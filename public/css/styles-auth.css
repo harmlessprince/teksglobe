@@ -1,0 +1,20 @@
+.my_bg {
+    background-image: linear-gradient(rgba(145, 146, 122, 0.62), rgba(217, 91, 132, 0.58)), url(../img/authbg.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.navbar-toggler {
+    padding: .25rem 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: var(--primary);
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
