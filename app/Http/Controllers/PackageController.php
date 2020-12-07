@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePackage;
 use App\Models\Package;
 use App\Models\Plan;
 use Illuminate\Http\Request;
@@ -19,6 +20,19 @@ class PackageController extends Controller
         return view('user.package.index', compact('packages'));
     }
 
+     /**
+     * Display a listing of the packages for the admin.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function allpackages()
+    {
+        $packages = Package::all();
+        return view('admin.package.index', compact('packages'));
+    }
+
+    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -27,6 +41,7 @@ class PackageController extends Controller
     public function create()
     {
         //
+        return view('admin.package.create');
     }
 
     /**
@@ -35,9 +50,22 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePackage $request)
     {
         //
+        [
+            'name' => $name,
+            'amount' => $amount,
+            'interest' => $interest,
+            'status' => $status,
+        ] = $request->validated();
+        Package::create([
+            'name' => $name,
+            'amount' => $amount,
+            'interest' => $interest,
+            'status' => $status,
+        ]);
+        return back()->with('success', 'Package Created');
     }
 
     /**

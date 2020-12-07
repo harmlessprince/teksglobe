@@ -83,7 +83,9 @@ Route::middleware('auth', 'verified')->group(function () {
             Route::get('/dashboard', function () {
                 return view('dashboard');
             })->name('admindb');
-            Route::resource('plan', PlanController::class);
+            // Route::resource('plan', PlanController::class);
+            Route::resource('packages', PackageController::class);
+            Route::get('packages', [PackageController::class, 'allpackages'])->name('packages.allpackages');
         });
     });
 
@@ -94,9 +96,9 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::post('packages/{package}/investments', [InvestmentController::class, 'store'])
         ->name('investments.store');
     Route::resource('investments', InvestmentController::class)->except('store');
-    Route::resource('packages', PackageController::class);
+    Route::resource('packages', PackageController::class)->only('index');
     Route::resource('profile', ProfileController::class);
-    Route::resource('deposit', DepositController::class);
+    // Route::resource('deposit', DepositController::class);
 
-    Route::resource('investment-style', StyleController::class);
+    // Route::resource('investment-style', StyleController::class);
 });

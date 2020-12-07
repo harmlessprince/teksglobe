@@ -9,7 +9,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav flex-column">
                     <li class="nav-divider text-center">
-                        <h3 style="color: #fff">Member Panel</h3>
+                        @can('isAdmin')
+                            @if (\Request::route()->getPrefix() == '/admin')
+                            <h3 style="color: #fff">Aministrator Panel</h3>
+                            @else
+                            <h3 style="color: #fff">Member Panel</h3>
+                            @endif
+                        @else
+                            <h3 style="color: #fff">Member Panel</h3>
+                        @endcan
+
                     </li>
                     {{-- <li class="nav-divider text-center">
                         <div class="user">
@@ -42,7 +51,7 @@
                         {{-- @endif --}}
 
                     @can('isAdmin')
-                        @if ((\Request::route()->getPrefix()) == '/admin')
+                        @if (\Request::route()->getPrefix() == '/admin')
                             @include('partials.navitem.adminlinks')
                         @else
                             @include('partials.navitem.userlinks')

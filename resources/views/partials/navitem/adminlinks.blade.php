@@ -90,14 +90,14 @@
     <div id="submenu-5" class="collapse submenu" style="">
         <ul class="nav flex-column">
             <li class="nav-item">
-            <a class="nav-link {{ (request()->is('/plan/*')) ? 'active' : '' }}" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5-1" aria-controls="submenu-5-1">Plan</a>
+            <a class="nav-link {{ (request()->is('/plan/*')) ? 'active' : '' }}" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5-1" aria-controls="submenu-5-1">Packages</a>
                 <div id="submenu-5-1" class="collapse submenu" style="">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('plan.index') }}">All plans</a>
+                            <a class="nav-link" href="{{ route('packages.allpackages') }}">All packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('plan.create') }}">Create plan</a>
+                            <a class="nav-link" href="{{ route('packages.create') }}">Create package</a>
                         </li>
                     </ul>
                 </div>
