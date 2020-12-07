@@ -36,7 +36,7 @@ Route::get('/', [AuthenticatedSessionController::class, 'create'])
 Route::post('/', [AuthenticatedSessionController::class, 'store'])
     ->middleware(array_filter([
         'guest',
-        $limiter ? 'throttle:'.$limiter : null,
+        $limiter ? 'throttle:' . $limiter : null,
     ]));
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
@@ -78,19 +78,22 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
 
 
 Route::middleware('auth', 'verified')->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('admindb');
+        Route::resource('plan', PlanController::class);
+    });
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('generaldb');
-    Route::get('/dashboard/admin', function () {
-        return view('dashboard');
-    })->name('admindb');
+
     Route::post('packages/{package}/investments', [InvestmentController::class, 'store'])
         ->name('investments.store');
     Route::resource('investments', InvestmentController::class)->except('store');
     Route::resource('packages', PackageController::class);
     Route::resource('profile', ProfileController::class);
     Route::resource('deposit', DepositController::class);
-    Route::resource('plan', PlanController::class);
+
     Route::resource('investment-style', StyleController::class);
 });
-

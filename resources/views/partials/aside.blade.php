@@ -42,7 +42,7 @@
                         {{-- @endif --}}
 
                     @can('isAdmin')
-                        @if (Route::current()->getName() === 'admindb')
+                        @if ((\Request::route()->getPrefix()) == '/admin')
                             @include('partials.navitem.adminlinks')
                         @else
                             @include('partials.navitem.userlinks')
