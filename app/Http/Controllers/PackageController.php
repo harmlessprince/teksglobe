@@ -15,8 +15,8 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $plans = Plan::with('style')->get();
-        return view('user.package.index', compact('plans'));
+        $packages = Package::all();
+        return view('user.package.index', compact('packages'));
     }
 
     /**

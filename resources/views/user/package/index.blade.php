@@ -13,29 +13,28 @@
             </div>
         </div>
 
-        @if (count($plans) > 0)
-            @foreach ($plans as $plan)
+        @if (count($packages) > 0)
+            @foreach ($packages as $package)
                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title mb-2">{{ $plan->style->name }}</h3>
-                        </div>
-                        <img class="img-fluid" src="../assets/images/card-img.jpg" alt="Card image cap">
+                        {{-- <div class="card-header">
+                            <h3 class="card-title mb-2">{{ $package->name }}</h3>
+                        </div> --}}
+                        <img class="img-fluid" src="{{ asset('assets/images/packaged.jpg') }}" alt="Card image cap">
                         <div class="card-body  alert alert-primary" style="margin-bottom: 0">
-                            <h3 class="card-title"> <strong class="text-secondary">XAF {{ $plan->minimum }} - XAF {{ $plan->maximum }} </strong></h3>
-                            
+                            <h3 class="card-title"> <strong class="text-secondary">XAF {{ $package->amount }}</strong></h3>
+
                             <p class="card-text ">
 
-
-
-                                This Plan has the following Benefits. You will get Return <strong class="text-secondary">{{ $plan->percentage }}% </strong>  money on
-                                every investment. This is <strong class="text-secondary"> {{ $plan->style->name }} </strong> Plan. It's means when you invest under
-                                this plan you will get interest <strong class="text-secondary"> {{ $plan->repeat }} </strong> times in total investment periods. You
-                                will get interests calculated <strong class="text-secondary"> {{ $plan->start_duration }} </strong> hours later for fraud check.
-                                after investment placed.
+                                This Plan has the following Benefits. You will get Return <strong
+                                    class="text-secondary">{{ $package->interest }}% </strong> money on
+                                every investment. This is <strong class="text-secondary"> {{ $package->name }} </strong>
+                                Plan.
                             </p>
-                            <a href="#" class="btn btn-primary btn-lg">Invest Now</a>
-                            {{-- <a href="#" class="card-link"></a> --}}
+                            <form method="post" action="{{ route('investments.store', $package->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-primary btn-lg">Invest Now</button>
+                            </form>
                         </div>
                     </div>
                 </div>

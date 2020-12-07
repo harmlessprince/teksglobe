@@ -41,13 +41,13 @@ class InvestmentController extends Controller
     {
         $investment = Investment::create([
             'user_id' => auth()->user()->id,
-            'package_id' => auth()->user()->id,
+            'package_id' => $package->id,
             'amount' => $package->amount,
             'balance' => $package->amount * 2,
         ]);
         // TODO:
         // auth()->user()->notify(new InvestmentNotification($investment));
-        return back()->with('status', 'Investment Made!');
+        return back()->with('success', 'Investment Made!');
     }
 
     /**
