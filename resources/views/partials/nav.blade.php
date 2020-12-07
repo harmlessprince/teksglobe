@@ -11,7 +11,7 @@
                 @can('isAdmin')
                     <li class="nav-item">
 
-                        @if (Route::current()->getName() === 'admindb')
+                        @if ((\Request::route()->getPrefix()) == '/admin')
                             <a class="nav-link nav-icons" href="{{ route('generaldb') }}" aria-haspopup="true"
                                 aria-expanded="false">
                                 <span class="indicator"></span>Go To User Panel</a>
@@ -24,7 +24,7 @@
                 @else
 
                 @endcan
-
+{{-- 
                 <li class="nav-item">
                     <a class="nav-link nav-icons" href="#" aria-haspopup="true" aria-expanded="false"><i
                             class="fas fa-fw fa-home"></i> <span class="indicator"></span>Homepage</a>
@@ -44,12 +44,12 @@
                     <a class="nav-link nav-icons" href="#" aria-haspopup="true" aria-expanded="false"><i
                             class="fas fa-fw fa-phone-square"></i> <span class="indicator"></span>Support center</a>
 
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a class="nav-link nav-icons" href="#" aria-haspopup="true" aria-expanded="false"><i
                             class="fas fa-fw fa-hands-helping"></i> <span class="indicator"></span>Request support</a>
 
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown nav-user">
                     <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">

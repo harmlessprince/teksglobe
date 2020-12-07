@@ -1,4 +1,4 @@
-<li class="nav-item ">
+{{-- <li class="nav-item ">
     <a class="nav-link active" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Email System </a>
     <div id="submenu-1" class="collapse submenu" style="">
         <ul class="nav flex-column">
@@ -54,8 +54,8 @@
             </li>
         </ul>
     </div>
-</li>
-
+</li> --}}
+{{-- 
 <li class="nav-item ">
     <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fa fa-fw fa-user-circle"></i>Ptc Ads</a>
     <div id="submenu-4" class="collapse submenu" style="">
@@ -68,9 +68,9 @@
             </li>
         </ul>
     </div>
-</li>
+</li> --}}
 
-<li class="nav-item ">
+{{-- <li class="nav-item ">
     <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-15" aria-controls="submenu-15"><i class="fa fa-fw fa-user-circle"></i>PPV Ads</a>
     <div id="submenu-15" class="collapse submenu" style="">
        
@@ -83,7 +83,7 @@
             </li>
         </ul>
     </div>
-</li>
+</li> --}}
 
 <li class="nav-item ">
     <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-5"><i class="fa fa-fw fa-user-circle"></i>Investment Section</a>
@@ -102,9 +102,9 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
             <a class="nav-link" href="{{route('investment-style.index')}}">Style</a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link" href="#"> Investments</a>
             </li>
@@ -114,7 +114,7 @@
         </ul>
     </div>
 </li>
-<li class="nav-item ">
+{{-- <li class="nav-item ">
     <a class="nav-link " href="#" ><i class="fa fa-fw fa-user-circle"></i>Instant gateways</a>
 </li>
 <li class="nav-item ">
@@ -224,4 +224,4 @@
             </li>
         </ul>
     </div>
-</li>
+</li> --}}

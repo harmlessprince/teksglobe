@@ -7,14 +7,14 @@
         </button>
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto navbar-right-top">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link nav-icons" href="#" aria-haspopup="true" aria-expanded="false">Blog</a>
 
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-icons" href="#" aria-haspopup="true" aria-expanded="false">Contact us</a>
 
-                </li>
+                </li> --}}
                 <li class="nav-item">
                 <a class="nav-link nav-icons" href="{{route('login')}}" aria-haspopup="true" aria-expanded="false">Login</a>
 
