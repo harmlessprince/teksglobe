@@ -62,12 +62,12 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">@yield('pageheader', 'Fix This')</h2>
+                            <h2 class="pageheader-title">@yield('pageheader', '')</h2>
                             <div class="col-12 divider mb-5" style="background-color:#e0e4ef">
 
-                            </div> 
-                          
-                           
+                            </div>
+
+
                             {{-- <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -82,13 +82,13 @@
                     </div>
                 </div>
 
-              
+
 
 
                 <!-- ============================================================== -->
                 <!-- end pageheader -->
                 <!-- ============================================================== -->
-               
+
                 <!-- ============================================================== -->
                 <!-- page contents  -->
                 <!-- ============================================================== -->

@@ -29,11 +29,12 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $date = now()->subDays(30);
             Investment::where('balance', '>', 0)
-                ->whereDate('created_at', '>', $date)
+                // ->whereDate('created_at', '>', $date)
                 ->chunkById(500, function ($investments) {
                     foreach ($investments as $investment) {
+                        $amount = $investment->amount;
                         $balance = $investment->balance;
-                        $interest = ($balance * 4) / 100;
+                        $interest = ($amount * 4) / 100;
                         dump($balance, $interest);
                         $left = $balance - $interest;
                         creditInterestTable(
@@ -48,10 +49,10 @@ class Kernel extends ConsoleKernel
                     }
                 });
         })
-        ->everyMinute()
+        ->everyMinute();
         // ->weekly()
         // ->fridays()
-        ->appendOutputTo('/storage/app');
+        // ->appendOutputTo('/storage/app');
     }
 
     /**

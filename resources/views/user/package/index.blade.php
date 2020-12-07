@@ -22,7 +22,7 @@
                         </div> --}}
                         <img class="img-fluid" src="{{ asset('assets/images/packaged.jpg') }}" alt="Card image cap">
                         <div class="card-body  alert alert-primary" style="margin-bottom: 0">
-                            <h3 class="card-title"> <strong class="text-secondary">XAF {{ $package->amount }}</strong></h3>
+                            <h3 class="card-title"> <strong class="text-secondary">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
 
                             <p class="card-text ">
 

@@ -6,6 +6,7 @@ use App\Models\Investment;
 use App\Models\Package;
 use App\Notifications\InvestmentNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvestmentController extends Controller
 {
@@ -16,7 +17,11 @@ class InvestmentController extends Controller
      */
     public function index()
     {
-        $investments = Investment::where('user_id', auth()->user()->id)->get();
+        $investments = Investment::select('investments.*', DB::raw('SUM(interests.amount) as interests'))
+            ->where('investments.user_id', auth()->user()->id)
+            ->leftJoin('interests', 'interests.investment_id', '=', 'investments.id')
+            ->groupBy('investments.id')
+            ->get();
         return view('investment.index', compact('investments'));
     }
 
@@ -58,7 +63,8 @@ class InvestmentController extends Controller
      */
     public function show(Investment $investment)
     {
-        //
+        $investment->load('interests');
+        return view('investment.show', compact('investment'));
     }
 
     /**
