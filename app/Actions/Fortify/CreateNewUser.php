@@ -79,9 +79,9 @@ class CreateNewUser implements CreatesNewUsers
 
         $user->sendEmailVerificationNotification();
 
-        $user->sendPhoneVerificationCode();
+        // $user->sendPhoneVerificationCode();
 
-        event(new UserReferred(request()->cookie('ref'), $user));
+        // event(new UserReferred(request()->cookie('ref'), $user));
         return $user;
     }
 }
