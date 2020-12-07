@@ -78,12 +78,15 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
 
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::prefix('admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('admindb');
-        Route::resource('plan', PlanController::class);
+    Route::group(['middleware' => ['admin']], function () {
+        Route::prefix('admin')->group(function () {
+            Route::get('/dashboard', function () {
+                return view('dashboard');
+            })->name('admindb');
+            Route::resource('plan', PlanController::class);
+        });
     });
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('generaldb');
