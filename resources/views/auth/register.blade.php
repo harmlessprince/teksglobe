@@ -1,30 +1,16 @@
 @extends('layouts.auth')
 @section('title', 'Register')
+
 @section('content')
     <form method="POST" action="{{ route('register') }}">
         @csrf
         <div class="card" style=" ">
             <div class="card-header text-center">
-                @include('components.navbarbrand')
                 <span class="splash-description">Please enter your information.</span></div>
             <div class="card-body">
                 @if ($errors->any())
                     <span class="text-danger">Whoops! Something went wrong.</span>
                 @endif
-                {{-- <div class="form-group">
-                    <input class="form-control form-control-lg" type="text" name="nick" required="" placeholder="Username"
-                        autocomplete="off">
-                    @if ($errors->has('nick'))
-                        <span class="text-danger">{{ $errors->first('nick') }}</span>
-                    @endif
-                </div>
-                <div class="form-group">
-                    <input class="form-control form-control-lg" type="text" name="sponsor_name" required=""
-                        placeholder="Sponsor Name" autocomplete="off">
-                    @if ($errors->has('sponsor_name'))
-                        <span class="text-danger">{{ $errors->first('sponsor_name') }}</span>
-                    @endif
-                </div> --}}
                 <div class="form-group">
                     <input class="form-control form-control-lg" type="text" name="name" required="" placeholder="Full Name"
                         autocomplete="off">
@@ -32,11 +18,6 @@
                 <div class="form-group">
                     <input class="form-control form-control-lg" type="text" name="mobile" required=""
                         placeholder="Phone Number" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <input class="form-control form-control-lg" type="text" name="postcode" required=""
-                        placeholder="Postal Code" autocomplete="off">
-
                 </div>
                 <div class="form-group">
                     <input class="form-control form-control-lg" type="email" name="email" required="" placeholder="E-mail"

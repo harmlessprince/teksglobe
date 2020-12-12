@@ -1,9 +1,9 @@
 @extends('layouts.auth')
 @section('title', 'Login')
+
 @section('content')
     <div class="card">
         <div class="card-header text-center">
-            @include('components.navbarbrand')
             <span class="splash-description">Please enter your user information.</span>
         </div>
         <div class="card-body">

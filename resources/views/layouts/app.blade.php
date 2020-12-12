@@ -35,7 +35,7 @@
         <!-- ============================================================== -->
         <!-- navbar -->
         <!-- ============================================================== -->
-        @include('partials.nav')
+        @include('partials.nav.app')
         <!-- ============================================================== -->
         <!-- end navbar -->
         <!-- ============================================================== -->
@@ -142,43 +142,4 @@
         <script src="{{ asset('assets/libs/js/main-js.js') }}"></script>
         @stack('scripts')
 </body>
-
 </html>
-
-
-
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>App Main Layout</h1>
-    <h4>Nav Links</h4>
-    <ul>
-        <li><a href="{{ route('packages.index') }}">Buy Package</a></li>
-        <li><a href="{{ route('investments.index') }}">Investment</a></li>
-        <li>
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                <div class="dropdown-item-icon"><i class="fa fa-sign-out"></i></div>
-                Logout
-            </a>
-        </li>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </ul>
-    <hr>
-    @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-        </div>
-        <hr>
-    @endif
-
-    @yield('content')
-</body>
-</html> --}}

@@ -125,6 +125,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Withdrawal Fee
+    |--------------------------------------------------------------------------
+    |
+    | This value is the percentage charged on withdrawal within the application.
+    |
+    */
+
+    'withdraw_fee' => env('APP_WITHDRAW_FEE', 0),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Transfer Fee
+    |--------------------------------------------------------------------------
+    |
+    | This value is the percentage charged on transfer within the application.
+    |
+    */
+
+    'transfer_fee' => env('APP_TRANSFER_FEE', 0),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |

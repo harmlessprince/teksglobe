@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\DepositController;
+use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StyleController;
+use App\Http\Controllers\TransferController;
+use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
@@ -78,27 +81,30 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
 
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::group(['middleware' => ['admin']], function () {
-        Route::prefix('admin')->group(function () {
-            Route::get('/dashboard', function () {
-                return view('dashboard');
-            })->name('admindb');
-            // Route::resource('plan', PlanController::class);
-            Route::resource('packages', PackageController::class);
-            Route::get('packages', [PackageController::class, 'allpackages'])->name('packages.allpackages');
-        });
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
+        Route::view('dashboard', 'admin.dashboard')->name('dashboard');
+        Route::get('packages/create', [PackageController::class, 'create'])->name('packages.create');
+        Route::post('packages', [PackageController::class, 'store'])->name('packages.store');
+        Route::get('packages', [PackageController::class, 'adminIndex'])->name('packages.index');
     });
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('generaldb');
-
-    Route::post('packages/{package}/investments', [InvestmentController::class, 'store'])
-        ->name('investments.store');
-    Route::resource('investments', InvestmentController::class)->except('store');
-    Route::resource('packages', PackageController::class)->only('index');
-    Route::resource('profile', ProfileController::class);
-    // Route::resource('deposit', DepositController::class);
-
-    // Route::resource('investment-style', StyleController::class);
+    Route::name('user.')->group(function() {
+        Route::view('dashboard', 'user.dashboard')->name('dashboard');
+        Route::get('investments/{investment}', [InvestmentController::class, 'show'])
+            ->name('investments.show');
+        Route::post('packages/{package}/investments', [InvestmentController::class, 'store'])
+            ->name('investments.store');
+        Route::get('investments', [InvestmentController::class, 'index'])->name('investments.index');
+        Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
+        Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
+        Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');
+        Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index');
+        Route::post('transfers', [TransferController::class, 'store'])->name('transfers.store');
+        Route::post('withdrawals', [WithdrawController::class, 'store'])->name('withdraws.store');
+        Route::get('withdrawals/create', [WithdrawController::class, 'create'])->name('withdraws.create');
+        Route::get('withdrawals/pending', [WithdrawController::class, 'pending'])->name('withdraws.pending');
+        Route::get('withdrawals/approved', [WithdrawController::class, 'approved'])->name('withdraws.approved');
+        Route::get('wallets', [InterestController::class, 'index'])->name('wallet.index');
+        Route::resource('profile', ProfileController::class);
+    });
 });

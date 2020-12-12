@@ -14,7 +14,8 @@ class InterestController extends Controller
      */
     public function index()
     {
-        //
+        $wallets = Interest::where('user_id', auth()->user()->id)->latest()->limit(90)->get();
+        return view('user.wallet.index', compact('wallets'));
     }
 
     /**

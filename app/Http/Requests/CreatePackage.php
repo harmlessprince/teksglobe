@@ -13,10 +13,7 @@ class CreatePackage extends FormRequest
      */
     public function authorize()
     {
-        if (auth()->user()->admin == true) {
-            return  true;
-        }
-        return false;
+        return auth()->user()->admin;
     }
 
     /**
@@ -27,13 +24,10 @@ class CreatePackage extends FormRequest
     public function rules()
     {
         return [
-            //return [
-            
-                'name' => 'required|max:100|unique:packages',
-                'amount' => 'required|numeric|min:1',
-                'interest' => 'required|numeric',
-                'status' => 'required|boolean',
-            ];
-        
+            'name' => 'required|max:100|unique:packages',
+            'amount' => 'required|numeric|min:1',
+            'interest' => 'required|numeric',
+            'status' => 'required|boolean',
+        ];
     }
 }

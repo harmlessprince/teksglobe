@@ -1,5 +1,6 @@
 @extends('layouts.auth')
 @section('title', 'Login')
+
 @section('content')
     <div class="card">
         {{-- <div class="card-header text-center"><img class="logo-img"
@@ -23,7 +24,7 @@
                     <div>
                         <div class="form-group"><button class="btn btn-block btn-primary btn-xl">
                                 {{ __('Resend Verification Email') }}</button></div>
-                    </div>  
+                    </div>
                 </form>
 
                 <form method="POST" action="{{ route('logout') }}">

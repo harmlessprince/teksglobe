@@ -17,6 +17,16 @@ class Investment extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'info' => 'json',
+        'verified_at' => 'datetime',
+    ];
+
+    /**
      * Get the package that owns the investment.
      */
     public function package()
@@ -48,4 +58,14 @@ class Investment extends Model
         return (($this->total - $this->balance) / $this->total) * 100;
     }
 
+    /**
+     * Get the investment current badge.
+     */
+    public function getBadgeAttribute()
+    {
+        if ($this->verified_at->diffInDays(now()) <= 30) {
+            return 'Incubation';
+        }
+        return ($this->balance > 0) ? 'Running' : 'Completed';
+    }
 }

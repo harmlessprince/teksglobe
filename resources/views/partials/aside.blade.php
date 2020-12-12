@@ -37,28 +37,11 @@
                             </ul>
                         </div>
                     </li> --}}
-                    {{-- @if (Request::url() == '/admin/dashboard') --}}
-                        {{-- @can('isAdmin') --}}
-                        {{-- @include('partials.navitem.adminlinks')
-                        --}}
-                        {{-- @else --}}
-                        {{-- @include('partials.navitem.userlinks')
-                        --}}
-                        {{-- @endcan --}}
-                        {{-- @else --}}
-                        {{-- @include('partials.navitem.userlinks')
-                        --}}
-                        {{-- @endif --}}
-
-                    @can('isAdmin')
-                        @if (\Request::route()->getPrefix() == '/admin')
-                            @include('partials.navitem.adminlinks')
-                        @else
-                            @include('partials.navitem.userlinks')
-                        @endif
+                    @if (\Request::route()->getPrefix() == '/admin')
+                        @include('partials.side-menu.admin')
                     @else
-                        @include('partials.navitem.userlinks')
-                    @endcan
+                        @include('partials.side-menu.user')
+                    @endif
                 </ul>
             </div>
         </nav>

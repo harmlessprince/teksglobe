@@ -18,17 +18,18 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('pin')->unique()->nullable();
             $table->boolean('admin')->default(false);
-            $table->date('membership_started');
-            $table->date('membership_expired');
-            $table->string('phone_verification_code')->nullable();
-            $table->timestamp('phone_verified_at')->nullable();
             $table->boolean('active')->default(false);
+            $table->timestamp('phone_verified_at')->nullable();
+            $table->string('phone_verification_code')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('pin')->nullable();
             $table->string('password');
-            $table->timestamps();
+            $table->string('mobile')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('referral')->nullable();
             $table->rememberToken();
+            $table->timestamps();
         });
     }
 

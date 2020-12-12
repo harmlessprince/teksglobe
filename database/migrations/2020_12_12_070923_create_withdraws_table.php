@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvestmentsTable extends Migration
+class CreateWithdrawsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateInvestmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('investments', function (Blueprint $table) {
+        Schema::create('withdraws', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->constrined()->onDelete('cascade');
-            $table->unsignedBigInteger('package_id')->constrined()->onDelete('cascade');
-			$table->unsignedDecimal('amount', 19, 2);
-            $table->unsignedDecimal('balance', 19, 2);
-            $table->string('gateway');
-            $table->enum('status', ['pending', 'approved', 'declined'])->default('pending');
-            $table->string('evidence')->nullable();
+            $table->unsignedDecimal('amount', 19, 2);
+            $table->unsignedDecimal('charge', 19, 2)->default(0);
+            $table->json('account')->nullable();
+            $table->string('request_ip')->nullable();
+            $table->enum('status', ['pending', 'approved', 'declined', 'disbursed'])->default('pending');
             $table->timestamp('verified_at');
             $table->unsignedBigInteger('verified_by')->nullable()->constrined('users');
-            $table->json('info')->nullable();
+            $table->string('verified_ip')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreateInvestmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('investments');
+        Schema::dropIfExists('withdraws');
     }
 }

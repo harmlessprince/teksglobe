@@ -1,1 +1,0 @@
-<a class="navbar-brand" href="{{ route('generaldb') }}">Teks Global</a>

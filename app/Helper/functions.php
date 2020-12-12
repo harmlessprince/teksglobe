@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
  * @param string $narration
  * @return void
  */
-function creditInterestTable(int $user, int $investment, float $amount, string $narration): void
+function creditInterestTable(int $user, float $amount, string $narration, int $investment = null): void
 {
     DB::table('interests')->insertOrIgnore(
         [
@@ -19,7 +19,7 @@ function creditInterestTable(int $user, int $investment, float $amount, string $
             'investment_id' => $investment,
             'narration' => $narration,
             'type' => 'credit',
-            'balance' => calculateWalletLedgerBalance($user) + $amount,
+            'balance' => calculateLedgerBalance($user) + $amount,
             'created_at' => now(),
             'updated_at' => now(),
         ]
@@ -34,14 +34,15 @@ function creditInterestTable(int $user, int $investment, float $amount, string $
  * @param string $narration
  * @return void
  */
-function debitWallet(int $user, float $amount, string $narration): void
+function debitInterestTable(int $user, float $amount, string $narration): void
 {
-    DB::table('wallets')->insertOrIgnore(
+    DB::table('interests')->insertOrIgnore(
         [
             'user_id' => $user,
             'amount' => $amount,
             'narration' => $narration,
             'type' => 'debit',
+            'balance' => calculateLedgerBalance($user) - $amount,
             'created_at' => now(),
             'updated_at' => now(),
         ]
@@ -54,23 +55,24 @@ function debitWallet(int $user, float $amount, string $narration): void
  * @param integer $user
  * @return float
  */
-function calculateWalletLedgerBalance(int $user): float
+function calculateLedgerBalance(int $user): float
 {
     return DB::table('interests')
+        ->select('balance')
         ->where('user_id', $user)
-        ->select(DB::raw("SUM(CASE WHEN type='credit' THEN amount ELSE -amount END) as amount"))
-        ->value('amount') ?? 0.00;
+        ->latest('id')
+        ->value('balance') ?? 0.00;
 }
 
 /**
  * Calculate user available wallet balance
  *
  * @param integer $user
- * @return string
+ * @return float
  */
-function calculateWalletAvailableBalance(int $user): string
+function calculateAvailableBalance(int $user): float
 {
-    $amount = (float)calculateWalletLedgerBalance($user);
+    $amount = (float)calculateLedgerBalance($user);
     $pending = DB::table('withdraws')
         ->where('user_id', $user)
         ->where('status', 'pending')
@@ -108,4 +110,28 @@ function makeInitialsFromSingleWord(string $name): string
         return substr(implode('', $capitals[1]), 0, 2);
     }
     return strtoupper(substr($name, 0, 2));
+}
+
+/**
+ * Calculate charge on withdrawal
+ *
+ * @param float $amount
+ * @return float
+ */
+function calculateChargeOnWithdrawal(float $amount = null): float
+{
+    $charge = (float)config('app.withdraw_fee');
+    return ($amount * $charge) / 100;
+}
+
+/**
+ * Calculate charge on transfer
+ *
+ * @param float $amount
+ * @return float
+ */
+function calculateChargeOnTransfer(float $amount = null): float
+{
+    $charge = (float)config('app.transfer_fee');
+    return ($amount * $charge) / 100;
 }

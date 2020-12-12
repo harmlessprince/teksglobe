@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BuyPackage;
 use App\Models\Investment;
 use App\Models\Package;
 use App\Notifications\InvestmentNotification;
@@ -19,10 +20,11 @@ class InvestmentController extends Controller
     {
         $investments = Investment::select('investments.*', DB::raw('SUM(interests.amount) as interests'))
             ->where('investments.user_id', auth()->user()->id)
+            ->where('status', 'approved')
             ->leftJoin('interests', 'interests.investment_id', '=', 'investments.id')
             ->groupBy('investments.id')
             ->get();
-        return view('investment.index', compact('investments'));
+        return view('user.investment.index', compact('investments'));
     }
 
     /**
@@ -38,21 +40,35 @@ class InvestmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Models\Investment  $investment
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Package  $package
+     * @param  \App\Http\Requests\BuyPackage  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Package $package, Request $request)
+    public function store(Package $package, BuyPackage $request)
     {
-        $investment = Investment::create([
-            'user_id' => auth()->user()->id,
+        // dd('5');
+        $user = auth()->user();
+        $data = [
+            'user_id' => $user->id,
             'package_id' => $package->id,
             'amount' => $package->amount,
             'balance' => $package->amount * 2,
-        ]);
+            'gateway' => $request->gateway,
+        ];
+        if ($request->gateway === 'bank') {
+            $data['info'] = ['name' => $request->name, 'amount' => $request->amount];
+        }
+        if ($request->gateway === 'wallet') {
+            if (calculateAvailableBalance($user->id) < $package->amount) {
+                return back()->with('error', 'Insufficient Funds');
+            }
+            $data['status'] = 'approved';
+            $data['verified_at'] = now();
+        }
+        $investment = Investment::create($data);
         // TODO:
-        // auth()->user()->notify(new InvestmentNotification($investment));
-        return back()->with('success', 'Investment Made!');
+        // $user->notify(new InvestmentNotification($investment));
+        return redirect()->route('user.packages.index')->with('success', 'Investment Made!');
     }
 
     /**
@@ -63,8 +79,11 @@ class InvestmentController extends Controller
      */
     public function show(Investment $investment)
     {
+        if ($investment->user_id !== auth()->user()->id) {
+            return abort(403);
+        }
         $investment->load('interests');
-        return view('investment.show', compact('investment'));
+        return view('user.investment.show', compact('investment'));
     }
 
     /**

@@ -12,7 +12,7 @@
     <link href="{{ asset('assets/vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
     --}}
     <link rel="stylesheet" href="{{ asset('assets/libs/css/style.css') }}">
-{{--     
+{{--
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
     --}}
 
@@ -24,7 +24,7 @@
         }
 
         body {
-           
+
             /* padding-top: 40px; */
             /* padding-bottom: 40px; */
         }
@@ -34,12 +34,11 @@
 
 <body>
     <div class="dashboard-main-wrapper my_bg">
-        @include('partials.navbargen')
+        @include('partials.nav.auth')
         <!-- ============================================================== -->
         <!-- login page  -->
         <!-- ============================================================== -->
         <div class="splash-container">
-           
             @yield('content')
         </div>
         <!-- ============================================================== -->
@@ -52,32 +51,4 @@
     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
 
 </body>
-
 </html>
-    
-
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Auth Main Layout</h1>
-    <h4>Nav Links</h4>
-    <ul>
-        <li><a href="{{ route('register') }}">Register</a></li>
-        <li><a href="{{ route('login') }}">Login</a></li>
-    </ul>
-    <hr>
-    @if (session('status'))
-        <div>
-            {{ session('status') }}
-        </div>
-        <hr>
-    @endif
-    @yield('content')
-</body>
-</html> --}}

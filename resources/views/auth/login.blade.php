@@ -1,13 +1,11 @@
 
 @extends('layouts.auth')
 @section('title', 'Login')
+
 @section('content')
     <div class="card ">
         <div class="card-header text-center">
-           @include('components.navbarbrand')
-            {{--
-            <x-jet-validation-errors class="mb-4" /> --}}
-
+            <p>Sigin to your Account</p>
             @if ($errors->any())
                 <span class="text-danger">Whoops! Something went wrong.</span>
             @endif

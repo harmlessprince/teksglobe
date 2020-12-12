@@ -3,7 +3,7 @@
 @section('title', 'Forgot password')
 @section('content')
     <div class="card">
-        <div class="card-header text-center">@include('components.navbarbrand')<span
+        <div class="card-header text-center"><span
                 class="splash-description">Please enter your user information.</span></div>
         <div class="card-body">
             <form  method="POST" action="{{ route('password.email') }}">
