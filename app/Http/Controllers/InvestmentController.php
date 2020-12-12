@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\PaystackPayment;
 use App\Http\Requests\BuyPackage;
 use App\Models\Investment;
 use App\Models\Package;
@@ -46,7 +47,11 @@ class InvestmentController extends Controller
      */
     public function store(Package $package, BuyPackage $request)
     {
-        // dd('5');
+        if ($request->gateway === 'paystack') {
+            $gateway = new PaystackPayment();
+            $payment = $gateway->prepareTransaction($package->amount, 'investment', $package);
+            return view('user.package.checkout', compact('payment', 'package'));
+        }
         $user = auth()->user();
         $data = [
             'user_id' => $user->id,

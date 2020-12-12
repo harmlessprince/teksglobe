@@ -28,8 +28,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             $date = now()->subDays(30);
+            dd($date);
             Investment::where('balance', '>', 0)
-                // ->whereDate('created_at', '>', $date)
+                ->whereDate('verified_at', '>', $date)
                 ->chunkById(500, function ($investments) {
                     foreach ($investments as $investment) {
                         $amount = $investment->amount;
@@ -39,9 +40,9 @@ class Kernel extends ConsoleKernel
                         $left = $balance - $interest;
                         creditInterestTable(
                             $investment->user_id,
-                            $investment->id,
                             $interest,
-                            'Interest gained'
+                            'Interest gained',
+                            $investment->id
                         );
                         dump($left);
                         $investment->balance = $left;

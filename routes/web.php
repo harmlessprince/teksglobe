@@ -1,13 +1,11 @@
 <?php
 
-use App\Http\Controllers\DepositController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\PackageController;
-use App\Http\Controllers\PlanController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StyleController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -78,7 +76,8 @@ Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke
 Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
     ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.send');
-
+// Verify Payment
+Route::post('payment/verify', [PaymentController::class, 'verify'])->name('payment.verify');
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
@@ -105,6 +104,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('withdrawals/pending', [WithdrawController::class, 'pending'])->name('withdraws.pending');
         Route::get('withdrawals/approved', [WithdrawController::class, 'approved'])->name('withdraws.approved');
         Route::get('wallets', [InterestController::class, 'index'])->name('wallet.index');
-        Route::resource('profile', ProfileController::class);
+        Route::get('profile', [UserController::class, 'show'])->name('profile.show');
     });
 });
