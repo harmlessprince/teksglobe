@@ -18,9 +18,7 @@
                         <input type="hidden" name="gateway" value="paystack">
                         <button type="submit" class="btn btn-primary btn-lg">Pay Online</button>
                     </form>
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#bankTransferModal">
-                        Bank Transfer
-                    </a>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#bankTransferModal">Bank Transfer</a>
                     <form method="post" class="my-4" action="{{ route('user.investments.store', $package->id) }}">
                         @csrf
                         <input type="hidden" name="gateway" value="wallet">

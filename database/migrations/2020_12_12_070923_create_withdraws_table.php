@@ -21,7 +21,7 @@ class CreateWithdrawsTable extends Migration
             $table->json('account')->nullable();
             $table->string('request_ip')->nullable();
             $table->enum('status', ['pending', 'approved', 'declined', 'disbursed'])->default('pending');
-            $table->timestamp('verified_at');
+            $table->timestamp('verified_at')->nullable();
             $table->unsignedBigInteger('verified_by')->nullable()->constrined('users');
             $table->string('verified_ip')->nullable();
             $table->timestamps();

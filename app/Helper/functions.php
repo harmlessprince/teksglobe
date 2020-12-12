@@ -138,6 +138,18 @@ function calculateChargeOnTransfer(float $amount = null): float
 }
 
 /**
+ * Calculate interest charge on loan
+ *
+ * @param float $amount
+ * @return float
+ */
+function calculateInterestOnLoan(float $amount = null): float
+{
+    $interest = (float)config('app.interest_fee');
+    return ($amount * $interest) / 100;
+}
+
+/**
  * Generate Reference number for user
  *
  * @return void

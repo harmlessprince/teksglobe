@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">Last 90 Transactions</h5>
+                <h5 class="card-header">Investment Loans</h5>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered first">
@@ -15,21 +15,25 @@
                                 <tr>
                                     <th></th>
                                     <th>Date</th>
-                                    <th>Narration</th>
-                                    <th>Debit</th>
-                                    <th>Credit</th>
+                                    <th>Amount</th>
+                                    <th>Interest</th>
+                                    <th>Total Payable</th>
+                                    <th>Status</th>
+                                    <th>Approved</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($wallets as $wallet)
+                                @foreach ($loans as $loan)
                                     <tr>
                                         <td>
-                                            <span class="badge-dot {{ ($wallet->type === 'credit') ? 'badge-primary' : 'badge-danger' }}"></span>
+                                            <span class="badge-dot {{ ($loan->status === 'approved') ? 'badge-primary' : 'badge-danger' }}"></span>
                                         </td>
-                                        <td>{{ $wallet->created_at->format('d M, Y H:i A') }}</td>
-                                        <td>{{ $wallet->narration }}</td>
-                                        <td>{{ ($wallet->type === 'debit') ? number_format($wallet->amount, 2) : '' }}</td>
-                                        <td>{{ ($wallet->type === 'credit') ? number_format($wallet->amount, 2) : '' }}</td>
+                                        <td>{{ $loan->created_at->format('d M, Y H:i A') }}</td>
+                                        <td>{{ number_format($loan->amount, 2) }}</td>
+                                        <td>{{ number_format($loan->charge, 2) }}</td>
+                                        <td>{{ number_format(($loan->amount + $loan->charge), 2) }}</td>
+                                        <td>{{ $loan->status }}</td>
+                                        <td>{{ optional($loan->verified_at)->format('d M, Y H:i A') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

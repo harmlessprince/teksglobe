@@ -147,6 +147,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Loan Interest Fee
+    |--------------------------------------------------------------------------
+    |
+    | This value is the percentage interest charged on loan within the application.
+    |
+    */
+
+    'interest_fee' => env('APP_LOAN_INTEREST_FEE', 2),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |

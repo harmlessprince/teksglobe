@@ -15,6 +15,15 @@ class CreateLoansTable extends Migration
     {
         Schema::create('loans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->constrined()->onDelete('cascade');
+            $table->unsignedBigInteger('investment_id')->constrined();
+            $table->unsignedDecimal('amount', 19, 2);
+            $table->unsignedDecimal('charge', 19, 2)->default(0);
+            $table->string('request_ip')->nullable();
+            $table->enum('status', ['pending', 'approved', 'declined'])->default('pending');
+            $table->timestamp('verified_at')->nullable();
+            $table->unsignedBigInteger('verified_by')->nullable()->constrined('users');
+            $table->string('verified_ip')->nullable();
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TransferController;
@@ -89,11 +90,14 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::name('user.')->group(function() {
         Route::view('dashboard', 'user.dashboard')->name('dashboard');
+        Route::post('investments/{investment}/loans', [LoanController::class, 'store'])
+            ->name('loans.store');
         Route::get('investments/{investment}', [InvestmentController::class, 'show'])
             ->name('investments.show');
         Route::post('packages/{package}/investments', [InvestmentController::class, 'store'])
             ->name('investments.store');
         Route::get('investments', [InvestmentController::class, 'index'])->name('investments.index');
+        Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
         Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
         Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');

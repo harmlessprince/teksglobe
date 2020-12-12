@@ -14,10 +14,9 @@
                             <h2 class="mb-1">{{ $investment->package->name }}</h2>
                         </div>
                         <div class="rating-star p-0 d-inline-block">
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary">{{ $investment->badge }}</a>
+                            <a href="javascript:void(0)" class="btn btn-sm btn-primary">{{ $investment->badge }}</a>
                         </div>
                     </div>
-                    <!--  <div class="float-right"><a href="#" class="user-avatar-email text-secondary">www.henrybarbara.com</a></div> -->
                     <div class="user-avatar-address">
                         <p class="border-bottom pb-3">
                             <span class="d-xl-inline-block d-block mb-2"><i class="far fa-money-bill-alt mr-2 text-primary"></i>Invested Amount: {{ number_format($investment->amount, 2) }}</span>
@@ -26,10 +25,13 @@
                             </span>
                             <span class="mb-2 d-xl-inline-block d-block ml-xl-4"><i class="fas fa-chart-line mr-2 text-primary"></i>Interest Gained: {{ number_format($investment->interests->sum('amount'), 2) }}</span>
                         </p>
-                        <div class="mt-3">
+                        <div class="mt-3 text-center">
                             <div class="progress mb-3">
                                 <div class="progress-bar" role="progressbar" style="width: {{ $investment->completion }}%;" aria-valuenow="{{ $investment->completion }}" aria-valuemin="0" aria-valuemax="{{ $investment->total }}">{{ $investment->completion }}%</div>
                             </div>
+                            @if (!$investment->hasActiveLoan())
+                                <a href="#" data-toggle="modal" data-target="#loanModal" class="btn btn-primary">Apply for Loan</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -59,6 +61,30 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- LAON CONFIRMATION MODAL --}}
+    <div class="modal fade" id="loanModal" tabindex="-1" role="dialog" aria-labelledby="loanModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loanModalLabel">Modal title</h5>
+                    <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </a>
+                </div>
+                <form method="post" class="my-4" action="{{ route('user.loans.store', $investment->id) }}">
+                    @csrf
+                    <div class="modal-body">
+                        <p>Woohoo, You are readng this text in a modal! Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications, or completely custom content.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-primary btn-lg">Apply</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

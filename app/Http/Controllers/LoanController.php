@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Investment;
 use App\Models\Loan;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,11 @@ class LoanController extends Controller
      */
     public function index()
     {
-        //
+        $loans = Loan::where('user_id', auth()->user()->id)
+            ->with('investment')
+            ->latest()
+            ->get();
+        return view('user.loan.index', compact('loans'));
     }
 
     /**
@@ -31,11 +36,24 @@ class LoanController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Investment  $investment
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Investment $investment)
     {
-        //
+        if ($investment->user_id !== auth()->user()->id || $investment->hasActiveLoan()) {
+            return abort(403);
+        }
+
+        $amount = $investment->loan_amount;
+        Loan::create([
+            'user_id' => auth()->user()->id,
+            'investment_id' => $investment->id,
+            'amount' => $amount,
+            'charge' => calculateInterestOnLoan($amount),
+            'request_ip' => $request->ip(),
+        ]);
+        return back()->with('success', 'Loan application successful');
     }
 
     /**
