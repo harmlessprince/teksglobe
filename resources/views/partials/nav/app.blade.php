@@ -34,7 +34,7 @@
                             <h5 class="mb-0 text-white nav-user-name">{{ auth()->user()->name }}</h5>
                             <span class="status"></span><span class="ml-2">Available</span>
                         </div>
-                        <a class="dropdown-item" href="{{ route('user.profile.show', auth()->user()->id) }}">
+                        <a class="dropdown-item" href="{{ route('user.membership.show', auth()->user()->id) }}">
                             {{-- <a class="dropdown-item" href="#"> --}}
                                 <i class="fas fa-user mr-2"></i>Account
                         </a>

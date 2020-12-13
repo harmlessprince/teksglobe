@@ -25,7 +25,7 @@
                         and do as our system say.
                     </p>
                     <p>
-                        <a href="{{ route('user.profile.show', auth()->user()->id) }}" class="btn btn-warning active">Edit profile</a>
+                        <a href="{{ route('user.membership.show', auth()->user()->id) }}" class="btn btn-warning active">Edit profile</a>
                     </p>
                 </div>
             </div>

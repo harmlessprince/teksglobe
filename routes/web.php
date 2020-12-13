@@ -88,6 +88,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::view('dashboard', 'admin.dashboard')->name('dashboard');
         Route::get('packages/create', [PackageController::class, 'create'])->name('packages.create');
         Route::post('packages', [PackageController::class, 'store'])->name('packages.store');
+        Route::delete('packages/{package}', [PackageController::class, 'destroy'])->name('packages.destroy');
         Route::get('packages', [PackageController::class, 'adminIndex'])->name('packages.index');
         Route::get('investments', [InvestmentController::class, 'adminIndex'])->name('investments.adminindex');
         Route::get('investments/pending', [InvestmentController::class, 'pendingInvestments'])->name('investments.pending');
@@ -113,6 +114,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('investments', [InvestmentController::class, 'index'])->name('investments.index');
         Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
+        
         Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');
         Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index');
         Route::post('transfers', [TransferController::class, 'store'])->name('transfers.store');
@@ -121,6 +123,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('withdrawals/pending', [WithdrawController::class, 'pending'])->name('withdraws.pending');
         Route::get('withdrawals/approved', [WithdrawController::class, 'approved'])->name('withdraws.approved');
         Route::get('wallets', [InterestController::class, 'index'])->name('wallet.index');
-        Route::resource('profile', ProfileController::class);
+        Route::get('profile/{user}', [MembershipController::class, 'show'])->name('membership.show');
     });
 });

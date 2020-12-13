@@ -7,7 +7,7 @@
         <!-- ============================================================== -->
         <!-- center aligned media -->
         <!-- ============================================================== -->
-        <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 mx-auto">
             <form method="post" action="" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
@@ -19,7 +19,7 @@
 
                     <div class="card-body">
                         <div class="col-12 text-center">
-                        <img src="{{$profile->avatar}}" class="profile__image" alt="profile picture">
+                        <img src="{{ url(auth()->user()->avatar) }}" class="profile__image" alt="profile picture">
                         </div>
                         <div class="col-12 text-center mt-3">
 
@@ -59,7 +59,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="mobile" class="col-form-label">Mobile Number</label>
-                                    <input id="mobile" type="number" value="{{ auth()->user()->mobile ?? '' }}"
+                                    <input id="mobile" type="tel" value="{{ auth()->user()->mobile ?? '' }}"
                                         class="form-control form-control-lg" name="mobile">
                                     @error('mobile')
                                         <span class="invalid-feedback  d-block" role="alert">
@@ -72,7 +72,7 @@
                             {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="address" class="col-form-label">Address Line 1</label>
-                                    <input id="address" type="text" value="{{ $profile->address ?? '' }}"
+                                    <input id="address" type="text" value="{{ $user->address ?? '' }}"
                                         class="form-control form-control-lg" name="address">
                                     @error('address')
                                         <span class="invalid-feedback  d-block" role="alert">
@@ -84,7 +84,7 @@
                             {{-- <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="address2" class="col-form-label">Address Line 2</label>
-                                    <input id="address2" type="text" value="{{ $profile->address2 ?? '' }}"
+                                    <input id="address2" type="text" value="{{ $user->address2 ?? '' }}"
                                         class="form-control form-control-lg" name="mobile_number">
                                 </div>
                             </div> --}}
@@ -92,7 +92,7 @@
                             {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="city" class="col-form-label">City</label>
-                                    <input id="city" type="text" value="{{ $profile->city ?? '' }}"
+                                    <input id="city" type="text" value="{{ $user->city ?? '' }}"
                                         class="form-control form-control-lg" name="city">
                                     @error('city')
                                         <span class="invalid-feedback  d-block" role="alert">
@@ -104,7 +104,7 @@
                             {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="state" class="col-form-label">State</label>
-                                    <input id="state" type="text" value="{{ $profile->state ?? '' }}"
+                                    <input id="state" type="text" value="{{ $user->state ?? '' }}"
                                         class="form-control form-control-lg" name="state">
                                     @error('state')
                                         <span class="invalid-feedback d-block" role="alert">
@@ -116,7 +116,7 @@
                             {{-- <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="address2" class="col-form-label">Postal code</label>
-                                    <input id="postal_code" type="text" value="{{ $profile->postcode ?? '' }}"
+                                    <input id="postal_code" type="text" value="{{ $user->postcode ?? '' }}"
                                         class="form-control form-control-lg" name="postcode">
                                     @error('postcode')
                                         <span class="invalid-feedback  d-block" role="alert">
@@ -130,14 +130,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="country" class="col-form-label">Country</label>
-                                    <input id="country" type="text" value="{{ $profile->country ?? '' }}"
+                                    <input id="country" type="text" value="{{ $user->country ?? '' }}"
                                         class="form-control form-control-lg" name="country">
                                 </div>
                             </div> --}}
                             {{-- <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="facebook" class="col-form-label">Facebook URL</label>
-                                    <input id="facebook" type="url" value="{{ $profile->facebook ?? '' }}"
+                                    <input id="facebook" type="url" value="{{ $user->facebook ?? '' }}"
                                         class="form-control form-control-lg" name="facebook">
                                 </div>
                             </div> --}}
@@ -146,7 +146,7 @@
                                     <label for="account" class="col-form-label">Account Number / Account Name e.g 679058690
                                         /
                                         John Doe</label>
-                                    <input id="account" type="text" value="{{ $profile->account ?? '' }}"
+                                    <input id="account" type="text" value="{{ $user->account ?? '' }}"
                                         class="form-control form-control-lg" name="account" placeholder="">
                                 </div>
                             </div> --}}
@@ -170,7 +170,7 @@
                                 <div class="form-group">
                                     <label for="about" class="col-form-label">About</label>
                                     <textarea class="form-control" rows="4" name="about" id="about">
-                                    {{ $profile->about }}
+                                    {{ $user->about }}
                                     </textarea>
                                 </div>
                             </div> --}}
@@ -187,7 +187,7 @@
 
                             <div class="col-12 card-action">
                                 <a href="#" class="btn btn-secondary">Cancle Edit</a>
-                                <button type="submit" class="btn btn-success">Update Profile</button>
+                                <button type="submit" class="btn btn-success">Update user</button>
                             </div>
                         </div>
 
@@ -201,7 +201,7 @@
         <!-- ============================================================== -->
         <!-- bootom aligne media -->
         <!-- ============================================================== -->
-        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+        {{-- <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
             <div class="card" style="display: flex; justify-content: space-around;">
                 <div class=" icon-box-sm card-header" style="display: flex; align-items: center;">
                     <i class="fas fa-clipboard-check fa-fw fa-sm text-danger mr-3"></i>
@@ -228,7 +228,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- ============================================================== -->
         <!-- end bootom aligne media -->
         <!-- ============================================================== -->

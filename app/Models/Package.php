@@ -15,4 +15,9 @@ class Package extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
 }

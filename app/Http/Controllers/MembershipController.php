@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateMembershipActive;
 use App\Models\Membership;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 class MembershipController extends Controller
@@ -57,9 +58,13 @@ class MembershipController extends Controller
      * @param  \App\Models\Membership  $membership
      * @return \Illuminate\Http\Response
      */
-    public function show(Membership $membership)
+    public function show(User $user)
     {
         //
+          
+        $user = Auth::user();
+        
+        return view('admin.membership.show', compact('user'));
     }
 
     /**
