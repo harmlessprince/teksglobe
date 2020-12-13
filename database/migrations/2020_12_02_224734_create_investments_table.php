@@ -22,7 +22,7 @@ class CreateInvestmentsTable extends Migration
             $table->string('gateway');
             $table->enum('status', ['pending', 'approved', 'declined'])->default('pending');
             $table->string('evidence')->nullable();
-            $table->timestamp('verified_at');
+            $table->timestamp('verified_at')->nullable();
             $table->unsignedBigInteger('verified_by')->nullable()->constrined('users');
             $table->json('info')->nullable();
             $table->timestamps();

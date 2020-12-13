@@ -25,16 +25,16 @@ class StyleSeeder extends Seeder
             ['name' => 'Yearly', 'compound' => 8760],
         ];
 
-        foreach ($datas as $data) {
+        // foreach ($datas as $data) {
 
-            Style::create([
-                'name' => $data['name'],
-                'compound' => $data['compound']
-            ])->each(function ($style) {
-                $style->plans()->saveMany(
-                    Plan::factory(1)->make(['style_id' => null])
-                );
-            });
-        }
+        //     Style::create([
+        //         'name' => $data['name'],
+        //         'compound' => $data['compound']
+        //     ])->each(function ($style) {
+        //         $style->plans()->saveMany(
+        //             Plan::factory(1)->make(['style_id' => null])
+        //         );
+        //     });
+        // }
     }
 }

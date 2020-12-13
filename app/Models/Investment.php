@@ -26,6 +26,22 @@ class Investment extends Model
         'verified_at' => 'datetime',
     ];
 
+     /**
+     * Get the package that owns the investment.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+     /**
+     * Get the user verifying the investment
+     */
+    public function verifiedBy()
+    {
+        return $this->belongsTo('App\Models\User', 'verified_by');
+    }
+
     /**
      * Get the package that owns the investment.
      */
@@ -68,4 +84,6 @@ class Investment extends Model
         }
         return ($this->balance > 0) ? 'Running' : 'Completed';
     }
+
+  
 }

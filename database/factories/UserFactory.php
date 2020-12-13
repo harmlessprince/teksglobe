@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
-            'admin' => $this->faker->boolean(20),
+            'admin' => $this->faker->boolean(50),
             'active' => $this->faker->boolean(50),
             'mobile' => $this->faker->phoneNumber,
             'avatar' => 'uploads/avatars/default.jpg',
@@ -36,4 +36,5 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ];
     }
+    
 }

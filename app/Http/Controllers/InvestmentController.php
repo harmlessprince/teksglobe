@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BuyPackage;
+use App\Http\Requests\UpdateInvestment;
 use App\Models\Investment;
 use App\Models\Package;
 use App\Notifications\InvestmentNotification;
@@ -25,6 +26,24 @@ class InvestmentController extends Controller
             ->groupBy('investments.id')
             ->get();
         return view('user.investment.index', compact('investments'));
+    }
+
+    public function adminIndex ()
+    {
+        $investments = Investment::get();
+        return view('admin.investment.index', compact('investments'));
+    }
+
+    public function pendingInvestments()
+    {
+       $investments = Investment::where('status', '=', 'pending')->get();
+       return view('admin.investment.pending', compact('investments'));
+
+    }
+    public function declinedInvestments()
+    {
+        $investments = Investment::where('status', '=', 'declined')->get();
+        return view('admin.investment.declined', compact('investments'));
     }
 
     /**
@@ -104,9 +123,18 @@ class InvestmentController extends Controller
      * @param  \App\Models\Investment  $investment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Investment $investment)
+    public function update(UpdateInvestment $request, Investment $investment)
     {
         //
+        [
+            'status' => $status,
+        ] = $request->validated();
+
+        $investment->status = $status;
+        $investment->verified_by = auth()->user()->id;
+        $investment->verified_at = now();
+        $investment->save();
+        return back()->with('success', 'Investment updated');
     }
 
     /**

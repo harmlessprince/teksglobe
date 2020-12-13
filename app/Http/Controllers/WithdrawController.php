@@ -116,4 +116,42 @@ class WithdrawController extends Controller
     {
         //
     }
+
+    /**
+       Displays teh linsting of the specified resource status from storage to pending.
+     *
+     * @param  \App\Models\Withdraw  $withdraw
+     * @return \Illuminate\Http\Response
+     */
+    public function pendingWithdrawal()
+    {
+        $pending_withdrawals = Withdraw::where('status', '=', "pending")->get();
+        return view('admin.withdraw.pending', compact('pending_withdrawals'));
+    }
+
+    /**
+     *  Displays teh linsting of the specified resource status from storage to approved.
+     *
+     * @param  \App\Models\Withdraw  $withdraw
+     * @return \Illuminate\Http\Response
+     */
+    public function approvedWithdrawal()
+    {
+        $approved_withdrawals = Withdraw::where('status', '=', "approved")->get();
+        return view('admin.withdraw.approved', compact('approved_withdrawals'));
+    }
+
+     /**
+     *  Displays teh linsting of the specified resource status from storage to approved.
+     *
+     * @param  \App\Models\Withdraw  $withdraw
+     * @return \Illuminate\Http\Response
+     */
+    public function declinedWithdrawal()
+    {
+        $declined_withdrawals = Withdraw::where('status', '=', "declined")->get();
+        return view('admin.withdraw.declined', compact('declined_withdrawals'));
+    }
+
+    
 }
