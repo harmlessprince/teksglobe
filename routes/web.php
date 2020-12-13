@@ -2,11 +2,8 @@
 
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvestmentController;
-<<<<<<< HEAD
 use App\Http\Controllers\MembershipController;
-=======
 use App\Http\Controllers\LoanController;
->>>>>>> 71102fd45cd7eb801f851441103813483a1727ea
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TransferController;
@@ -120,7 +117,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
         Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
-        
+        Route::get('membership', [MembershipController::class, 'show'])->name('membership.show');
         Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');
         Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index');
         Route::post('transfers', [TransferController::class, 'store'])->name('transfers.store');
@@ -129,10 +126,6 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('withdrawals/pending', [WithdrawController::class, 'pending'])->name('withdraws.pending');
         Route::get('withdrawals/approved', [WithdrawController::class, 'approved'])->name('withdraws.approved');
         Route::get('wallets', [InterestController::class, 'index'])->name('wallet.index');
-<<<<<<< HEAD
-        Route::get('profile/{user}', [MembershipController::class, 'show'])->name('membership.show');
-=======
         Route::get('profile', [UserController::class, 'show'])->name('profile.show');
->>>>>>> 71102fd45cd7eb801f851441103813483a1727ea
     });
 });
