@@ -26,11 +26,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // SELECT *,  verified_at + INTERVAL 30 DAY  FROM `investments` WHERE ;
         $schedule->call(function () {
-            $date = now()->subDays(30);
-            dd($date);
             Investment::where('balance', '>', 0)
-                ->whereDate('verified_at', '>', $date)
+                ->whereNotNull('verified_at')
+                ->whereRaw('(verified_at + INTERVAL 30 DAY) < NOW()')
                 ->chunkById(500, function ($investments) {
                     foreach ($investments as $investment) {
                         $amount = $investment->amount;

@@ -63,6 +63,7 @@ class Investment extends Model
      */
     public function getBadgeAttribute()
     {
+        // dd($this->verified_at->diffInDays(now()));
         if ($this->verified_at->diffInDays(now()) <= 30) {
             return 'Incubation';
         }
