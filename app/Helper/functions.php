@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * Credit a user wallet
@@ -134,4 +135,27 @@ function calculateChargeOnTransfer(float $amount = null): float
 {
     $charge = (float)config('app.transfer_fee');
     return ($amount * $charge) / 100;
+}
+
+/**
+ * Calculate interest charge on loan
+ *
+ * @param float $amount
+ * @return float
+ */
+function calculateInterestOnLoan(float $amount = null): float
+{
+    $interest = (float)config('app.interest_fee');
+    return ($amount * $interest) / 100;
+}
+
+/**
+ * Generate Reference number for user
+ *
+ * @return void
+ */
+function generatePaymentReference()
+{
+    $reference = Str::uuid();
+    return str_replace('-', '', $reference);
 }

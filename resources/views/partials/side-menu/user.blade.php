@@ -30,5 +30,5 @@
     <a class="nav-link" href="{{ route('user.wallet.index') }}" aria-expanded="false"><i class="mdi mdi-highway"></i>Wallet History</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('user.wallet.index') }}" aria-expanded="false"><i class="mdi mdi-highway"></i>Loans</a>
+    <a class="nav-link" href="{{ route('user.loans.index') }}" aria-expanded="false"><i class="mdi mdi-highway"></i>Loans</a>
 </li>

@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\DepositController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvestmentController;
+<<<<<<< HEAD
 use App\Http\Controllers\MembershipController;
+=======
+use App\Http\Controllers\LoanController;
+>>>>>>> 71102fd45cd7eb801f851441103813483a1727ea
 use App\Http\Controllers\PackageController;
-use App\Http\Controllers\PlanController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StyleController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TransferController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawController;
 use App\Models\Withdraw;
 use Database\Factories\WithdrawFactory;
@@ -81,7 +83,8 @@ Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke
 Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
     ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.send');
-
+// Verify Payment
+Route::post('payment/verify', [PaymentController::class, 'verify'])->name('payment.verify');
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
@@ -107,11 +110,14 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::name('user.')->group(function () {
         Route::view('dashboard', 'user.dashboard')->name('dashboard');
+        Route::post('investments/{investment}/loans', [LoanController::class, 'store'])
+            ->name('loans.store');
         Route::get('investments/{investment}', [InvestmentController::class, 'show'])
             ->name('investments.show');
         Route::post('packages/{package}/investments', [InvestmentController::class, 'store'])
             ->name('investments.store');
         Route::get('investments', [InvestmentController::class, 'index'])->name('investments.index');
+        Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
         Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
         
@@ -123,6 +129,10 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('withdrawals/pending', [WithdrawController::class, 'pending'])->name('withdraws.pending');
         Route::get('withdrawals/approved', [WithdrawController::class, 'approved'])->name('withdraws.approved');
         Route::get('wallets', [InterestController::class, 'index'])->name('wallet.index');
+<<<<<<< HEAD
         Route::get('profile/{user}', [MembershipController::class, 'show'])->name('membership.show');
+=======
+        Route::get('profile', [UserController::class, 'show'])->name('profile.show');
+>>>>>>> 71102fd45cd7eb801f851441103813483a1727ea
     });
 });
