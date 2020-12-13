@@ -99,6 +99,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('withdrawals/approved', [WithdrawController::class, 'approvedWithdrawal'])->name('withdraws.approved');
         Route::get('withdrawals/declined', [WithdrawController::class, 'declinedWithdrawal'])->name('withdraws.declined');
         Route::get('membership', [MembershipController::class, 'index'])->name('membership.index');
+        Route::post('membership/{user}', [MembershipController::class, 'update'])->name('membership.update');
         Route::get('membership/active', [MembershipController::class, 'index'])->name('membership.active');
         Route::get('membership/inactive', [MembershipController::class, 'index'])->name('membership.inactive');
     });

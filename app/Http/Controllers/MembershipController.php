@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateMembershipActive;
 use App\Models\Membership;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -79,9 +80,19 @@ class MembershipController extends Controller
      * @param  \App\Models\Membership  $membership
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Membership $membership)
+    public function update(UpdateMembershipActive $request, User $user)
     {
         //
+        [
+            'active' => $active,
+        ] = $request->validated();
+
+        $user->active = $active;
+        $user->save();
+        if ($user->active == true) {
+            return back()->with('success', 'User has been successfully Activated');
+        }
+        return back()->with('success', 'User has been sucessfully Deactivated');
     }
 
     /**

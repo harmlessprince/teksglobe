@@ -37,18 +37,14 @@
                                         </td>
                                         <td>{{ $user->mobile }}</td>
                                         <td>
-                                            @if ($user->active == true)
-                                                <p class="text-success"> Active</p>
-                                            @else
-                                                <p class="text-danger"> Inactive</p>
-                                            @endif
+                                            <p class="text-success"> Active</p>
                                         </td>
                                         <td>
-                                            @if ($user->active == true)
-                                            <a href="" class="text-danger"> Deactivate</a>
-                                        @else
-                                            <a href="" class="text-success"> Activate</a>
-                                        @endif
+                                            <form action="{{ route('admin.membership.update', $user->id) }}" method="post">
+                                                @csrf
+                                                <input type="hidden" value="0" name="active">
+                                                <button type="submit" class="btn btn-sm btn-danger"> Deactivate</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
