@@ -16,11 +16,12 @@
                         <table class="table table-striped table-bordered first">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th >Name</th>
                                     <th>Amount</th>
-                                    <th>Interest</th>
-                                    <th>Status</th>
+                                    <th width = "25">Interest</th>
+                                    <th width = "25">Status</th>
                                     <th>Created at</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,6 +40,16 @@
                                             </td>
 
                                             <td> {{ $package->created_at->format('d M, Y H:i A') }}</td>
+                                            <td>
+                                                <form action="{{ route('admin.packages.destroy', $package->id) }}"
+                                                    method="post" class="d-inline mr-2">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+
+                                                <button href="" class="btn btn-sm btn-warning ">Edit</button>
+                                            </td>
                                         </tr>
                                     @endforeach
 

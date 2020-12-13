@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Investment;
 use App\Models\Profile;
 use App\Models\User;
 use Database\Factories\ProfileFactory;
@@ -21,6 +22,9 @@ class UserSeeder extends Seeder
         //     $user->profile()->save(Profile::factory()->make());
         // });
 
-        User::factory(10)->create();
+        User::factory(10)->create()->each(function ($user)
+        {
+            $user->investments()->saveMany( Investment::factory(3)->make(['user_id' => null]));
+        });
     }
 }

@@ -20,7 +20,7 @@ class PackageController extends Controller
         return view('user.package.index', compact('packages'));
     }
 
-     /**
+    /**
      * Display a listing of the packages for the admin.
      *
      * @return \Illuminate\Http\Response
@@ -107,6 +107,10 @@ class PackageController extends Controller
      */
     public function destroy(Package $package)
     {
-        //
+        if ($package->investments()->exists()) {
+            return back()->with('error', 'Ooops!! This Package can not be deleted, their are users subscribed to it');
+        }
+        $package->delete();
+        return back()->with('success', 'Package has been Deleted');
     }
 }

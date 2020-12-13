@@ -25,7 +25,11 @@
                         and do as our system say.
                     </p>
                     <p>
+<<<<<<< HEAD
+                        <a href="{{ route('user.membership.show', auth()->user()->id) }}" class="btn btn-warning active">Edit profile</a>
+=======
                         <a href="{{ route('user.profile.show') }}" class="btn btn-warning active">Edit profile</a>
+>>>>>>> 71102fd45cd7eb801f851441103813483a1727ea
                     </p>
                 </div>
             </div>

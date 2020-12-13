@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawController;
+use App\Models\Withdraw;
+use Database\Factories\WithdrawFactory;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
@@ -81,14 +84,28 @@ Route::post('/email/verification-notification', [EmailVerificationNotificationCo
 Route::post('payment/verify', [PaymentController::class, 'verify'])->name('payment.verify');
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         Route::view('dashboard', 'admin.dashboard')->name('dashboard');
         Route::get('packages/create', [PackageController::class, 'create'])->name('packages.create');
         Route::post('packages', [PackageController::class, 'store'])->name('packages.store');
+        Route::delete('packages/{package}', [PackageController::class, 'destroy'])->name('packages.destroy');
         Route::get('packages', [PackageController::class, 'adminIndex'])->name('packages.index');
+        Route::get('investments', [InvestmentController::class, 'adminIndex'])->name('investments.adminindex');
+        Route::get('investments/pending', [InvestmentController::class, 'pendingInvestments'])->name('investments.pending');
+        Route::get('investments/declined', [InvestmentController::class, 'declinedInvestments'])->name('investments.declined');
+        Route::post('investments/{investment}', [InvestmentController::class, 'update'])
+        ->name('investments.update');
+        Route::post('withdrawals/{withdrawal}', [WithdrawController::class, 'update'])->name('withdrawals.update');
+        Route::get('withdrawals/pending', [WithdrawController::class, 'pendingWithdrawal'])->name('withdraws.pending');
+        Route::get('withdrawals/approved', [WithdrawController::class, 'approvedWithdrawal'])->name('withdraws.approved');
+        Route::get('withdrawals/declined', [WithdrawController::class, 'declinedWithdrawal'])->name('withdraws.declined');
+        Route::get('membership', [MembershipController::class, 'index'])->name('membership.index');
+        Route::post('membership/{user}', [MembershipController::class, 'update'])->name('membership.update');
+        Route::get('membership/active', [MembershipController::class, 'index'])->name('membership.active');
+        Route::get('membership/inactive', [MembershipController::class, 'index'])->name('membership.inactive');
     });
 
-    Route::name('user.')->group(function() {
+    Route::name('user.')->group(function () {
         Route::view('dashboard', 'user.dashboard')->name('dashboard');
         Route::post('investments/{investment}/loans', [LoanController::class, 'store'])
             ->name('loans.store');
@@ -100,6 +117,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
         Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
+        Route::get('membership', [MembershipController::class, 'show'])->name('membership.show');
         Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');
         Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index');
         Route::post('transfers', [TransferController::class, 'store'])->name('transfers.store');
