@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateWithdrawal;
 use App\Http\Requests\WithdrawRequest;
 use App\Models\Withdraw;
 use Illuminate\Http\Request;
@@ -101,9 +102,23 @@ class WithdrawController extends Controller
      * @param  \App\Models\Withdraw  $withdraw
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Withdraw $withdraw)
+    public function update(UpdateWithdrawal $request, Withdraw $withdraw)
     {
         //
+       
+        [
+            'status' => $status,
+        ] = $request->validated();
+
+        $withdraw->status = $status;
+        $withdraw->verified_by = auth()->user()->id;
+        $withdraw->verified_at = now();
+        $withdraw->save();
+        if ($withdraw->status == 'approved') {
+            debitInterestTable($withdraw->user_id, $withdraw->amount, "fix this");
+            return back()->with('success', 'Withdrawal has been successfully Approved');
+        }
+        return back()->with('success', 'Withdrawal has been successfully Declined');
     }
 
     /**

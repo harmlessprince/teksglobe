@@ -95,7 +95,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('investments/declined', [InvestmentController::class, 'declinedInvestments'])->name('investments.declined');
         Route::post('investments/{investment}', [InvestmentController::class, 'update'])
             ->name('investments.update');
-        Route::post('withdrawals/{withdrawal}', [WithdrawController::class, 'update'])->name('withdrawals.update');
+        Route::post('withdrawals/{withdraw}', [WithdrawController::class, 'update'])->name('withdrawals.update');
         Route::get('withdrawals/pending', [WithdrawController::class, 'pendingWithdrawal'])->name('withdraws.pending');
         Route::get('withdrawals/approved', [WithdrawController::class, 'approvedWithdrawal'])->name('withdraws.approved');
         Route::get('withdrawals/declined', [WithdrawController::class, 'declinedWithdrawal'])->name('withdraws.declined');
