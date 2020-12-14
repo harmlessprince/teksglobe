@@ -14,25 +14,27 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Name</th>
                                     <th>Amount</th>
                                     <th>Charge</th>
                                     <th>Account</th>
                                     <th>Requested</th>
-                                    <th>Approved</th>
+                                    {{-- <th>Approved</th> --}}
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($declined_withdrawals as $declined_withdrawal)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
+                                    <td>{{$declined_withdrawal->user->name}}</td>
                                         <td>{{ number_format($declined_withdrawal->amount, 2) }}</td>
                                         <td>{{ number_format($declined_withdrawal->charge, 2) }}</td>
                                         <td>---</td>
                                         <td> {{ $declined_withdrawal->verified_at->format('d M, Y H:i A') }}</td>
-                                        <td>{{ $declined_withdrawal->status }}</td>
-                                        <td>
+                                        <td> <p class="text-success">{{ $declined_withdrawal->status }}</p></td>
+                                        {{-- <td>
                                             <form action="{{ route('admin.withdrawals.update', $declined_withdrawal->id) }}"
                                                 method="post">
                                                 @csrf
@@ -45,7 +47,7 @@
                                                 <input type="hidden" name="status" value="approved">
                                                 <button type="submit" class="btn btn-primary btn-sm">Re-activate</button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

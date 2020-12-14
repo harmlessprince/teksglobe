@@ -22,7 +22,7 @@ class LoanController extends Controller
             ->get();
         return view('user.loan.index', compact('loans'));
     }
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,7 +35,7 @@ class LoanController extends Controller
         return view('admin.loan.pending', compact('loans'));
     }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -48,7 +48,7 @@ class LoanController extends Controller
         return view('admin.loan.pending', compact('loans'));
     }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -61,7 +61,7 @@ class LoanController extends Controller
             ->get();
         return view('admin.loan.declined', compact('loans'));
     }
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -73,7 +73,7 @@ class LoanController extends Controller
             ->get();
         return view('admin.loan.approved', compact('loans'));
     }
-     
+
 
     /**
      * Show the form for creating a new resource.
@@ -149,11 +149,8 @@ class LoanController extends Controller
         $loan->verified_by = auth()->user()->id;
         $loan->verified_at = now();
         $loan->save();
-        if ($loan->status == 'approved') {
-            creditInterestTable($loan->user_id, $loan->amount, "fix this");
-            return back()->with('success', 'Withdrawal has been successfully Approved');
-        }
-        return back()->with('success', 'Withdrawal has been successfully Declined');
+        creditInterestTable($loan->user_id, $loan->amount, "fix this");
+        return back()->with('success', 'Withdrawal has been successfully Approved');
     }
 
     /**
@@ -162,8 +159,17 @@ class LoanController extends Controller
      * @param  \App\Models\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Loan $loan)
+    public function destroy(UpdateLoan $request, Loan $loan)
     {
         //
+        [
+            'status' => $status,
+        ] = $request->validated();
+
+        $loan->status = $status;
+        $loan->verified_by = auth()->user()->id;
+        $loan->verified_at = now();
+        $loan->save();
+        return back()->with('success', 'Withdrawal has been successfully Declined');
     }
 }

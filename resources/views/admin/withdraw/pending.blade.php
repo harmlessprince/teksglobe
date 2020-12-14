@@ -14,33 +14,40 @@
                             <thead>
                                 <tr>
                                     <th></th>
+                                    <th>Name</th>
                                     <th>Amount</th>
                                     <th>Charge</th>
                                     <th>Requested</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Approve</th>
+                                    <th>Decline</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($pending_withdrawals as $pending_withdrawal)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
+                                        <td>{{ $pending_withdrawal->user->name }}</td>
                                         <td>{{ number_format($pending_withdrawal->amount, 2) }}</td>
                                         <td>{{ number_format($pending_withdrawal->charge, 2) }}</td>
                                         <td> {{ $pending_withdrawal->created_at->format('d M, Y H:i A') }}</td>
-                                        <td>{{ $pending_withdrawal->status }}</td>
+                                        <td>
+                                            <p class="text-warning"> {{ $pending_withdrawal->status }} </p>
+                                        </td>
                                         <td>
                                             <form method="post" class="my-4"
-                                                action="{{ route('admin.withdrawals.update', $pending_withdrawal->id) }}">
+                                                action="{{ route('admin.withdraw.update', $pending_withdrawal->id) }}">
                                                 @csrf
                                                 <input type="hidden" name="status" value="approved">
                                                 <button type="submit" class="btn btn-success btn-sm">Approve</button>
                                             </form>
+                                        </td>
+                                        <td>
                                             <form method="post" class="my-4"
-                                                action="{{ route('admin.withdrawals.update', $pending_withdrawal->id) }}">
+                                                action="{{ route('admin.withdrawals.destroy', $pending_withdrawal->id) }}">
                                                 @csrf
-                                                <input type="hidden" name="status" value="pending">
-                                                <button type="submit" class="btn btn-warning btn-sm">Pend It</button>
+                                                <input type="hidden" name="status" value="declined">
+                                                <button type="submit" class="btn btn-danger btn-sm">Decline</button>
                                             </form>
                                         </td>
                                     </tr>

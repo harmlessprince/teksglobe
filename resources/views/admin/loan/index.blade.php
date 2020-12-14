@@ -14,6 +14,7 @@
                             <thead>
                                 <tr>
                                     <th></th>
+                                    <th>Name</th>
                                     <th>Date</th>
                                     <th>Amount</th>
                                     <th>Interest</th>
@@ -28,6 +29,7 @@
                                         <td>
                                             <span class="badge-dot {{ ($loan->status === 'approved') ? 'badge-primary' : 'badge-danger' }}"></span>
                                         </td>
+                                        <td>{{ $loan->user->name }}</td>
                                         <td>{{ $loan->created_at->format('d M, Y H:i A') }}</td>
                                         <td>{{ number_format($loan->amount, 2) }}</td>
                                         <td>{{ number_format($loan->charge, 2) }}</td>

@@ -14,12 +14,13 @@
                             <thead>
                                 <tr>
                                     <th></th>
+                                    <td>Name</td>
                                     <th>Date</th>
                                     <th>Amount</th>
                                     <th>Interest</th>
                                     <th>Total Payable</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th>Verified at</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,11 +29,12 @@
                                         <td>
                                             <span class="badge-dot {{ ($loan->status === 'approved') ? 'badge-primary' : 'badge-danger' }}"></span>
                                         </td>
+                                    <td>{{$loan->user->name}}</td>
                                         <td>{{ $loan->created_at->format('d M, Y H:i A') }}</td>
                                         <td>{{ number_format($loan->amount, 2) }}</td>
                                         <td>{{ number_format($loan->charge, 2) }}</td>
                                         <td>{{ number_format(($loan->amount + $loan->charge), 2) }}</td>
-                                        <td>{{ $loan->status }}</td>
+                                        <td> <p class="text-success"> {{ $loan->status }}</p></td>
                                         <td>{{ optional($loan->verified_at)->format('d M, Y H:i A') }}</td>
                                     </tr>
                                 @endforeach

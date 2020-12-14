@@ -14,25 +14,27 @@
                             <thead>
                                 <tr>
                                     <th></th>
+                                    <th>Name</th>
                                     <th>Amount</th>
                                     <th>Charge</th>
                                     <th>Account</th>
                                     <th>Requested</th>
-                                    <th>Approved</th>
+                                    {{-- <th>Approved</th> --}}
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($approved_withdrawals as $approved_withdrawal)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
+                                        <td>{{ $approved_withdrawal->user->name }}</td>
                                         <td>{{ number_format($approved_withdrawal->amount, 2) }}</td>
                                         <td>{{ number_format($approved_withdrawal->charge, 2) }}</td>
                                         <td>---</td>
                                         <td> {{ $approved_withdrawal->verified_at->format('d M, Y H:i A') }}</td>
-                                        <td>{{ $approved_withdrawal->status }}</td>
-                                        <td></td>
+                                        <td> <p class="text-success">{{ $approved_withdrawal->status }}</p> </td>
+                                        {{-- <td></td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -16,13 +16,7 @@ class Loan extends Model
      */
     protected $guarded = [];
 
-    /**
-     * Get the investment that owns the loan.
-     */
-    public function investment()
-    {
-        return $this->belongsTo('App\Models\Investment');
-    }
+
 
     /**
      * The attributes that should be cast to native types.
@@ -32,4 +26,20 @@ class Loan extends Model
     protected $casts = [
         'verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the investment that owns the loan.
+     */
+    public function investment()
+    {
+        return $this->belongsTo('App\Models\Investment');
+    }
+
+    /**
+     * Get the User that owns the loan.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
