@@ -32,3 +32,6 @@
 <li class="nav-item">
     <a class="nav-link" href="{{ route('user.loans.index') }}" aria-expanded="false"><i class="mdi mdi-highway"></i>Loans</a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('user.banks.create') }}" aria-expanded="false"><i class="mdi mdi-highway"></i>Bank Details</a>
+</li>

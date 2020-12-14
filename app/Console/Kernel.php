@@ -29,7 +29,8 @@ class Kernel extends ConsoleKernel
         // SELECT *,  verified_at + INTERVAL 30 DAY  FROM `investments` WHERE ;
         $schedule->call(function () {
             Investment::where('balance', '>', 0)
-                ->whereNotNull('verified_at')
+                ->where('status', 'approved')
+                // ->whereNotNull('verified_at')
                 // ->whereRaw('(verified_at + INTERVAL 30 DAY) < NOW()')
                 ->chunkById(500, function ($investments) {
                     foreach ($investments as $investment) {

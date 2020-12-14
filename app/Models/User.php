@@ -44,4 +44,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Investment::class);
     }
+
+    /**
+     * Get the bank record associated with the user.
+     */
+    public function bank()
+    {
+        return $this->hasOne(BankAccount::class);
+    }
 }
