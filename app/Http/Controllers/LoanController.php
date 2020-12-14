@@ -21,6 +21,58 @@ class LoanController extends Controller
             ->get();
         return view('user.loan.index', compact('loans'));
     }
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function completed()
+    {
+        $loans = Loan::where('status', '=', 'completed')
+            ->latest()
+            ->get();
+        return view('admin.loan.pending', compact('loans'));
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pending()
+    {
+        $loans = Loan::where('status', '=', 'pending')
+            ->latest()
+            ->get();
+        return view('admin.loan.pending', compact('loans'));
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function declined()
+    {
+        $loans = Loan::where('status', '=', 'declined')
+            ->with('investment')
+            ->latest()
+            ->get();
+        return view('admin.loan.declined', compact('loans'));
+    }
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function approved()
+    {
+        $loans = Loan::where('status', '=', 'approved')
+            ->latest()
+            ->get();
+        return view('admin.loan.approved', compact('loans'));
+    }
+     
 
     /**
      * Show the form for creating a new resource.

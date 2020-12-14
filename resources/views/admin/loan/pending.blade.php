@@ -7,61 +7,50 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h5 class="card-header">Declined Investments</h5>
+                <h5 class="card-header">Pending Loans</h5>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered first">
                             <thead>
                                 <tr>
-                                    <th>Investor name</th>
-                                    <th>Package name</th>
+                                    <th></th>
+                                    <th>Date</th>
                                     <th>Amount</th>
-                                    <th>Balance</th>
-                                    <th>Created at</th>
+                                    <th>Interest</th>
+                                    <th>Total Payable</th>
                                     <th>Status</th>
+                                   
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @foreach ($investments as $investment)
+                                @foreach ($loans as $loan)
                                     <tr>
-                                        <td>{{ $investment->user->name }}</td>
-                                        <td>{{ $investment->package->name }}</td>
-                                        <td>{{ number_format($investment->amount, 2) }}</td>
-                                        <td>{{ number_format($investment->balance, 2) }}</td>
-                                        <td> {{ $investment->created_at->format('d M, Y H:i A') }}</td>
                                         <td>
-                                            <a href="#" class="card-link text-danger">Declined</a>
+                                            <span
+                                                class="badge-dot {{ $loan->status === 'approved' ? 'badge-primary' : 'badge-danger' }}"></span>
                                         </td>
-                                       
+                                        <td>{{ $loan->created_at->format('d M, Y H:i A') }}</td>
+                                        <td>{{ number_format($loan->amount, 2) }}</td>
+                                        <td>{{ number_format($loan->charge, 2) }}</td>
+                                        <td>{{ number_format($loan->amount + $loan->charge, 2) }}</td>
+                                        <td>{{ $loan->status }}</td>
+                                        {{-- <td>{{ optional($loan->verified_at)->format('d M, Y H:i A') }}</td> --}}
                                         <td>
-                                            <form method="post" class="my-4" action="{{ route('admin.investments.update', $investment->id) }}">
+                                            <form method="post" class="my-4" action="{{ route('admin.loans.update', $loan->id) }}">
                                                 @csrf
                                                 <input type="hidden" name="status" value="approved">
                                                 <button type="submit" class="btn btn-success btn-sm">Approve</button>
                                             </form>
-                                            <form method="post" class="my-4" action="{{ route('admin.investments.update', $investment->id) }}">
+                                            <form method="post" class="my-4" action="{{ route('admin.loans.update', $loan->id) }}">
                                                 @csrf
-                                                <input type="hidden" name="status" value="pending">
-                                                <button type="submit" class="btn btn-warning btn-sm">Pend it</button>
+                                                <input type="hidden" name="status" value="declined">
+                                                <button type="submit" class="btn btn-danger btn-sm">Decline</button>
                                             </form>
                                         </td>
-
                                     </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Investor name</th>
-                                    <th>Package name</th>
-                                    <th>Amount</th>
-                                    <th>Balance</th>
-                                    <th>Created at</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

@@ -31,7 +31,7 @@ class InvestmentController extends Controller
 
     public function adminIndex ()
     {
-        $investments = Investment::get();
+        $investments = Investment::where('status', '=', 'approved')->get();
         return view('admin.investment.index', compact('investments'));
     }
 

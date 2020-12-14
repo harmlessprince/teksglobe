@@ -44,7 +44,7 @@
                                                 action="">
                                                 @csrf
                                                 <input type="hidden" name="status" value="approved">
-                                                <button type="submit" class="btn btn-primary btn-sm ">Activate</button>
+                                                <button type="submit" class="btn btn-success btn-sm ">Approve</button>
                                             </form>
                                             <form method="post" class="my-4 declined"
                                                 action="">
