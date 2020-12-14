@@ -26,7 +26,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-
                                 @foreach ($investments as $investment)
                                     <tr>
                                         <td>{{ $investment->user->name }}</td>
@@ -47,7 +46,7 @@
                                                 <button type="submit" class="btn btn-success btn-sm ">Approve</button>
                                             </form>
                                             <form method="post" class="my-4 declined"
-                                                action="">
+                                                action="" >
                                                 @csrf
                                                 <input type="hidden" name="status" value="declined">
                                                 <button type="submit" class="btn btn-danger btn-sm ">Decline</button>
@@ -107,7 +106,7 @@
                                     "Investment approved", {
                                         icon: "success",
                                     }).then(() =>  location.reload());
-                                   
+
                             });
 
                         } else {
@@ -140,7 +139,7 @@
                                     "Investment Declined", {
                                         icon: "success",
                                     }).then(() =>  location.reload());
-                                   
+
                             });
 
                         } else {

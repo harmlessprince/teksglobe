@@ -62,10 +62,14 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
                             <h2 class="pageheader-title">@yield('pageheader', '')</h2>
-                            <div class="col-12 divider mb-5" style="background-color:#e0e4ef">
-
-                            </div>
-
+                            <div class="col-12 divider mb-3" style="background-color:#e0e4ef"></div>
+                            @if(\Request::route()->getPrefix() != '/admin')
+                                <div class="card mb-2 ml-auto" style="width: fit-content;">
+                                    <div class="card-body">
+                                        <p>Wallet Balance: &#8358;{{ number_format(calculateAvailableBalance(auth()->user()->id), 2) }}</p>
+                                    </div>
+                                </div>
+                            @endcannot
 
                             {{-- <div class="page-breadcrumb">
                                 <nav aria-label="breadcrumb">

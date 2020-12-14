@@ -18,6 +18,7 @@
                                     <th>Narration</th>
                                     <th>Debit</th>
                                     <th>Credit</th>
+                                    <th>Balance</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -30,6 +31,7 @@
                                         <td>{{ $wallet->narration }}</td>
                                         <td>{{ ($wallet->type === 'debit') ? number_format($wallet->amount, 2) : '' }}</td>
                                         <td>{{ ($wallet->type === 'credit') ? number_format($wallet->amount, 2) : '' }}</td>
+                                        <td>{{ number_format($wallet->balance, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
