@@ -56,16 +56,16 @@
     <div id="submenu-4" class="collapse submenu" style="">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="">Pending</a>
+            <a class="nav-link" href="{{route('admin.loans.pending')}}">Pending</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Approved</a>
+                <a class="nav-link" href="{{route('admin.loans.approved')}}">Approved</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Declined</a>
+                <a class="nav-link" href="{{route('admin.loans.declined')}}">Declined</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="">Completed</a>
+                <a class="nav-link" href="{{route('admin.loans.completed')}}">Completed</a>
             </li>
         </ul>
     </div>

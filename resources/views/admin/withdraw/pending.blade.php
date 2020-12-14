@@ -29,7 +29,20 @@
                                         <td>{{ number_format($pending_withdrawal->charge, 2) }}</td>
                                         <td> {{ $pending_withdrawal->created_at->format('d M, Y H:i A') }}</td>
                                         <td>{{ $pending_withdrawal->status }}</td>
-                                        <td></td>
+                                        <td>
+                                            <form method="post" class="my-4"
+                                                action="{{ route('admin.withdrawals.update', $pending_withdrawal->id) }}">
+                                                @csrf
+                                                <input type="hidden" name="status" value="approved">
+                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                            </form>
+                                            <form method="post" class="my-4"
+                                                action="{{ route('admin.withdrawals.update', $pending_withdrawal->id) }}">
+                                                @csrf
+                                                <input type="hidden" name="status" value="pending">
+                                                <button type="submit" class="btn btn-warning btn-sm">Pend It</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

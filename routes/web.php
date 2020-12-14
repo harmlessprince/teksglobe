@@ -95,8 +95,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('investments/pending', [InvestmentController::class, 'pendingInvestments'])->name('investments.pending');
         Route::get('investments/declined', [InvestmentController::class, 'declinedInvestments'])->name('investments.declined');
         Route::post('investments/{investment}', [InvestmentController::class, 'update'])
-        ->name('investments.update');
-        Route::post('withdrawals/{withdrawal}', [WithdrawController::class, 'update'])->name('withdrawals.update');
+            ->name('investments.update');
+        Route::post('withdrawals/{withdraw}', [WithdrawController::class, 'update'])->name('withdrawals.update');
         Route::get('withdrawals/pending', [WithdrawController::class, 'pendingWithdrawal'])->name('withdraws.pending');
         Route::get('withdrawals/approved', [WithdrawController::class, 'approvedWithdrawal'])->name('withdraws.approved');
         Route::get('withdrawals/declined', [WithdrawController::class, 'declinedWithdrawal'])->name('withdraws.declined');
@@ -104,6 +104,11 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::post('membership/{user}', [MembershipController::class, 'update'])->name('membership.update');
         Route::get('membership/active', [MembershipController::class, 'index'])->name('membership.active');
         Route::get('membership/inactive', [MembershipController::class, 'index'])->name('membership.inactive');
+        Route::get('loans/completed', [LoanController::class, 'completed'])->name('loans.completed');
+        Route::get('loans/pending', [LoanController::class, 'pending'])->name('loans.pending');
+        Route::get('loans/declined', [LoanController::class, 'declined'])->name('loans.declined');
+        Route::get('loans/approved', [LoanController::class, 'approved'])->name('loans.approved');
+        Route::post('loans/{loan}', [LoanController::class, 'update'])->name('loans.update');
     });
 
     Route::name('user.')->group(function () {

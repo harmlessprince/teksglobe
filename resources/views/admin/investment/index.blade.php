@@ -25,26 +25,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 @foreach ($investments as $investment)
                                     <tr>
                                         <td>{{ $investment->user->name }}</td>
                                         <td>{{ $investment->package->name }}</td>
                                         <td>{{ number_format($investment->amount, 2) }}</td>
                                         <td>{{ number_format($investment->balance, 2) }}</td>
-
                                         <td>
-                                            @if ($investment->status == 'pending')
-                                                <a href="#" class="card-link text-warning">Pending</a>
-                                            @elseif($investment->status == 'declined')
-                                                <a href="#" class="card-link text-danger">Declined</a>
-                                            @else
-                                                <a href="#" class="card-link text-success">Approved</a>
-                                            @endif
+                                            <a href="#" class="card-link text-success">Approved</a>
                                         </td>
                                         <td>{{ $investment->evidence }}</td>
-                                        <td>{{  ( $investment->verified_at) ? $investment->verified_at->format('d M, Y H:i A') : '' }}</td>
-                                        <td>{{  $investment->verifiedBy->name ?? ''}}</td>
+                                        <td>{{ $investment->verified_at ? $investment->verified_at->format('d M, Y H:i A') : '' }}
+                                        </td>
+                                        <td>{{ $investment->verifiedBy->name ?? '' }}</td>
                                         <td> {{ $investment->created_at->format('d M, Y H:i A') }}</td>
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateLoan;
 use App\Models\Investment;
 use App\Models\Loan;
 use Illuminate\Http\Request;
@@ -21,6 +22,58 @@ class LoanController extends Controller
             ->get();
         return view('user.loan.index', compact('loans'));
     }
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function completed()
+    {
+        $loans = Loan::where('status', '=', 'completed')
+            ->latest()
+            ->get();
+        return view('admin.loan.pending', compact('loans'));
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pending()
+    {
+        $loans = Loan::where('status', '=', 'pending')
+            ->latest()
+            ->get();
+        return view('admin.loan.pending', compact('loans'));
+    }
+
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function declined()
+    {
+        $loans = Loan::where('status', '=', 'declined')
+            ->with('investment')
+            ->latest()
+            ->get();
+        return view('admin.loan.declined', compact('loans'));
+    }
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function approved()
+    {
+        $loans = Loan::where('status', '=', 'approved')
+            ->latest()
+            ->get();
+        return view('admin.loan.approved', compact('loans'));
+    }
+     
 
     /**
      * Show the form for creating a new resource.
@@ -85,9 +138,22 @@ class LoanController extends Controller
      * @param  \App\Models\Loan  $loan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Loan $loan)
+    public function update(UpdateLoan $request, Loan $loan)
     {
         //
+        [
+            'status' => $status,
+        ] = $request->validated();
+
+        $loan->status = $status;
+        $loan->verified_by = auth()->user()->id;
+        $loan->verified_at = now();
+        $loan->save();
+        if ($loan->status == 'approved') {
+            creditInterestTable($loan->user_id, $loan->amount, "fix this");
+            return back()->with('success', 'Withdrawal has been successfully Approved');
+        }
+        return back()->with('success', 'Withdrawal has been successfully Declined');
     }
 
     /**
