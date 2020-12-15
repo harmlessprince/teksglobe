@@ -119,3 +119,8 @@ img{
 .text-green {
     color: #00ac69!important;
 }
+
+.spinner-white {
+    border-top-color: #fff;
+    border-left-color: #fff;
+}

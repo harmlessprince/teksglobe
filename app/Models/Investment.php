@@ -81,12 +81,12 @@ class Investment extends Model
     {
         // dd($this->verified_at->diffInDays(now()));
         if ($this->verified_at->diffInDays(now()) <= 30) {
-            return 'Incubation';
+            return ['text' => 'Incubation', 'color' => 'secondary'];
         }
-        return ($this->balance > 0) ? 'Running' : 'Completed';
+        return ($this->balance > 0) ? ['text' => 'Running', 'color' => 'primary'] : ['text' => 'Completed', 'color' => 'success'];
     }
 
-  
+
     /**
      * Get the amount can be taken as loan on investment.
      */

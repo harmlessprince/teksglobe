@@ -11,8 +11,7 @@
     <link href="{{ asset('assets/vendor/fonts/circular-std/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/libs/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/fontawesome/css/fontawesome-all.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css') }}">
         @stack('css')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
@@ -31,7 +30,7 @@
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
-    <div class="dashboard-main-wrapper">
+    <div class="dashboard-main-wrapper" id="app">
         <!-- ============================================================== -->
         <!-- navbar -->
         <!-- ============================================================== -->
@@ -64,7 +63,7 @@
                             <h2 class="pageheader-title">@yield('pageheader', '')</h2>
                             <div class="col-12 divider mb-3" style="background-color:#e0e4ef"></div>
                             @if(\Request::route()->getPrefix() != '/admin')
-                                <div class="card mb-2 ml-auto" style="width: fit-content;">
+                                <div class="card mb-2 ml-auto" style="width: fit-content;" id="walletBalance">
                                     <div class="card-body">
                                         <p>Wallet Balance: &#8358;{{ number_format(calculateAvailableBalance(auth()->user()->id), 2) }}</p>
                                     </div>
@@ -138,11 +137,12 @@
         <!-- ============================================================== -->
         <!-- end main wrapper  -->
         <!-- ============================================================== -->
-        <!-- Optional JavaScript -->
-        <script src="{{ asset('assets/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
-        <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
-        <script src="{{ asset('assets/vendor/slimscroll/jquery.slimscroll.js') }}"></script>
-        <script src="{{ asset('assets/libs/js/main-js.js') }}"></script>
-        @stack('scripts')
+    </div>
+    <!-- Optional JavaScript -->
+    <script src="{{ asset('assets/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.js') }}"></script>
+    <script src="{{ asset('assets/vendor/slimscroll/jquery.slimscroll.js') }}"></script>
+    <script src="{{ asset('assets/libs/js/main-js.js') }}"></script>
+    @stack('scripts')
 </body>
 </html>

@@ -14,7 +14,10 @@
                             <h2 class="mb-1">{{ $investment->package->name }}</h2>
                         </div>
                         <div class="rating-star p-0 d-inline-block">
-                            <a href="javascript:void(0)" class="btn btn-sm btn-primary">{{ $investment->badge }}</a>
+                            @php
+                                $badge = $investment->badge;
+                            @endphp
+                            <a href="javascript:void(0)" class="btn btn-sm btn-{{ $badge['color'] }}">{{ $badge['text'] }}</a>
                         </div>
                     </div>
                     <div class="user-avatar-address">

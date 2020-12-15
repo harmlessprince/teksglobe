@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -158,4 +159,28 @@ function generatePaymentReference()
 {
     $reference = Str::uuid();
     return str_replace('-', '', $reference);
+}
+
+/**
+ * Return a successful JSON response
+ *
+ * @param array $payload
+ * @param string $message
+ * @param integer $status
+ * @return JsonResponse
+ */
+function respondWithSuccess($payload = [], $message = 'Successful', $status = 200): JsonResponse {
+    return response()->json(['success' => true, 'message' => $message, 'payload' => $payload], $status);
+}
+
+/**
+ * Return a successful JSON response
+ *
+ * @param array $payload
+ * @param string $message
+ * @param integer $status
+ * @return JsonResponse
+ */
+function respondWithError($payload = [], $message = 'An erorr occured', $status = 500): JsonResponse {
+    return response()->json(['success' => false, 'message' => $message, 'payload' => $payload], $status);
 }

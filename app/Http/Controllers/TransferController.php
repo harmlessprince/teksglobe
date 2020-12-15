@@ -26,11 +26,14 @@ class TransferController extends Controller
      */
     public function store(Request $request)
     {
-        ['user' => $user, 'amount' => $amount, 'email' => $email] = $request->all();
-        debitInterestTable(auth()->user()->id, ($amount + calculateChargeOnTransfer($amount)), 'TRF/'.$user.'/'.$email);
-        creditInterestTable($user, $amount,  'TRF/'.auth()->user()->id.'/'.auth()->user()->email);
-
-        return redirect()->route('user.transfers.index')->with('success', 'Funds transfer successful');
+        try {
+            ['user' => $user, 'amount' => $amount, 'email' => $email] = $request->all();
+            debitInterestTable(auth()->user()->id, ($amount + calculateChargeOnTransfer($amount)), 'TRF/'.$user.'/'.$email);
+            creditInterestTable($user, $amount,  'TRF/'.auth()->user()->id.'/'.auth()->user()->email);
+            return respondWithSuccess([], 'Funds transfer successful');
+        } catch (\Throwable $th) {
+            return respondWithError([], $th->getMessage());
+        }
     }
 
     /**
@@ -43,6 +46,6 @@ class TransferController extends Controller
     {
         ['email' => $email, 'amount' => $amount, 'pin' => $pin] = $request->validated();
         $account = DB::table('users')->select('id', 'name')->where('email', $email)->first();
-        return view('user.transfer.confirm', ['account' => $account, 'amount' => $amount, 'email' => $email]);
+        return respondWithSuccess(['account' => $account, 'amount' => $amount, 'email' => $email]);
     }
 }

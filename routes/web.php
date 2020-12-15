@@ -129,7 +129,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
         Route::get('membership', [MembershipController::class, 'show'])->name('membership.show');
         Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');
-        Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index');
+        Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index')->middleware('password.confirm');
         Route::post('transfers', [TransferController::class, 'store'])->name('transfers.store');
         Route::post('withdrawals', [WithdrawController::class, 'store'])->name('withdraws.store');
         Route::get('withdrawals/create', [WithdrawController::class, 'create'])->name('withdraws.create');
