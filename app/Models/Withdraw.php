@@ -24,4 +24,8 @@ class Withdraw extends Model
     protected $casts = [
         'verified_at' => 'datetime',
     ];
+
+    public function user (){
+        return $this->belongsTo(User::class);
+    }
 }

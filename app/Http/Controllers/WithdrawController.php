@@ -105,7 +105,7 @@ class WithdrawController extends Controller
     public function update(UpdateWithdrawal $request, Withdraw $withdraw)
     {
         //
-       
+
         [
             'status' => $status,
         ] = $request->validated();
@@ -114,11 +114,8 @@ class WithdrawController extends Controller
         $withdraw->verified_by = auth()->user()->id;
         $withdraw->verified_at = now();
         $withdraw->save();
-        if ($withdraw->status == 'approved') {
-            debitInterestTable($withdraw->user_id, $withdraw->amount, "fix this");
-            return back()->with('success', 'Withdrawal has been successfully Approved');
-        }
-        return back()->with('success', 'Withdrawal has been successfully Declined');
+        debitInterestTable($withdraw->user_id, $withdraw->amount, "Withdrawal approved");
+        return back()->with('success', 'Withdrawal has been successfully Approved');
     }
 
     /**
@@ -127,9 +124,18 @@ class WithdrawController extends Controller
      * @param  \App\Models\Withdraw  $withdraw
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Withdraw $withdraw)
+    public function destroy(UpdateWithdrawal $request, Withdraw $withdraw)
     {
         //
+        [
+            'status' => $status,
+        ] = $request->validated();
+
+        $withdraw->status = $status;
+        $withdraw->verified_by = auth()->user()->id;
+        $withdraw->verified_at = now();
+        $withdraw->save();
+        return back()->with('success', 'Withdrawal has been successfully Declined');
     }
 
     /**
@@ -156,7 +162,7 @@ class WithdrawController extends Controller
         return view('admin.withdraw.approved', compact('approved_withdrawals'));
     }
 
-     /**
+    /**
      *  Displays teh linsting of the specified resource status from storage to approved.
      *
      * @param  \App\Models\Withdraw  $withdraw
@@ -167,6 +173,4 @@ class WithdrawController extends Controller
         $declined_withdrawals = Withdraw::where('status', '=', "declined")->get();
         return view('admin.withdraw.declined', compact('declined_withdrawals'));
     }
-
-    
 }

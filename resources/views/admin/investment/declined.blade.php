@@ -19,7 +19,7 @@
                                     <th>Balance</th>
                                     <th>Created at</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,7 +35,7 @@
                                             <a href="#" class="card-link text-danger">Declined</a>
                                         </td>
                                        
-                                        <td>
+                                        {{-- <td>
                                             <form method="post" class="my-4" action="{{ route('admin.investments.update', $investment->id) }}">
                                                 @csrf
                                                 <input type="hidden" name="status" value="approved">
@@ -46,7 +46,7 @@
                                                 <input type="hidden" name="status" value="pending">
                                                 <button type="submit" class="btn btn-warning btn-sm">Pend it</button>
                                             </form>
-                                        </td>
+                                        </td> --}}
 
                                     </tr>
                                 @endforeach
@@ -59,7 +59,7 @@
                                     <th>Balance</th>
                                     <th>Created at</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </tfoot>
                         </table>
