@@ -6,6 +6,8 @@ use App\Http\Requests\RequestLoan;
 use App\Http\Requests\UpdateLoan;
 use App\Models\Investment;
 use App\Models\Loan;
+use App\Notifications\LoanApprovedNotification;
+use App\Notifications\LoanDeclinedNotification;
 use Illuminate\Http\Request;
 
 class LoanController extends Controller
@@ -148,10 +150,14 @@ class LoanController extends Controller
         $loan->verified_by = auth()->user()->id;
         $loan->verified_at = now();
         $loan->save();
+        //
         creditInterestTable($loan->user_id, $loan->amount, "fix this");
         debitLoanAccountTable($loan->user_id, $loan->amount, 'Loan Booking', $loan->investment_id);
         debitLoanAccountTable($loan->user_id, $loan->charge, ' Interest on Loan', $loan->investment_id);
-        return back()->with('success', 'Withdrawal has been successfully Approved');
+        //
+        $loan->user->notify(new LoanApprovedNotification($loan));
+        //
+        return back()->with('success', 'Loan has been successfully Approved');
     }
 
     /**
@@ -172,8 +178,10 @@ class LoanController extends Controller
         $loan->verified_by = auth()->user()->id;
         $loan->verified_at = now();
         $loan->narration = $request->narration;
-
         $loan->save();
+        //
+        $loan->user->notify(new LoanDeclinedNotification($loan));
+        //
         return back()->with('success', 'Loan has been successfully Declined');
     }
 }

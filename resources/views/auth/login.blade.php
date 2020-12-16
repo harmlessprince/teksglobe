@@ -1,4 +1,3 @@
-
 @extends('layouts.auth')
 @section('title', 'Login')
 
@@ -49,28 +48,3 @@
         </div>
     </div>
 @endsection
-
-{{-- @extends('layouts.auth')
-
-@section('content')
-    <h4>Login</h4>
-    <form action="{{ route('login') }}" method="post">
-        @csrf
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email">
-            @error('email')
-                <span>{{ $message }}</span>
-            @enderror
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password">
-            @error('password')
-                <span>{{ $message }}</span>
-            @enderror
-        </div>
-        <a href="{{ route('password.request') }}">Forgot Password</a>
-        <button>Login</button>
-    </form>
-@endsection --}}

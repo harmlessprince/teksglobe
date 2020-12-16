@@ -2,26 +2,30 @@
 
 namespace App\Notifications;
 
-use App\Models\Investment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class InvestmentNotification extends Notification
+class TransactionAlert extends Notification
 {
     use Queueable;
 
-    protected $investment;
+    protected $amount, $type, $narration, $ref, $balance, $date;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Investment $investment)
+    public function __construct($amount, $type, $narration, $ref, $balance, $date)
     {
-        $this->investment = $investment;
+        $this->amount = $amount;
+        $this->type = $type;
+        $this->narration = $narration;
+        $this->ref = $ref;
+        $this->balance = $balance;
+        $this->date = $date;
     }
 
     /**
@@ -44,10 +48,15 @@ class InvestmentNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('You have successfully purchased '.$this->investment->package->name.' Investment Package')
-            ->line('Your investment will be in an incubation period for the next 30 days.')
-            ->line('You can monitor your investments on your dashboard at any given time')
-            ->action('View Investment', route('user.investments.show', $this->investment->id))
+            ->subject('Transaction Alert ['. ucfirst($this->type).': '.number_format($this->balance, 2).' NGN]')
+            ->line('Your account has been '. ucfirst($this->type).' NGN '.number_format($this->amount, 2))
+            ->line('Transaction Summary')
+            ->line('Account Name: '. ucwords($notifiable->name))
+            ->line('Description: '.$this->narration)
+            ->line('Reference Number: '.str_pad($this->ref, 6, 0))
+            ->line('Transaction Date: '.$this->date->format('d F Y'))
+            ->line('Available Balance: '.number_format($this->balance, 2))
+            ->action('View Transaction History', route('user.wallet.index'))
             ->line('Thank you for using our application!');
     }
 

@@ -7,13 +7,14 @@
         </button>
         <div class="collapse navbar-collapse " id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto navbar-right-top">
-                <li class="nav-item">
-                    <a class="nav-link nav-icons" href="{{ route('login') }}" aria-haspopup="true" aria-expanded="false">Login</a>
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-icons" href="{{ route('register') }}" aria-haspopup="true" aria-expanded="false">Register</a>
-                </li>
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link nav-icons" href="{{ route('login') }}" aria-haspopup="true" aria-expanded="false">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icons" href="{{ route('register') }}" aria-haspopup="true" aria-expanded="false">Register</a>
+                    </li>
+                @endguest
             </ul>
         </div>
     </nav>

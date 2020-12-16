@@ -25,6 +25,7 @@ class InvestmentController extends Controller
             // ->where('status', 'approved')
             ->leftJoin('interests', 'interests.investment_id', '=', 'investments.id')
             ->groupBy('investments.id')
+            ->latest('verified_at')
             ->get();
         return view('user.investment.index', compact('investments'));
     }
@@ -80,11 +81,11 @@ class InvestmentController extends Controller
             'balance' => $package->returns,
             'gateway' => $request->gateway,
         ];
-        if ($request->gateway === 'bank') {
+        if ($data['gateway'] === 'bank') {
             $data['info'] = ['name' => $request->name, 'amount' => $request->amount];
             $data['evidence'] = $request->file('evidence')->store('evidence', 'public');
         }
-        if ($request->gateway === 'wallet') {
+        if ($data['gateway'] === 'wallet') {
             if (calculateAvailableBalance($user->id) < $package->amount) {
                 return back()->with('error', 'Insufficient Funds');
             }
@@ -92,8 +93,9 @@ class InvestmentController extends Controller
             $data['verified_at'] = now();
         }
         $investment = Investment::create($data);
-        // TODO:
-        // $user->notify(new InvestmentNotification($investment));
+        if ($data['gateway'] === 'wallet') {
+            $user->notify(new InvestmentNotification($investment));
+        }
         return redirect()->route('user.packages.index')->with('success', 'Investment Made!');
     }
 

@@ -12,15 +12,18 @@
                     <span class="text-danger">Whoops! Something went wrong.</span>
                 @endif
                 <div class="form-group">
-                    <input class="form-control form-control-lg" type="text" name="name" required="" placeholder="Full Name"
+                    <input class="form-control form-control-lg" type="text" name="name" required placeholder="Full Name"
                         autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <input class="form-control form-control-lg" type="text" name="mobile" required=""
-                        placeholder="Phone Number" autocomplete="off">
+                    <input class="form-control form-control-lg" type="text" name="mobile" required
+                        placeholder="Phone Number (+23480000001)" autocomplete="off">
+                    @error('mobile')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
-                    <input class="form-control form-control-lg" type="email" name="email" required="" placeholder="E-mail"
+                    <input class="form-control form-control-lg" type="email" name="email" required placeholder="E-mail"
                         autocomplete="off">
                     @if ($errors->has('email'))
                         <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -28,14 +31,14 @@
                 </div>
                 <div class="form-group">
                     <input class="form-control form-control-lg" id="confirmation" type="password" name="password"
-                        required="" placeholder="Password">
+                        required placeholder="Password">
                     @if ($errors->has('password'))
                         <span class="text-danger">{{ $errors->first('password') }}</span>
                     @endif
                 </div>
                 <div class="form-group">
                     <input class="form-control form-control-lg" type="password" name="password_confirmation"
-                        id="password_confirmation" required="" placeholder="Confirm">
+                        id="password_confirmation" required placeholder="Confirm">
                 </div>
                 <div class="form-group pt-2">
                     <button class="btn btn-block btn-primary" type="submit">Register My Account</button>

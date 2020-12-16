@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helper\PaystackPayment;
 use App\Models\Investment;
 use App\Models\Payment;
+use App\Models\User;
+use App\Notifications\InvestmentNotification;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -48,6 +50,7 @@ class PaymentController extends Controller
                     'status' => 'approved',
                     'verified_at' => now(),
                 ]);
+                $investment->user->notify(new InvestmentNotification($investment));
                 return redirect()->route('user.packages.index')->with('success', 'Payment successful');
             }
         } else {

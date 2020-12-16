@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use App\Notifications\TransactionAlert;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,18 +17,22 @@ use Illuminate\Support\Str;
  */
 function creditInterestTable(int $user, float $amount, string $narration, int $investment = null): void
 {
-    DB::table('interests')->insertOrIgnore(
+    $now = now();
+    $balance = calculateLedgerBalance($user) + $amount;
+
+    $id = DB::table('interests')->insertGetId(
         [
             'user_id' => $user,
             'amount' => $amount,
             'investment_id' => $investment,
             'narration' => $narration,
             'type' => 'credit',
-            'balance' => calculateLedgerBalance($user) + $amount,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'balance' => $balance,
+            'created_at' => $now,
+            'updated_at' => $now,
         ]
     );
+    User::find($user)->notify(new TransactionAlert($amount, 'credit', $narration, $id, $balance, $now));
 }
 
 /**
@@ -39,17 +45,20 @@ function creditInterestTable(int $user, float $amount, string $narration, int $i
  */
 function debitInterestTable(int $user, float $amount, string $narration): void
 {
-    DB::table('interests')->insertOrIgnore(
+    $now = now();
+    $balance = calculateLedgerBalance($user) - $amount;
+    $id = DB::table('interests')->insertGetId(
         [
             'user_id' => $user,
             'amount' => $amount,
             'narration' => $narration,
             'type' => 'debit',
-            'balance' => calculateLedgerBalance($user) - $amount,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'balance' => $balance,
+            'created_at' => $now,
+            'updated_at' => $now,
         ]
     );
+    User::find($user)->notify(new TransactionAlert($amount, 'debit', $narration, $id, $balance, $now));
 }
 
 /**

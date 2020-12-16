@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Models\Investment;
+use App\Models\Loan;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class InvestmentNotification extends Notification
+class LoanDeclinedNotification extends Notification
 {
     use Queueable;
 
-    protected $investment;
+    protected $loan;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Investment $investment)
+    public function __construct(Loan $loan)
     {
-        $this->investment = $investment;
+        $this->loan = $loan;
     }
 
     /**
@@ -44,10 +44,9 @@ class InvestmentNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('You have successfully purchased '.$this->investment->package->name.' Investment Package')
-            ->line('Your investment will be in an incubation period for the next 30 days.')
-            ->line('You can monitor your investments on your dashboard at any given time')
-            ->action('View Investment', route('user.investments.show', $this->investment->id))
+            ->line('Your loan has been declined.')
+            ->line('Reason: '.$this->loan->narration ?: '---')
+            ->action('View', route('user.loans.index'))
             ->line('Thank you for using our application!');
     }
 
