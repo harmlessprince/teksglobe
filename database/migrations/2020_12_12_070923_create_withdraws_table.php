@@ -24,6 +24,7 @@ class CreateWithdrawsTable extends Migration
             $table->timestamp('verified_at')->nullable();
             $table->unsignedBigInteger('verified_by')->nullable()->constrined('users');
             $table->string('verified_ip')->nullable();
+            $table->string('narration')->nullable();
             $table->timestamps();
         });
     }

@@ -1,4 +1,11 @@
 @extends('layouts.app')
+@push('css')
+
+<style>
+.text-custom{
+        color: #0E0C28 !important;
+    }
+</style>
 
 @section('content')
     <div class="row">
@@ -9,21 +16,43 @@
         </div>
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
-                <div class="card-body  alert alert-primary" style="margin-bottom: 0">
-                    <h3 class="card-title"> <strong class="text-secondary">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
+                <div class="card-body" style="margin-bottom: 0">
+                    <h3 class="card-title"> <strong class="text-custom">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
 
-                    <p class="card-text "> This Plan has the following Benefits. You will get Return <strong class="text-secondary">{{ $package->interest }}% </strong> money on every investment. This is <strong class="text-secondary"> {{ $package->name }} </strong> Plan.</p>
-                    <form method="post" class="my-4" action="{{ route('user.investments.store', $package->id) }}">
-                        @csrf
-                        <input type="hidden" name="gateway" value="paystack">
-                        <button type="submit" class="btn btn-primary btn-lg">Pay Online</button>
-                    </form>
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#bankTransferModal">Bank Transfer</a>
-                    <form method="post" class="my-4" action="{{ route('user.investments.store', $package->id) }}">
+                    <p class="card-text "> This Plan has the following Benefits. You will get Return <strong class="text-custom">{{ $package->interest }}% </strong> money on every investment. This is <strong class="text-custom"> {{ $package->name }} </strong> Plan.</p>
+                    <form method="post" class="" action="{{ route('user.investments.store', $package->id) }}">
                         @csrf
                         <input type="hidden" name="gateway" value="wallet">
-                        <button type="submit" class="btn btn-primary btn-lg">Buy from Wallet</button>
+                        <button type="submit" class="btn btn-success btn-lg">Buy from Wallet</button>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-body " style="margin-bottom: 0">
+                    <h3 class="card-title"> <strong class="text-custom">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
+
+                    <p class="card-text "> This Plan has the following Benefits. You will get Return <strong class="text-custom">{{ $package->interest }}% </strong> money on every investment. This is <strong class="text-custom"> {{ $package->name }} </strong> Plan.</p>
+                    <form method="post" class="" action="{{ route('user.investments.store', $package->id) }}">
+                        @csrf
+                        <input type="hidden" name="gateway" value="paystack">
+                        <button type="submit" class="btn btn-success btn-lg">Pay Online</button>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-body " style="margin-bottom: 0">
+                    <h3 class="card-title"> <strong class="text-custom">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
+
+                    <p class="card-text "> This Plan has the following Benefits. You will get Return <strong class="text-custom">{{ $package->interest }}% </strong> money on every investment. This is <strong class="text-custom"> {{ $package->name }} </strong> Plan.</p>
+                    
+
+                    <a href="#" class="btn btn-success" data-toggle="modal" data-target="#bankTransferModal">Bank Transfer</a>
+                   
                 </div>
             </div>
         </div>
@@ -79,4 +108,5 @@
             </div>
         </div>
     </div>
+
 @endsection

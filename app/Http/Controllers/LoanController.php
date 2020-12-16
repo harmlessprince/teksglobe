@@ -33,7 +33,7 @@ class LoanController extends Controller
         $loans = Loan::where('status', '=', 'completed')
             ->latest()
             ->get();
-        return view('admin.loan.pending', compact('loans'));
+        return view('admin.loan.completed', compact('loans'));
     }
 
     /**
@@ -165,12 +165,15 @@ class LoanController extends Controller
         //
         [
             'status' => $status,
+            // 'narrration' => $narrration,
         ] = $request->validated();
 
         $loan->status = $status;
         $loan->verified_by = auth()->user()->id;
         $loan->verified_at = now();
+        $loan->narration = $request->narration;
+       
         $loan->save();
-        return back()->with('success', 'Withdrawal has been successfully Declined');
+        return back()->with('success', 'Loan has been successfully Declined');
     }
 }
