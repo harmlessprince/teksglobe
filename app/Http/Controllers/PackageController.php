@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePackage;
+use App\Http\Requests\UpdatePackage;
 use App\Models\Package;
 use Illuminate\Http\Request;
 
@@ -83,19 +84,32 @@ class PackageController extends Controller
      */
     public function edit(Package $package)
     {
-        //
+        return view('admin.package.edit', compact('package'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdatePackage  $request
      * @param  \App\Models\Package  $package
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Package $package)
+    public function update(UpdatePackage $request, Package $package)
     {
-        //
+        [
+            'name' => $name,
+            'amount' => $amount,
+            'returns' => $returns,
+            'status' => $status,
+        ] = $request->validated();
+
+        $package->name = $name;
+        $package->amount = $amount;
+        $package->returns = $returns;
+        $package->status = $status;
+        $package->save();
+
+        return back()->with('success', 'Package Created');
     }
 
     /**

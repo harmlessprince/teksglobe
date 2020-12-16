@@ -7,9 +7,10 @@ use Illuminate\Support\Str;
 /**
  * Credit a user wallet
  *
- * @param integer $user
+ * @param int $user
  * @param float $amount
  * @param string $narration
+ * @param int $investment
  * @return void
  */
 function creditInterestTable(int $user, float $amount, string $narration, int $investment = null): void
@@ -31,7 +32,7 @@ function creditInterestTable(int $user, float $amount, string $narration, int $i
 /**
  * Debit a user wallet
  *
- * @param integer $user
+ * @param int $user
  * @param float $amount
  * @param string $narration
  * @return void
@@ -54,7 +55,7 @@ function debitInterestTable(int $user, float $amount, string $narration): void
 /**
  * Calculate user ledger wallet balance
  *
- * @param integer $user
+ * @param int $user
  * @return float
  */
 function calculateLedgerBalance(int $user): float
@@ -69,7 +70,7 @@ function calculateLedgerBalance(int $user): float
 /**
  * Calculate user available wallet balance
  *
- * @param integer $user
+ * @param int $user
  * @return float
  */
 function calculateAvailableBalance(int $user): float
@@ -166,7 +167,7 @@ function generatePaymentReference()
  *
  * @param array $payload
  * @param string $message
- * @param integer $status
+ * @param int $status
  * @return JsonResponse
  */
 function respondWithSuccess($payload = [], $message = 'Successful', $status = 200): JsonResponse {
@@ -178,7 +179,7 @@ function respondWithSuccess($payload = [], $message = 'Successful', $status = 20
  *
  * @param array $payload
  * @param string $message
- * @param integer $status
+ * @param int $status
  * @return JsonResponse
  */
 function respondWithError($payload = [], $message = 'An erorr occured', $status = 500): JsonResponse {
@@ -188,12 +189,13 @@ function respondWithError($payload = [], $message = 'An erorr occured', $status 
 /**
  * Credit a loan account
  *
- * @param integer $user
+ * @param int $user
  * @param float $amount
  * @param string $narration
+ * @param string $investment
  * @return void
  */
-function creditLoanAccountTable(int $user, float $amount, string $narration): void
+function creditLoanAccountTable(int $user, float $amount, string $narration, int $investment = null): void
 {
     DB::table('loan_accounts')->insertOrIgnore(
         [
@@ -201,7 +203,9 @@ function creditLoanAccountTable(int $user, float $amount, string $narration): vo
             'amount' => $amount,
             'narration' => $narration,
             'type' => 'credit',
-            'balance' => calculateLoanAccountBalance() + $amount,
+            'investment_id' => $investment,
+            'balance' => calculateUserLoanAccountBalance($user) + $amount,
+            'total' => calculateLoanAccountBalance() + $amount,
             'created_at' => now(),
             'updated_at' => now(),
         ]
@@ -211,12 +215,13 @@ function creditLoanAccountTable(int $user, float $amount, string $narration): vo
 /**
  * Debit a loan account
  *
- * @param integer $user
+ * @param int $user
  * @param float $amount
  * @param string $narration
+ * @param int $investment
  * @return void
  */
-function debitLoanAccountTable(int $user, float $amount, string $narration): void
+function debitLoanAccountTable(int $user, float $amount, string $narration, int $investment = null): void
 {
     DB::table('loan_accounts')->insertOrIgnore(
         [
@@ -224,7 +229,9 @@ function debitLoanAccountTable(int $user, float $amount, string $narration): voi
             'amount' => $amount,
             'narration' => $narration,
             'type' => 'debit',
-            'balance' => calculateLoanAccountBalance() - $amount,
+            'investment_id' => $investment,
+            'balance' => calculateUserLoanAccountBalance($user) - $amount,
+            'total' => calculateLoanAccountBalance() - $amount,
             'created_at' => now(),
             'updated_at' => now(),
         ]
@@ -239,21 +246,26 @@ function debitLoanAccountTable(int $user, float $amount, string $narration): voi
 function calculateLoanAccountBalance(): float
 {
     return DB::table('loan_accounts')
-        ->select('balance')
+        ->select('total')
         ->latest('id')
-        ->value('balance') ?? 0.00;
+        ->value('total') ?? 0.00;
 }
 
 /**
  * Calculate total account loan balance
  *
- * @param integer $user
+ * @param int $user
  * @return float
  */
 function calculateUserLoanAccountBalance(int $user): float
 {
     return DB::table('loan_accounts')
         ->where('user_id', $user)
-        ->select(DB::raw("SUM(CASE WHEN type='credit' THEN amount ELSE -amount END) as amount"))
-        ->value('amount') ?? '0.00';
+        ->select('balance')
+        ->latest('id')
+        ->value('balance') ?? 0.00;
+
+    // return DB::table('loan_accounts')
+    //     ->select(DB::raw("SUM(CASE WHEN type='credit' THEN amount ELSE -amount END) as amount"))
+    //     ->value('amount') ?? '0.00';
 }

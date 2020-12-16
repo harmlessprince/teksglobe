@@ -1,7 +1,7 @@
 <!-- ============================================================== -->
 <div class="dashboard-header">
     <nav class="navbar navbar-expand-lg bg-white fixed-top">
-        <a class="navbar-brand" href="{{ route('user.dashboard') }}">Teks Global</a>
+        <a class="navbar-brand" href="{{ route('user.dashboard') }}">{{ config('app.name') }}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -32,7 +32,7 @@
                         aria-labelledby="navbarDropdownMenuLink2">
                         <div class="nav-user-info">
                             <h5 class="mb-0 text-white nav-user-name">{{ auth()->user()->name }}</h5>
-                            <span class="status"></span><span class="ml-2">Available</span>
+                            {{-- <span class="status"></span><span class="ml-2">Available</span> --}}
                         </div>
                         <a class="dropdown-item" href="{{ route('user.profile.show') }}">
                             <i class="fas fa-user mr-2"></i>Account

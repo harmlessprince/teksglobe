@@ -31,9 +31,10 @@ class Kernel extends ConsoleKernel
             Investment::where('balance', '>', 0)
                 ->where('status', 'approved')
                 ->whereNotNull('verified_at')
-                ->whereRaw('(verified_at + INTERVAL 30 DAY) < NOW()')
+                ->whereRaw('DATE(verified_at + INTERVAL 30 DAY) < DATE(NOW())')
                 ->chunkById(500, function ($investments) {
                     foreach ($investments as $investment) {
+                        // dump($investment->id);
                         $balance = $investment->balance;
                         $returns = $investment->returns;
                         $weekly = $returns / 50;
@@ -45,11 +46,11 @@ class Kernel extends ConsoleKernel
                             $investment->id
                         );
                         $investment->decrement('balance', $interest);
-                        $loan = abs(calculateUserLoanAccountBalance($investment->user_id));
+                        $loan = abs($investment->loanAccountSum());
                         if ($loan > 0) {
                             $liquidation = ($loan > $interest) ? $interest : $loan;
-                            creditLoanAccountTable($investment->user_id, $liquidation, 'Loan Liquidation');
-                            debitInterestTable($investment->user_id, $liquidation, 'Loan liquidation');
+                            creditLoanAccountTable($investment->user_id, $liquidation, 'Loan Liquidation', $investment->id);
+                            debitInterestTable($investment->user_id, $liquidation, 'Loan liquidation', $investment->id);
                         }
                     }
                 });

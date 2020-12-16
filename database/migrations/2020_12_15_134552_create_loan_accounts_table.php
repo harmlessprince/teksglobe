@@ -21,6 +21,7 @@ class CreateLoanAccountsTable extends Migration
             $table->decimal('amount', 19, 2)->default(0);
             $table->enum('type', ['credit', 'debit']);
             $table->decimal('balance', 19, 2)->default(0);
+            $table->decimal('total', 19, 2)->default(0);
             $table->timestamps();
         });
     }

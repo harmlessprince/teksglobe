@@ -59,6 +59,14 @@ class Investment extends Model
     }
 
     /**
+     * Get the loan account on the investment.
+     */
+    public function loanAccount()
+    {
+        return $this->hasMany('App\Models\LoanAccount');
+    }
+
+    /**
      * Get the investment expected total.
      */
     public function getCompletionAttribute()
@@ -68,8 +76,10 @@ class Investment extends Model
 
     public function isRunning()
     {
-        // dump($this->verified_at->diffInDays(now()));
-        return $this->verified_at && $this->verified_at->diffInDays(now()) >= 30;
+        if (!$this->verified_at) return false;
+        $verified = $this->verified_at->startOfDay();
+        $now = now()->startOfDay();
+        return $verified->diffInDays($now) > 30;
     }
 
     /**
@@ -102,5 +112,13 @@ class Investment extends Model
     public function availableLoanAmount()
     {
         return ($this->amount / 2) - $this->loan()->whereIn('status', ['pending', 'approved'])->sum('amount');
+    }
+
+    public function loanAccountSum()
+    {
+        return $this->loanAccount()
+            ->select('balance')
+            ->latest('id')
+            ->value('balance') ?? 0.00;
     }
 }

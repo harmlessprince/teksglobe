@@ -15,7 +15,7 @@
                                 <tr>
                                     <th >Name</th>
                                     <th>Amount</th>
-                                    <th width="25">Interest</th>
+                                    <th width="25">Returns</th>
                                     <th width="25">Status</th>
                                     <th>Created at</th>
                                     <th>Action</th>
@@ -25,8 +25,8 @@
                                 @foreach ($packages as $package)
                                     <tr>
                                         <td>{{ $package->name }}</td>
-                                        <td>{{ $package->amount }}</td>
-                                        <td>{{ $package->returns }}</td>
+                                        <td>{{ number_format($package->amount, 2) }}</td>
+                                        <td>{{ number_format($package->returns, 2) }}</td>
                                         <td>
                                             @if ($package->status == 1)
                                                 <span class="text-success">Active</span>
@@ -34,16 +34,15 @@
                                                 <span class="text-danger">Not Active</span>
                                             @endif
                                         </td>
-
                                         <td> {{ $package->created_at->format('d M, Y H:i A') }}</td>
                                         <td>
-                                            <form action="{{ route('admin.packages.destroy', $package->id) }}"
+                                            {{-- <form action="{{ route('admin.packages.destroy', $package->id) }}"
                                                 method="post" class="d-inline mr-2">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
-                                            <button class="btn btn-sm btn-warning ">Edit</button>
+                                            </form> --}}
+                                            <a href="{{ route('admin.packages.edit', $package->id) }}" class="btn btn-sm btn-warning ">Edit</a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -93,6 +93,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::post('packages', [PackageController::class, 'store'])->name('packages.store');
         Route::delete('packages/{package}', [PackageController::class, 'destroy'])->name('packages.destroy');
         Route::get('packages', [PackageController::class, 'adminIndex'])->name('packages.index');
+        Route::get('packages/edit/{package}', [PackageController::class, 'edit'])->name('packages.edit');
+        Route::put('packages/{package}', [PackageController::class, 'update'])->name('packages.update');
         Route::get('investments', [InvestmentController::class, 'adminIndex'])->name('investments.adminindex');
         Route::get('investments/pending', [InvestmentController::class, 'pendingInvestments'])->name('investments.pending');
         Route::get('investments/declined', [InvestmentController::class, 'declinedInvestments'])->name('investments.declined');

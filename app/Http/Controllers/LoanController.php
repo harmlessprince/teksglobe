@@ -149,8 +149,8 @@ class LoanController extends Controller
         $loan->verified_at = now();
         $loan->save();
         creditInterestTable($loan->user_id, $loan->amount, "fix this");
-        debitLoanAccountTable($loan->user_id, $loan->amount, 'Loan Booking');
-        debitLoanAccountTable($loan->user_id, $loan->charge, ' Interest on Loan');
+        debitLoanAccountTable($loan->user_id, $loan->amount, 'Loan Booking', $loan->investment_id);
+        debitLoanAccountTable($loan->user_id, $loan->charge, ' Interest on Loan', $loan->investment_id);
         return back()->with('success', 'Withdrawal has been successfully Approved');
     }
 
@@ -172,7 +172,7 @@ class LoanController extends Controller
         $loan->verified_by = auth()->user()->id;
         $loan->verified_at = now();
         $loan->narration = $request->narration;
-       
+
         $loan->save();
         return back()->with('success', 'Loan has been successfully Declined');
     }

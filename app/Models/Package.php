@@ -20,4 +20,12 @@ class Package extends Model
     {
         return $this->hasMany(Investment::class);
     }
+
+    /**
+     * Get the package interest.
+     */
+    public function getInterestAttribute()
+    {
+        return ($this->returns * 100) / ($this->amount * 50);
+    }
 }
