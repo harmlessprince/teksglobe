@@ -49,7 +49,7 @@
                                                 action="" >
                                                 @csrf
                                                 <input type="hidden" name="status" value="declined">
-                                                <button type="submit" class="btn btn-danger btn-sm ">Decline</button>
+                                                <button type="submit" class="btn btn-danger btn-sm " data-toggle="modal" data-target="#declined">Decline</button>
                                             </form>
                                         </td>
 
@@ -74,6 +74,9 @@
         </div>
     </div>
 
+
+
+    
 @endsection
 
 @push('scripts')

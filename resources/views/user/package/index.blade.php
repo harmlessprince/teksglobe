@@ -18,10 +18,10 @@
                         <h3 class="card-title mb-2">{{ $package->name }}</h3>
                     </div> --}}
                     <img class="img-fluid" src="{{ asset('assets/images/packaged.jpg') }}" alt="Card image cap">
-                    <div class="card-body  alert alert-primary" style="margin-bottom: 0">
-                        <h3 class="card-title"> <strong class="text-secondary">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
+                    <div class="card-body " style="margin-bottom: 0">
+                        <h3 class="card-title"> <strong class="text-success">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
 
-                        <p class="card-text "> This Plan has the following Benefits. You will get Return <strong class="text-secondary">{{ $package->interest }}% </strong> money on every investment. This is <strong class="text-secondary"> {{ $package->name }} </strong> Plan.</p>
+                        <p class="card-text "> This Plan has the following Benefits. You will get Return <strong class="text-success">{{ $package->interest }}% </strong> money on every investment. This is <strong class="text-success"> {{ $package->name }} </strong> Plan.</p>
                         <a href="{{ route('user.packages.show', $package->id) }}" class="btn btn-primary btn-lg">Invest Now</a>
                     </div>
                 </div>
