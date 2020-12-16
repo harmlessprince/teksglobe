@@ -43,11 +43,46 @@
                                             </form>
                                         </td>
                                         <td>
+                                          
+                                                <button type="submit" class="btn btn-danger btn-sm"  data-toggle="modal"
+                                                data-target="#declineModal-{{ $pending_withdrawal->id }}">Decline</button> 
+                                          
+                                            <!-- Modal -->
                                             <form method="post" class="my-4"
                                                 action="{{ route('admin.withdrawals.destroy', $pending_withdrawal->id) }}">
                                                 @csrf
-                                                <input type="hidden" name="status" value="declined">
-                                                <button type="submit" class="btn btn-danger btn-sm">Decline</button>
+                                                <div class="modal fade" id="declineModal-{{ $pending_withdrawal->id}}" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title text-warning" id="exampleModalLabel">
+                                                                    Are you sure you want to decline this withdrawal request
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="status" value="declined">
+                                                                <div class="form-group">
+                                                                    <label for="narration">Kindly state reason for
+                                                                        declination of this withdrawal</label>
+                                                                    <textarea name="narration" id="" cols="30" rows="4"
+                                                                        class="form-control" id="narration" required ></textarea>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-warning">Yes Decline
+                                                                    Withdrawal</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </form>
                                         </td>
                                     </tr>
