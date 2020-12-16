@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-8 col-sm-12 col-12 mx-auto">
         <Alert :alert="alert" />
-        <form method="post" :action="confirmTransfer" @submit.prevent="confirmTransfer" v-if="!hasRecepient">
+        <form method="post" @submit.prevent="confirmTransfer" v-if="!hasRecepient">
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Transfer</h5>
@@ -41,7 +41,7 @@
                                 <span v-else>Submit</span>
                             </button>
                         </div>
-                        <p class="col-12" v-else-if="!pinStatus"><em>You have not created a pin for you account.Click <a :href="profileUrl"><u>Here</u></a> to create your pin</em></p>
+                        <p class="col-12" v-else-if="!pinStatus"><em>You have not created a pin for you account.Click <a :href="pinUrl"><u>Here</u></a> to create your pin</em></p>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 type: String,
                 required: true,
             },
-            profileUrl: {
+            pinUrl: {
                 type: String,
                 required: true,
             },

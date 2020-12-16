@@ -43,10 +43,10 @@
                                             </form>
                                         </td>
                                         <td>
-                                          
+
                                                 <button type="submit" class="btn btn-danger btn-sm"  data-toggle="modal"
-                                                data-target="#declineModal-{{ $pending_withdrawal->id }}">Decline</button> 
-                                          
+                                                data-target="#declineModal-{{ $pending_withdrawal->id }}">Decline</button>
+
                                             <!-- Modal -->
                                             <form method="post" class="my-4"
                                                 action="{{ route('admin.withdrawals.destroy', $pending_withdrawal->id) }}">

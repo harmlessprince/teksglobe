@@ -41,7 +41,7 @@
                             </div>
                         </section>
                         <p class="col-12" v-else-if="!withdrawStatus"><em>You do not have your bank details on the system. Click <a :href="profileUrl"><u>Here</u></a> to add your bank details</em></p>
-                        <p class="col-12" v-else-if="!pinStatus"><em>You have not created a pin for you account.Click <a :href="profileUrl"><u>Here</u></a> to create your pin</em></p>
+                        <p class="col-12" v-else-if="!pinStatus"><em>You have not created a pin for you account.Click <a :href="pinUrl"><u>Here</u></a> to create your pin</em></p>
                     </div>
                 </div>
             </div>
@@ -60,6 +60,10 @@
                 required: true,
             },
             profileUrl: {
+                type: String,
+                required: true,
+            },
+            pinUrl: {
                 type: String,
                 required: true,
             },

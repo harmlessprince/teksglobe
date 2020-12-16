@@ -6,6 +6,6 @@
 
 @section('content')
     <div class="row">
-        <transfer-component confirm-url="{{ route('user.transfers.confirm') }}" transfer-url="{{ route('user.transfers.store') }}" profile-url="{{ route('user.profile.show') }}" :pin-status="{{ $pin }}"></transfer-component>
+        <transfer-component confirm-url="{{ route('user.transfers.confirm') }}" transfer-url="{{ route('user.transfers.store') }}" pin-url="{{ route('user.pin.index') }}" :pin-status="{{ $pin }}"></transfer-component>
     </div>
 @endsection

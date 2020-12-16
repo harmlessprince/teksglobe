@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 col-sm-12 col-12 mx-auto">
-            <form method="post" action="{{ url('/user/confirm-password') }}">
+            <form method="post" action="{{ url('/user/confirm-password') }}" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="icon-circle-medium  icon-box-lg  warning-bell sidebar-dark">
@@ -17,7 +17,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="password" class="col-form-label">Password</label>
-                                    <input id="password" type="password" class="form-control form-control-lg" name="password" required>
+                                    <input id="password" type="password" class="form-control form-control-lg" name="password" required autocomplete="one-time-code">
                                     @error('password')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
