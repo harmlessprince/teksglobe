@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Interest;
+use App\Models\LoanAccount;
 use Illuminate\Http\Request;
 
-class InterestController extends Controller
+class LoanAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class InterestController extends Controller
      */
     public function index()
     {
-        $wallets = Interest::where('user_id', auth()->user()->id)->latest('id')->limit(90)->get();
-        return view('user.wallet.index', compact('wallets'));
+        //
     }
 
     /**
@@ -42,10 +41,10 @@ class InterestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Interest  $interest
+     * @param  \App\Models\LoanAccount  $loanAccount
      * @return \Illuminate\Http\Response
      */
-    public function show(Interest $interest)
+    public function show(LoanAccount $loanAccount)
     {
         //
     }
@@ -53,10 +52,10 @@ class InterestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Interest  $interest
+     * @param  \App\Models\LoanAccount  $loanAccount
      * @return \Illuminate\Http\Response
      */
-    public function edit(Interest $interest)
+    public function edit(LoanAccount $loanAccount)
     {
         //
     }
@@ -65,10 +64,10 @@ class InterestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Interest  $interest
+     * @param  \App\Models\LoanAccount  $loanAccount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Interest $interest)
+    public function update(Request $request, LoanAccount $loanAccount)
     {
         //
     }
@@ -76,10 +75,10 @@ class InterestController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Interest  $interest
+     * @param  \App\Models\LoanAccount  $loanAccount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Interest $interest)
+    public function destroy(LoanAccount $loanAccount)
     {
         //
     }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePackage extends FormRequest
+class RequestLoan extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreatePackage extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->admin;
+        return $this->route('investment')->user_id === auth()->user()->id && $this->route('investment')->canTakeLoan();
     }
 
     /**
@@ -24,10 +24,7 @@ class CreatePackage extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100|unique:packages',
-            'amount' => 'bail|required|numeric|min:1',
-            'returns' => 'bail|required|numeric|min:'.$this->amount,
-            'status' => 'required|boolean',
+            'amount' => 'required|numeric|min:1|max:'.$this->route('investment')->availableLoanAmount(),
         ];
     }
 }

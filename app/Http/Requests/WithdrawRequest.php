@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class WithdrawRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class WithdrawRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->bank()->exists();
     }
 
     /**
@@ -41,5 +43,18 @@ class WithdrawRequest extends FormRequest
         return [
             'amount.max' => 'Insufficient Funds',
         ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        throw (new ValidationException($validator, respondWithError($validator->errors(), 'An error occured', 422)));
     }
 }

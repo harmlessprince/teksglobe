@@ -11,7 +11,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="amount" class="col-form-label">Amount</label>
-                                <input id="amount" type="number" v-model.number="form.amount" class="form-control form-control-lg" name="amount">
+                                <input id="amount" required type="number" v-model.number="form.amount" class="form-control form-control-lg" name="amount">
                                 <span class="invalid-feedback d-block" role="alert" v-if="amountError">
                                     <strong>{{ amountError }}</strong>
                                 </span>
@@ -20,7 +20,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="email" class="col-form-label">Email</label>
-                                <input id="email" type="email" v-model="form.email" class="form-control form-control-lg" name="email">
+                                <input id="email" required type="email" v-model="form.email" class="form-control form-control-lg" name="email">
                                 <span class="invalid-feedback d-block" role="alert" v-if="emailError">
                                     <strong>{{ emailError }}</strong>
                                 </span>
@@ -29,7 +29,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="pin" class="col-form-label">Pin</label>
-                                <input id="pin" type="text" v-model="form.pin" class="form-control form-control-lg" name="pin">
+                                <input id="pin" required type="text" v-model="form.pin" class="form-control form-control-lg" name="pin">
                                 <span class="invalid-feedback d-block" role="alert" v-if="pinError">
                                     <strong>{{ pinError }}</strong>
                                 </span>
@@ -119,9 +119,6 @@
                     timeout = setTimeout(() => this.showAlert(), 5000);
                 }
             }
-        },
-        async mounted() {
-
         },
         methods: {
             async confirmTransfer() {

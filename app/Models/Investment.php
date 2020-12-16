@@ -61,17 +61,15 @@ class Investment extends Model
     /**
      * Get the investment expected total.
      */
-    public function getTotalAttribute()
-    {
-        return $this->amount * 2;
-    }
-
-    /**
-     * Get the investment expected total.
-     */
     public function getCompletionAttribute()
     {
-        return (($this->total - $this->balance) / $this->total) * 100;
+        return (($this->returns - $this->balance) / $this->returns) * 100;
+    }
+
+    public function isRunning()
+    {
+        // dump($this->verified_at->diffInDays(now()));
+        return $this->verified_at && $this->verified_at->diffInDays(now()) >= 30;
     }
 
     /**
@@ -79,20 +77,13 @@ class Investment extends Model
      */
     public function getBadgeAttribute()
     {
-        // dd($this->verified_at->diffInDays(now()));
-        if ($this->verified_at->diffInDays(now()) <= 30) {
+        if (!$this->verified_at) {
+            return ['text' => ucfirst($this->status), 'color' => 'dark'];
+        }
+        if (!$this->isRunning()) {
             return ['text' => 'Incubation', 'color' => 'secondary'];
         }
         return ($this->balance > 0) ? ['text' => 'Running', 'color' => 'primary'] : ['text' => 'Completed', 'color' => 'success'];
-    }
-
-
-    /**
-     * Get the amount can be taken as loan on investment.
-     */
-    public function getLoanAmountAttribute()
-    {
-        return $this->amount / 2;
     }
 
     /**
@@ -103,8 +94,13 @@ class Investment extends Model
         return $this->hasMany('App\Models\Loan');
     }
 
-    public function hasActiveLoan()
+    public function canTakeLoan()
     {
-        return $this->loan()->where('status', '<>', 'declined')->exists();
+        return $this->isRunning() && $this->availableLoanAmount() > 0;
+    }
+
+    public function availableLoanAmount()
+    {
+        return ($this->amount / 2) - $this->loan()->whereIn('status', ['pending', 'approved'])->sum('amount');
     }
 }

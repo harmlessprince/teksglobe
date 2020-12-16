@@ -184,3 +184,76 @@ function respondWithSuccess($payload = [], $message = 'Successful', $status = 20
 function respondWithError($payload = [], $message = 'An erorr occured', $status = 500): JsonResponse {
     return response()->json(['success' => false, 'message' => $message, 'payload' => $payload], $status);
 }
+
+/**
+ * Credit a loan account
+ *
+ * @param integer $user
+ * @param float $amount
+ * @param string $narration
+ * @return void
+ */
+function creditLoanAccountTable(int $user, float $amount, string $narration): void
+{
+    DB::table('loan_accounts')->insertOrIgnore(
+        [
+            'user_id' => $user,
+            'amount' => $amount,
+            'narration' => $narration,
+            'type' => 'credit',
+            'balance' => calculateLoanAccountBalance() + $amount,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]
+    );
+}
+
+/**
+ * Debit a loan account
+ *
+ * @param integer $user
+ * @param float $amount
+ * @param string $narration
+ * @return void
+ */
+function debitLoanAccountTable(int $user, float $amount, string $narration): void
+{
+    DB::table('loan_accounts')->insertOrIgnore(
+        [
+            'user_id' => $user,
+            'amount' => $amount,
+            'narration' => $narration,
+            'type' => 'debit',
+            'balance' => calculateLoanAccountBalance() - $amount,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]
+    );
+}
+
+/**
+ * Calculate total account loan balance
+ *
+ * @return float
+ */
+function calculateLoanAccountBalance(): float
+{
+    return DB::table('loan_accounts')
+        ->select('balance')
+        ->latest('id')
+        ->value('balance') ?? 0.00;
+}
+
+/**
+ * Calculate total account loan balance
+ *
+ * @param integer $user
+ * @return float
+ */
+function calculateUserLoanAccountBalance(int $user): float
+{
+    return DB::table('loan_accounts')
+        ->where('user_id', $user)
+        ->select(DB::raw("SUM(CASE WHEN type='credit' THEN amount ELSE -amount END) as amount"))
+        ->value('amount') ?? '0.00';
+}

@@ -17,7 +17,7 @@ class CreatePackagesTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedDecimal('amount', 19, 2);
-			$table->unsignedDecimal('interest')->default(4);
+			$table->unsignedDecimal('returns', 19, 2);
 			$table->boolean('status')->default(true);
             $table->timestamps();
         });

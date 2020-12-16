@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestLoan;
 use App\Http\Requests\UpdateLoan;
 use App\Models\Investment;
 use App\Models\Loan;
@@ -88,17 +89,14 @@ class LoanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\RequestLoan  $request
      * @param  \App\Models\Investment  $investment
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Investment $investment)
+    public function store(RequestLoan $request, Investment $investment)
     {
-        if ($investment->user_id !== auth()->user()->id || $investment->hasActiveLoan()) {
-            return abort(403);
-        }
+        ['amount' => $amount] = $request->validated();
 
-        $amount = $investment->loan_amount;
         Loan::create([
             'user_id' => auth()->user()->id,
             'investment_id' => $investment->id,
@@ -106,6 +104,7 @@ class LoanController extends Controller
             'charge' => calculateInterestOnLoan($amount),
             'request_ip' => $request->ip(),
         ]);
+
         return back()->with('success', 'Loan application successful');
     }
 
@@ -150,6 +149,8 @@ class LoanController extends Controller
         $loan->verified_at = now();
         $loan->save();
         creditInterestTable($loan->user_id, $loan->amount, "fix this");
+        debitLoanAccountTable($loan->user_id, $loan->amount, 'Loan Booking');
+        debitLoanAccountTable($loan->user_id, $loan->charge, ' Interest on Loan');
         return back()->with('success', 'Withdrawal has been successfully Approved');
     }
 

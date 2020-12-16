@@ -22,7 +22,7 @@ class InvestmentController extends Controller
     {
         $investments = Investment::select('investments.*', DB::raw('SUM(interests.amount) as interests'))
             ->where('investments.user_id', auth()->user()->id)
-            ->where('status', 'approved')
+            // ->where('status', 'approved')
             ->leftJoin('interests', 'interests.investment_id', '=', 'investments.id')
             ->groupBy('investments.id')
             ->get();
@@ -76,7 +76,8 @@ class InvestmentController extends Controller
             'user_id' => $user->id,
             'package_id' => $package->id,
             'amount' => $package->amount,
-            'balance' => $package->amount * 2,
+            'returns' => $package->returns,
+            'balance' => $package->returns,
             'gateway' => $request->gateway,
         ];
         if ($request->gateway === 'bank') {

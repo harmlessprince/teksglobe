@@ -14,6 +14,8 @@ class UserController extends Controller
     public function show()
     {
         $user = auth()->user();
-        return view('user.profile.show', compact('user'));
+        $bank = auth()->user()->bank()->first();
+
+        return view('user.profile.show', compact('user', 'bank'));
     }
 }

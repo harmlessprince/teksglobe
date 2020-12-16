@@ -29,7 +29,8 @@ class WithdrawController extends Controller
         $withdraws = Withdraw::where('user_id', auth()->user()->id)
             ->where('status', 'pending')
             ->get();
-        return view('user.withdraw.pending', compact('withdraws'));
+        $bank = auth()->user()->bank()->first();
+        return view('user.withdraw.pending', compact('withdraws', 'bank'));
     }
 
     /**
@@ -52,7 +53,8 @@ class WithdrawController extends Controller
      */
     public function create()
     {
-        return view('user.withdraw.create');
+        $bank = auth()->user()->bank()->exists();
+        return view('user.withdraw.create', compact('bank'));
     }
 
     /**
@@ -63,14 +65,19 @@ class WithdrawController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
-        ['amount' => $amount, 'pin' => $pin] = $request->validated();
-        Withdraw::create([
-            'user_id' => auth()->user()->id,
-            'amount' => $amount,
-            'charge' => calculateChargeOnWithdrawal($amount),
-            'request_ip' => $request->ip(),
-        ]);
-        return back()->with('success', 'Withdrawal request successful');
+        try {
+            ['amount' => $amount, 'pin' => $pin] = $request->validated();
+
+            Withdraw::create([
+                'user_id' => auth()->user()->id,
+                'amount' => $amount,
+                'charge' => calculateChargeOnWithdrawal($amount),
+                'request_ip' => $request->ip(),
+            ]);
+            return respondWithSuccess([], 'Withdrawal request successful');
+        } catch (\Throwable $th) {
+            return respondWithError([], $th->getMessage());
+        }
     }
 
     /**
@@ -139,7 +146,7 @@ class WithdrawController extends Controller
     }
 
     /**
-       Displays teh linsting of the specified resource status from storage to pending.
+     * Displays teh linsting of the specified resource status from storage to pending.
      *
      * @param  \App\Models\Withdraw  $withdraw
      * @return \Illuminate\Http\Response

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InterestController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\MembershipController;
@@ -114,7 +115,7 @@ Route::middleware('auth', 'verified')->group(function () {
     });
 
     Route::name('user.')->group(function () {
-        Route::view('dashboard', 'user.dashboard')->name('dashboard');
+        Route::get('dashboard', [DashboardController::class, 'user'])->name('dashboard');
         Route::get('banks/create', [BankAccountController::class, 'create'])
             ->name('banks.create');
         Route::post('banks', [BankAccountController::class, 'store'])

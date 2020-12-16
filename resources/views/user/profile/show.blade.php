@@ -103,32 +103,60 @@
             </form>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-            <div class="card" style="display: flex; justify-content: space-around;">
-                <div class=" icon-box-sm card-header" style="display: flex; align-items: center;">
-                    <i class="fas fa-clipboard-check fa-fw fa-sm text-danger mr-3"></i>
-                    <h5 class=" mb-0">KYC Verify Status</h5>
-                </div>
-                <div class="card-body">
-                    <div class="col-12 text-center">
-                        <div class=" icon-box-sm mb-4 kyc_verify">
-
-                            <h3 class=" mb-0">Identity Verify:</h3>
-                            <a href="#" class="btn btn-danger">
-                                <i class="fas fa-times fa-fw fa-lg" style="font-size: 30px"></i>
-                            </a>
+            <form method="post" action="{{ route('user.banks.store') }}">
+                @csrf
+                <div class="card">
+                    <div class="icon-circle-medium  icon-box-lg  warning-bell sidebar-dark">
+                        <i class="fas fa-dolly fa-fw fa-sm text-primary"></i>
+                    </div>
+                    <div class="card-header">
+                        <h5 class="mb-0" style="margin-left: 4rem;">Bank Account</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Note: This can be done once. For futher change reach out to customer support</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="bank" class="col-form-label">Bank</label>
+                                    <input id="bank" type="text" value="{{ old('bank', optional($bank)->bank_name) }}" class="form-control form-control-lg" name="bank" required>
+                                    @error('bank')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name" class="col-form-label">Account Name</label>
+                                    <input id="name" type="text" value="{{ old('name', optional($bank)->account_name) }}" class="form-control form-control-lg" name="name" required>
+                                    @error('name')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="number" class="col-form-label">Account Number</label>
+                                    <input id="number" type="number" value="{{ old('number', optional($bank)->account_number) }}" class="form-control form-control-lg" name="number" required>
+                                    @error('number')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            @if (!$bank)
+                                <div class="col-12 mt-2 card-action">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            @endif
                         </div>
-                        <div class=" icon-box-sm kyc_verify">
-
-                            <h3 class=" mb-0">Address Verify:</h3>
-                            <a href="#" class="btn btn-danger">
-                                <i class="fas fa-times fa-fw fa-lg" style="font-size: 30px"></i>
-                            </a>
-
-                        </div>
-                        <a href="#" type="submit" class="btn btn-success mt-5">Submit verification</a>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 @endsection

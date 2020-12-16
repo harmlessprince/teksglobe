@@ -47,7 +47,7 @@
                                                 <button type="submit" class="btn btn-success btn-sm">Approve</button>
                                             </form>
                                             <form method="post" class="my-4"
-                                                action="{{ route('admin.loans.delete', $loan->id) }}">
+                                                action="{{ route('admin.loans.destroy', $loan->id) }}">
                                                 @csrf
                                                 <input type="hidden" name="status" value="declined">
                                                 <button type="submit" class="btn btn-danger btn-sm">Decline</button>

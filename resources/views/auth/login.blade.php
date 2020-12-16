@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <input class="form-control form-control-lg" id="password" name="password" type="password"
-                        placeholder="Password" value="password">
+                        placeholder="Password">
                 </div>
                 <div class="form-group">
                     <label class="custom-control custom-checkbox">

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePackage;
 use App\Models\Package;
-use App\Models\Plan;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
@@ -49,17 +48,17 @@ class PackageController extends Controller
      */
     public function store(CreatePackage $request)
     {
-        //
         [
             'name' => $name,
             'amount' => $amount,
-            'interest' => $interest,
+            'returns' => $returns,
             'status' => $status,
         ] = $request->validated();
+
         Package::create([
             'name' => $name,
             'amount' => $amount,
-            'interest' => $interest,
+            'returns' => $returns,
             'status' => $status,
         ]);
         return back()->with('success', 'Package Created');

@@ -18,6 +18,7 @@ class CreateInvestmentsTable extends Migration
             $table->unsignedBigInteger('user_id')->constrined()->onDelete('cascade');
             $table->unsignedBigInteger('package_id')->constrined()->onDelete('cascade');
 			$table->unsignedDecimal('amount', 19, 2);
+			$table->unsignedDecimal('returns', 19, 2);
             $table->unsignedDecimal('balance', 19, 2);
             $table->string('gateway');
             $table->enum('status', ['pending', 'approved', 'declined'])->default('pending');

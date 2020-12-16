@@ -16,6 +16,7 @@
                                     <th></th>
                                     <th>Amount</th>
                                     <th>Charge</th>
+                                    <th>Account</th>
                                     <th>Requested</th>
                                 </tr>
                             </thead>
@@ -25,6 +26,7 @@
                                         <td>{{ ++$loop->index }}</td>
                                         <td>{{ number_format($withdraw->amount, 2) }}</td>
                                         <td>{{ number_format($withdraw->charge, 2) }}</td>
+                                        <td>{{ $bank->bank_name }}/{{ $bank->account_name }}/{{ $bank->account_number }}</td>
                                         <td> {{ $withdraw->created_at->format('d M, Y H:i A') }}</td>
                                     </tr>
                                 @endforeach

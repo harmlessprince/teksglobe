@@ -23,16 +23,16 @@
                     <div class="user-avatar-address">
                         <p class="border-bottom pb-3">
                             <span class="d-xl-inline-block d-block mb-2"><i class="far fa-money-bill-alt mr-2 text-primary"></i>Invested Amount: {{ number_format($investment->amount, 2) }}</span>
-                            <span class="mb-2 ml-xl-4 d-xl-inline-block d-block"><i class="fa fa-calendar-alt mr-2 text-primary"></i>Invested Date: {{ $investment->verified_at->format('d M, Y H:i A') }}</span>
+                            <span class="mb-2 ml-xl-4 d-xl-inline-block d-block"><i class="fa fa-calendar-alt mr-2 text-primary"></i>Invested Date: {{ optional($investment->verified_at)->format('d M, Y H:i A') }}</span>
                             <span class="mb-2 d-xl-inline-block d-block ml-xl-4"><i class="fas fa-piggy-bank mr-2 text-primary"></i>Interest Rate: 4%
                             </span>
                             <span class="mb-2 d-xl-inline-block d-block ml-xl-4"><i class="fas fa-chart-line mr-2 text-primary"></i>Interest Gained: {{ number_format($investment->interests->sum('amount'), 2) }}</span>
                         </p>
                         <div class="mt-3 text-center">
                             <div class="progress mb-3">
-                                <div class="progress-bar" role="progressbar" style="width: {{ $investment->completion }}%;" aria-valuenow="{{ $investment->completion }}" aria-valuemin="0" aria-valuemax="{{ $investment->total }}">{{ $investment->completion }}%</div>
+                                <div class="progress-bar" role="progressbar" style="width: {{ $investment->completion }}%;" aria-valuenow="{{ $investment->completion }}" aria-valuemin="0" aria-valuemax="{{ $investment->returns }}">{{ $investment->completion }}%</div>
                             </div>
-                            @if (!$investment->hasActiveLoan())
+                            @if ($investment->canTakeLoan())
                                 <a href="#" data-toggle="modal" data-target="#loanModal" class="btn btn-primary">Apply for Loan</a>
                             @endif
                         </div>
@@ -81,7 +81,20 @@
                 <form method="post" class="my-4" action="{{ route('user.loans.store', $investment->id) }}">
                     @csrf
                     <div class="modal-body">
-                        <p>Woohoo, You are readng this text in a modal! Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications, or completely custom content.</p>
+                        <p>{{ $investment->availableLoanAmount() }}</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="amount" class="col-form-label">Amount</label>
+                                    <input id="amount" type="number" min="1" value="{{ old('amount') }}" class="form-control form-control-lg" name="amount" required max="{{ $investment->availableLoanAmount() }}">
+                                    @error('amount')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>

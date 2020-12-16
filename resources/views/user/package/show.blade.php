@@ -42,7 +42,9 @@
                 <form method="post" class="my-4" action="{{ route('user.investments.store', $package->id) }}">
                     @csrf
                     <div class="modal-body">
-                        <p>Woohoo, You are readng this text in a modal! Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications, or completely custom content.</p>
+                        <p>Payment/transfer can also be made into Spectranet's bank account below. When done with payment, kindly scanned payment teller or screenshot of successful transfer transaction and send to us at care@spectranet.com.ng for us to credit your account.
+                            Bank	Account Number
+                            Abuja	FCMB	0658482020</p>
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">

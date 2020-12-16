@@ -13,39 +13,35 @@
                         <table class="table table-striped table-bordered first">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
-                                    <th>Amount</th>
-                                    <th>Balance</th>
-                                    <th>Interest gained</th>
-                                    <th>target</th>
-                                    <th>created at</th>
+                                    <th>Status</th>
+                                    <th>Amount Invested</th>
+                                    <th>Expected Returns</th>
+                                    <th>Current Returns</th>
+                                    <th>Date</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($investments as $investment)
                                     <tr>
+                                        <td>
+                                            @php
+                                                $badge = $investment->badge;
+                                            @endphp
+                                            <span class="badge-dot badge-{{ $badge['color'] }}"></span>
+                                        </td>
+                                        <td>{{ ucfirst($investment->status) }}</td>
                                         <td>{{ $investment->package->name }}</td>
                                         <td>{{ number_format($investment->amount, 2) }}</td>
-                                        <td>{{ number_format($investment->balance, 2) }}</td>
+                                        <td>{{ number_format($investment->returns, 2) }}</td>
                                         <td>{{ number_format($investment->interests, 2) }}</td>
-                                        <td>{{ number_format($investment->total, 2) }}</td>
-                                        <td> {{ $investment->created_at->format('d M, Y H:i A') }}</td>
+                                        <td> {{ optional($investment->verified_at)->format('d M, Y H:i A') }}</td>
                                         <td><a href="{{ route('user.investments.show', $investment->id) }}" class="card-link">View</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Amount</th>
-                                    <th>Balance</th>
-                                    <th>Interest gained</th>
-                                    <th>target</th>
-                                    <th>created at</th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

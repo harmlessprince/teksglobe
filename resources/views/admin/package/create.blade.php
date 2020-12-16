@@ -14,7 +14,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name" class="col-form-label">Name</label>
                                     <input id="name" type="text" value="" class="form-control form-control-lg" name="name">
@@ -25,10 +25,10 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="amount" class="col-form-label">Amount</label>
-                                    <input id="amount" type="text" value="" class="form-control form-control-lg" name="amount">
+                                    <input id="amount" type="number" value="" class="form-control form-control-lg" name="amount">
                                     @error('amount')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -38,9 +38,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="interest" class="col-form-label">Investment Interest Return (in Percentage)</label>
-                                    <input id="interest" type="number" value="" class="form-control form-control-lg" name="interest" min="0.0000">
-                                    @error('interest')
+                                    <label for="returns" class="col-form-label">Investment Returns</label>
+                                    <input id="returns" type="number" value="" class="form-control form-control-lg" name="returns" min="1">
+                                    @error('returns')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -51,7 +51,7 @@
                                 <div class="form-group">
                                     <label for="status" class="col-form-label">Active Status</label>
                                     <select class="form-control form-control-lg" name="status">
-                                        <option>--Select--</option>
+                                        <option value="">--Select--</option>
                                         <option value="1">Active</option>
                                         <option value="0">Not active</option>
 

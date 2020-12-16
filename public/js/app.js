@@ -2086,22 +2086,51 @@ var timeout;
       }
     }
   },
-  mounted: function mounted() {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }))();
-  },
   methods: {
     confirmTransfer: function confirmTransfer() {
       var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+
+                _this2.showAlert();
+
+                _this2.processing = true;
+                _context.next = 5;
+                return axios.post(_this2.confirmUrl, _objectSpread({}, _this2.form));
+
+              case 5:
+                res = _context.sent;
+                _this2.recepient = res.data.payload;
+                _this2.hasRecepient = true;
+                _context.next = 13;
+                break;
+
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](0);
+                _this2.errors = _context.t0.response.data.payload;
+
+              case 13:
+                _context.prev = 13;
+                _this2.processing = false;
+                return _context.finish(13);
+
+              case 16:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 10, 13, 16]]);
+      }))();
+    },
+    transferFunds: function transferFunds() {
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var res;
@@ -2110,50 +2139,8 @@ var timeout;
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
-
-                _this2.showAlert();
-
-                _this2.processing = true;
-                _context2.next = 5;
-                return axios.post(_this2.confirmUrl, _objectSpread({}, _this2.form));
-
-              case 5:
-                res = _context2.sent;
-                _this2.recepient = res.data.payload;
-                _this2.hasRecepient = true;
-                _context2.next = 13;
-                break;
-
-              case 10:
-                _context2.prev = 10;
-                _context2.t0 = _context2["catch"](0);
-                _this2.errors = _context2.t0.response.data.payload;
-
-              case 13:
-                _context2.prev = 13;
-                _this2.processing = false;
-                return _context2.finish(13);
-
-              case 16:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[0, 10, 13, 16]]);
-      }))();
-    },
-    transferFunds: function transferFunds() {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
                 _this3.processing = true;
-                _context3.next = 4;
+                _context2.next = 4;
                 return axios.post(_this3.transferUrl, {
                   email: _this3.recepient.email,
                   user: _this3.recepient.account.id,
@@ -2161,7 +2148,7 @@ var timeout;
                 });
 
               case 4:
-                res = _context3.sent;
+                res = _context2.sent;
 
                 _this3.resetForm();
 
@@ -2170,26 +2157,26 @@ var timeout;
                 _this3.showAlert(true, 'success', res.data.message);
 
                 _this3.hasRecepient = false;
-                _context3.next = 14;
+                _context2.next = 14;
                 break;
 
               case 11:
-                _context3.prev = 11;
-                _context3.t0 = _context3["catch"](0);
+                _context2.prev = 11;
+                _context2.t0 = _context2["catch"](0);
 
-                _this3.showAlert(true, 'success', _context3.t0.response.data.message);
+                _this3.showAlert(true, 'success', _context2.t0.response.data.message);
 
               case 14:
-                _context3.prev = 14;
+                _context2.prev = 14;
                 _this3.processing = false;
-                return _context3.finish(14);
+                return _context2.finish(14);
 
               case 17:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3, null, [[0, 11, 14, 17]]);
+        }, _callee2, null, [[0, 11, 14, 17]]);
       }))();
     },
     cancelTransfer: function cancelTransfer() {
@@ -2217,6 +2204,202 @@ var timeout;
     },
     emailError: function emailError() {
       return this.errors.hasOwnProperty('email') ? this.errors.email[0] : false;
+    },
+    pinError: function pinError() {
+      return this.errors.hasOwnProperty('pin') ? this.errors.pin[0] : false;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WithdrawComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WithdrawComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Alert_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Alert.vue */ "./resources/js/components/Alert.vue");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var timeout;
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    withdrawUrl: {
+      type: String,
+      required: true
+    },
+    canWithdraw: {
+      // type: String,
+      required: true
+    }
+  },
+  components: {
+    Alert: _Alert_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      processing: false,
+      form: {
+        amount: '',
+        pin: ''
+      },
+      confirm: false,
+      errors: {},
+      alert: {
+        msg: null,
+        show: false,
+        type: null
+      }
+    };
+  },
+  watch: {
+    alert: function alert(data) {
+      var _this = this;
+
+      if (data.show) {
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+          return _this.showAlert();
+        }, 5000);
+      }
+    }
+  },
+  methods: {
+    confirmWithdraw: function confirmWithdraw() {
+      this.confirm = true;
+    },
+    withdrawFunds: function withdrawFunds() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _this2.processing = true;
+                _context.next = 4;
+                return axios.post(_this2.withdrawUrl, _objectSpread({}, _this2.form));
+
+              case 4:
+                res = _context.sent;
+
+                _this2.resetForm();
+
+                _this2.showAlert(true, 'success', res.data.message);
+
+                _this2.confirm = false;
+                _context.next = 15;
+                break;
+
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context["catch"](0);
+                _this2.errors = _context.t0.response.data.payload;
+
+                _this2.cancelWithdraw();
+
+                _this2.showAlert(true, 'success', _context.t0.response.data.message);
+
+              case 15:
+                _context.prev = 15;
+                _this2.processing = false;
+                return _context.finish(15);
+
+              case 18:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 10, 15, 18]]);
+      }))();
+    },
+    cancelWithdraw: function cancelWithdraw() {
+      this.confirm = false;
+      this.form.pin = '';
+    },
+    resetForm: function resetForm() {
+      this.form.amount = '';
+      this.form.pin = '';
+    },
+    showAlert: function showAlert() {
+      var show = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var msg = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+      this.alert = {
+        show: show,
+        type: type,
+        msg: msg
+      };
+    }
+  },
+  computed: {
+    amountError: function amountError() {
+      return this.errors.hasOwnProperty('amount') ? this.errors.amount[0] : false;
     },
     pinError: function pinError() {
       return this.errors.hasOwnProperty('pin') ? this.errors.pin[0] : false;
@@ -3553,6 +3736,7 @@ var render = function() {
                           staticClass: "form-control form-control-lg",
                           attrs: {
                             id: "amount",
+                            required: "",
                             type: "number",
                             name: "amount"
                           },
@@ -3608,7 +3792,12 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control form-control-lg",
-                          attrs: { id: "email", type: "email", name: "email" },
+                          attrs: {
+                            id: "email",
+                            required: "",
+                            type: "email",
+                            name: "email"
+                          },
                           domProps: { value: _vm.form.email },
                           on: {
                             input: function($event) {
@@ -3654,7 +3843,12 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control form-control-lg",
-                          attrs: { id: "pin", type: "text", name: "pin" },
+                          attrs: {
+                            id: "pin",
+                            required: "",
+                            type: "text",
+                            name: "pin"
+                          },
                           domProps: { value: _vm.form.pin },
                           on: {
                             input: function($event) {
@@ -3803,6 +3997,219 @@ var staticRenderFns = [
           width: "100%"
         }
       })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WithdrawComponent.vue?vue&type=template&id=615908b8&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WithdrawComponent.vue?vue&type=template&id=615908b8& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "col-md-8 col-sm-12 col-12 mx-auto" },
+    [
+      _c("Alert", { attrs: { alert: _vm.alert } }),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          attrs: { method: "post", action: _vm.confirmWithdraw },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.confirmWithdraw($event)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "card" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-form-label",
+                        attrs: { for: "amount" }
+                      },
+                      [_vm._v("Amount")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model.number",
+                          value: _vm.form.amount,
+                          expression: "form.amount",
+                          modifiers: { number: true }
+                        }
+                      ],
+                      staticClass: "form-control form-control-lg",
+                      attrs: {
+                        id: "amount",
+                        required: "",
+                        type: "number",
+                        name: "amount"
+                      },
+                      domProps: { value: _vm.form.amount },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.form,
+                            "amount",
+                            _vm._n($event.target.value)
+                          )
+                        },
+                        blur: function($event) {
+                          return _vm.$forceUpdate()
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.amountError
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback d-block",
+                            attrs: { role: "alert" }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(_vm.amountError))])]
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      { staticClass: "col-form-label", attrs: { for: "pin" } },
+                      [_vm._v("Pin")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.pin,
+                          expression: "form.pin"
+                        }
+                      ],
+                      staticClass: "form-control form-control-lg",
+                      attrs: {
+                        id: "pin",
+                        required: "",
+                        type: "text",
+                        name: "pin"
+                      },
+                      domProps: { value: _vm.form.pin },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "pin", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.pinError
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "invalid-feedback d-block",
+                            attrs: { role: "alert" }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(_vm.pinError))])]
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.confirm
+                  ? _c("div", { staticClass: "col-12 mt-2 card-action" }, [
+                      _c("p", [_vm._v("Are you sure?")]),
+                      _vm._v(" "),
+                      !_vm.processing
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { disabled: _vm.processing },
+                              on: { click: _vm.cancelWithdraw }
+                            },
+                            [_vm._v("Cancel")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { disabled: _vm.processing },
+                          on: { click: _vm.withdrawFunds }
+                        },
+                        [
+                          _vm.processing
+                            ? _c("span", {
+                                staticClass:
+                                  "dashboard-spinner spinner-white spinner-xs"
+                              })
+                            : _c("span", [_vm._v("Withdraw")])
+                        ]
+                      )
+                    ])
+                  : _c("div", { staticClass: "col-12 mt-2 card-action" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit", disabled: _vm.processing }
+                        },
+                        [_vm._v("Submit")]
+                      )
+                    ])
+              ])
+            ])
+          ])
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h5", { staticClass: "mb-0" }, [_vm._v("Withdrawal")])
     ])
   }
 ]
@@ -15963,6 +16370,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.component('transfer-component', __webpack_require__(/*! ./components/TransferComponent.vue */ "./resources/js/components/TransferComponent.vue")["default"]);
+Vue.component('withdraw-component', __webpack_require__(/*! ./components/WithdrawComponent.vue */ "./resources/js/components/WithdrawComponent.vue")["default"]);
 var app = new Vue({
   el: '#app'
 });
@@ -16134,6 +16542,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TransferComponent_vue_vue_type_template_id_4589dd12___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TransferComponent_vue_vue_type_template_id_4589dd12___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/WithdrawComponent.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/WithdrawComponent.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _WithdrawComponent_vue_vue_type_template_id_615908b8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WithdrawComponent.vue?vue&type=template&id=615908b8& */ "./resources/js/components/WithdrawComponent.vue?vue&type=template&id=615908b8&");
+/* harmony import */ var _WithdrawComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WithdrawComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/WithdrawComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _WithdrawComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _WithdrawComponent_vue_vue_type_template_id_615908b8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _WithdrawComponent_vue_vue_type_template_id_615908b8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/WithdrawComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/WithdrawComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/WithdrawComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./WithdrawComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WithdrawComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/WithdrawComponent.vue?vue&type=template&id=615908b8&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/WithdrawComponent.vue?vue&type=template&id=615908b8& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_615908b8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./WithdrawComponent.vue?vue&type=template&id=615908b8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WithdrawComponent.vue?vue&type=template&id=615908b8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_615908b8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_615908b8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

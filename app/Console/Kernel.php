@@ -30,24 +30,27 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             Investment::where('balance', '>', 0)
                 ->where('status', 'approved')
-                // ->whereNotNull('verified_at')
-                // ->whereRaw('(verified_at + INTERVAL 30 DAY) < NOW()')
+                ->whereNotNull('verified_at')
+                ->whereRaw('(verified_at + INTERVAL 30 DAY) < NOW()')
                 ->chunkById(500, function ($investments) {
                     foreach ($investments as $investment) {
-                        $amount = $investment->amount;
                         $balance = $investment->balance;
-                        $interest = ($amount * 4) / 100;
-                        dump($balance, $interest);
-                        $left = $balance - $interest;
+                        $returns = $investment->returns;
+                        $weekly = $returns / 50;
+                        $interest = ($weekly > $balance) ? $balance : $weekly;
                         creditInterestTable(
                             $investment->user_id,
                             $interest,
-                            'Interest gained',
+                            'Interest gained on investment',
                             $investment->id
                         );
-                        dump($left);
-                        $investment->balance = $left;
-                        $investment->save();
+                        $investment->decrement('balance', $interest);
+                        $loan = abs(calculateUserLoanAccountBalance($investment->user_id));
+                        if ($loan > 0) {
+                            $liquidation = ($loan > $interest) ? $interest : $loan;
+                            creditLoanAccountTable($investment->user_id, $liquidation, 'Loan Liquidation');
+                            debitInterestTable($investment->user_id, $liquidation, 'Loan liquidation');
+                        }
                     }
                 });
         })
