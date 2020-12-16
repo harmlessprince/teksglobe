@@ -61,8 +61,7 @@ class MembershipController extends Controller
     public function show(User $user)
     {
         //
-          
-        $user = Auth::user();
+        $user->load('bank');
         
         return view('admin.membership.show', compact('user'));
     }

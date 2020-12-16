@@ -26,7 +26,10 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
-                                        <td>{{ $user->name }}</td>
+                                        <td>
+                                            <a href="{{route('admin.membership.show', $user->id)}}">    {{ $user->name }}</a>
+                                        
+                                        </td>
                                         <td>{{ $user->email }}</td>
                                         <td>
                                             @if ($user->admin == true)
