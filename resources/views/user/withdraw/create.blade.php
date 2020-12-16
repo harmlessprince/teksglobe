@@ -6,6 +6,6 @@
 
 @section('content')
     <div class="row">
-        <withdraw-component withdraw-url="{{ route('user.withdraws.store') }}" can-withdraw="{{ $bank }}"></withdraw-component>
+        <withdraw-component withdraw-url="{{ route('user.withdraws.store') }}" :withdraw-status="{{ $bank }}" profile-url="{{ route('user.profile.show') }}" :pin-status="{{ $pin }}"></withdraw-component>
     </div>
 @endsection

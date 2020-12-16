@@ -53,8 +53,9 @@ class WithdrawController extends Controller
      */
     public function create()
     {
-        $bank = auth()->user()->bank()->exists();
-        return view('user.withdraw.create', compact('bank'));
+        $bank = (int)auth()->user()->bank()->exists();
+        $pin = auth()->user()->hasPin();
+        return view('user.withdraw.create', compact('bank', 'pin'));
     }
 
     /**

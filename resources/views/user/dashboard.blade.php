@@ -37,8 +37,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-inline-block">
-                        <h6 class="text-muted">Wallet Balance</h6>
-                        <h2 class="mb-0">&#8358;{{ number_format($balance) }}</h2>
+                        <h6 class="text-muted">Wallet Balance (&#8358;)</h6>
+                        <h2 class="mb-0">{{ number_format($balance) }}</h2>
                     </div>
                     <div class="float-right icon-circle-medium  icon-box-lg  bg-brand-light mt-1">
                         <i class="fa fa-money-bill-alt fa-fw fa-sm text-brand"></i>
@@ -50,8 +50,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-inline-block">
-                        <h6 class="text-muted">Total Investments</h6>
-                        <h2 class="mb-0">&#8358;{{ number_format($investments) }}</h2>
+                        <h6 class="text-muted">Total Investments (&#8358;)</h6>
+                        <h2 class="mb-0">{{ number_format($investments) }}</h2>
                     </div>
                     <div class="float-right icon-circle-medium  icon-box-lg  bg-info-light mt-1">
                         <i class="fa fa-eye fa-fw fa-sm text-info"></i>
@@ -63,8 +63,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-inline-block">
-                        <h6 class="text-muted">Outstanding Loans</h6>
-                        <h2 class="mb-0">&#8358;{{ number_format($loans, 2) }}</h2>
+                        <h6 class="text-muted">Outstanding Loans (&#8358;)</h6>
+                        <h2 class="mb-0">{{ number_format($loans) }}</h2>
                     </div>
                     <div class="float-right icon-circle-medium  icon-box-lg  bg-primary-light mt-1">
                         <i class="fa fa-user fa-fw fa-sm text-primary"></i>

@@ -39,7 +39,7 @@
                         <input type="hidden" name="gateway" value="paystack">
                         <button type="submit" class="btn btn-success btn-lg">Pay Online</button>
                     </form>
-                   
+
                 </div>
             </div>
         </div>
@@ -49,10 +49,10 @@
                     <h3 class="card-title"> <strong class="text-custom">&#8358;{{ number_format($package->amount, 2) }}</strong></h3>
 
                     <p class="card-text "> This Plan has the following Benefits. You will get Return <strong class="text-custom">{{ $package->interest }}% </strong> money on every investment. This is <strong class="text-custom"> {{ $package->name }} </strong> Plan.</p>
-                    
+
 
                     <a href="#" class="btn btn-success" data-toggle="modal" data-target="#bankTransferModal">Bank Transfer</a>
-                   
+
                 </div>
             </div>
         </div>
@@ -63,22 +63,20 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="bankTransferModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="bankTransferModalLabel">Bank Transfer</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </a>
                 </div>
-                <form method="post" class="my-4" action="{{ route('user.investments.store', $package->id) }}">
+                <form method="post" class="my-4" action="{{ route('user.investments.store', $package->id) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <p>Payment/transfer can also be made into Spectranet's bank account below. When done with payment, kindly scanned payment teller or screenshot of successful transfer transaction and send to us at care@spectranet.com.ng for us to credit your account.
-                            Bank	Account Number
-                            Abuja	FCMB	0658482020</p>
+                        <p>Payment/transfer can also be made into {{ config('app.name') }}'s bank account below. When done with payment, kindly fill the form below with screenshot of teller or successful transfer transaction for us to credit your account. FCMB 0658482020</p>
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="name" class="col-form-label">Depositor's Name</label>
-                                    <input id="name" type="text" class="form-control form-control-lg" name="name">
+                                    <input id="name" type="text" required class="form-control form-control-lg" name="name">
                                     @error('name')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -89,8 +87,19 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="amount" class="col-form-label">Amount</label>
-                                    <input id="amount" type="number" class="form-control form-control-lg" name="amount">
+                                    <input id="amount" type="number" required value="{{ $package->amount }}" readonly class="form-control form-control-lg" name="amount">
                                     @error('amount')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="evidence" class="col-form-label">Evidence</label>
+                                    <input id="evidence" type="file" required class="form-control form-control-lg" name="evidence">
+                                    @error('evidence')
                                         <span class="invalid-feedback d-block" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

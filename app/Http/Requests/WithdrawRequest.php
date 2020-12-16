@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckPin;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
@@ -29,7 +30,7 @@ class WithdrawRequest extends FormRequest
         $charge = calculateChargeOnWithdrawal($this->amount);
         return [
             'amount' => 'bail|required|numeric|min:1|max:'.($balance - $charge),
-            'pin' => 'required|string',
+            'pin' => ['required', 'numeric', new CheckPin],
         ];
     }
 

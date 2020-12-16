@@ -8,6 +8,7 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PinController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawController;
@@ -87,7 +88,7 @@ Route::post('payment/verify', [PaymentController::class, 'verify'])->name('payme
 
 Route::middleware('auth', 'verified')->group(function () {
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::view('dashboard', 'admin.dashboard')->name('dashboard');
+        Route::get('dashboard', [DashboardController::class, 'admin'])->name('dashboard');
         Route::get('packages/create', [PackageController::class, 'create'])->name('packages.create');
         Route::post('packages', [PackageController::class, 'store'])->name('packages.store');
         Route::delete('packages/{package}', [PackageController::class, 'destroy'])->name('packages.destroy');
@@ -129,16 +130,18 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('investments', [InvestmentController::class, 'index'])->name('investments.index');
         Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
         Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
+        Route::get('profile', [UserController::class, 'show'])->name('profile.show');
+        Route::get('pin/update', [PinController::class, 'index'])->name('pin.index');
+        Route::post('pin/update', [PinController::class, 'update'])->name('pin.update');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
         Route::get('membership', [MembershipController::class, 'show'])->name('membership.show');
         Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');
         Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index')->middleware('password.confirm');
         Route::post('transfers', [TransferController::class, 'store'])->name('transfers.store');
         Route::post('withdrawals', [WithdrawController::class, 'store'])->name('withdraws.store');
-        Route::get('withdrawals/create', [WithdrawController::class, 'create'])->name('withdraws.create');
+        Route::get('withdrawals/create', [WithdrawController::class, 'create'])->name('withdraws.create')->middleware('password.confirm');
         Route::get('withdrawals/pending', [WithdrawController::class, 'pending'])->name('withdraws.pending');
         Route::get('withdrawals/approved', [WithdrawController::class, 'approved'])->name('withdraws.approved');
         Route::get('wallets', [InterestController::class, 'index'])->name('wallet.index');
-        Route::get('profile', [UserController::class, 'show'])->name('profile.show');
     });
 });

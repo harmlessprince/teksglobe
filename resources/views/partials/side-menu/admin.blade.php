@@ -64,9 +64,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.loans.declined')}}">Declined</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{route('admin.loans.completed')}}">Completed</a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </li>

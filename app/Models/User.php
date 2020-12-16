@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
+        'pin',
         'password',
         'remember_token',
     ];
@@ -51,5 +52,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function bank()
     {
         return $this->hasOne(BankAccount::class);
+    }
+
+    /**
+     *
+     */
+    public function hasPin()
+    {
+        return $this->pin ? 1 : 0;
     }
 }

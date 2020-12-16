@@ -1,5 +1,5 @@
 <template>
-    <div class="alert alert-success alert-block" v-if="alert.show">
+    <div class="alert alert-block" :class="'alert-'+alert.type" v-if="alert.show">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ alert.msg }}</strong>
     </div>

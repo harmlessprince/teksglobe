@@ -65,7 +65,7 @@
                             @if(\Request::route()->getPrefix() != '/admin')
                                 <div class="card mb-2 ml-auto" style="width: fit-content;" id="walletBalance">
                                     <div class="card-body">
-                                        <h5 class="text-success">Wallet Balance: &#8358;{{ number_format(calculateAvailableBalance(auth()->user()->id), 2) }}</h5>
+                                        <h5 class="text-success mb-0">Wallet Balance: &#8358;{{ number_format(calculateAvailableBalance(auth()->user()->id), 2) }}</h5>
                                     </div>
                                 </div>
                             @endcannot

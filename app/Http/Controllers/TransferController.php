@@ -15,7 +15,8 @@ class TransferController extends Controller
      */
     public function index()
     {
-        return view('user.transfer.index');
+        $pin = auth()->user()->hasPin();
+        return view('user.transfer.index', compact('pin'));
     }
 
     /**
@@ -45,7 +46,7 @@ class TransferController extends Controller
     public function confirm(TransferRequest $request)
     {
         ['email' => $email, 'amount' => $amount, 'pin' => $pin] = $request->validated();
-        $account = DB::table('users')->select('id', 'name')->where('email', $email)->first();
+        $account = DB::table('users')->select('id', 'name')->where('email', $email)->orWhere('phone', $email)->first();
         return respondWithSuccess(['account' => $account, 'amount' => $amount, 'email' => $email]);
     }
 }

@@ -82,6 +82,7 @@ class InvestmentController extends Controller
         ];
         if ($request->gateway === 'bank') {
             $data['info'] = ['name' => $request->name, 'amount' => $request->amount];
+            $data['evidence'] = $request->file('evidence')->store('evidence', 'public');
         }
         if ($request->gateway === 'wallet') {
             if (calculateAvailableBalance($user->id) < $package->amount) {

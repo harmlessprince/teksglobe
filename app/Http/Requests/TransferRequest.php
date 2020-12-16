@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckPin;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class TransferRequest extends FormRequest
@@ -30,7 +32,14 @@ class TransferRequest extends FormRequest
         return [
             'amount' => 'bail|required|numeric|min:1|max:'.($balance - $charge),
             'email' => 'required|string|email|exists:users',
-            'pin' => 'required|string',
+            'email' => [
+                'required',
+                'string',
+                Rule::exists('users', 'email')->where(function ($query) {
+                    $query->orWhere('phone', $this->email);
+                }),
+            ],
+            'pin' => ['required', 'numeric', new CheckPin],
         ];
     }
 

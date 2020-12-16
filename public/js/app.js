@@ -2039,6 +2039,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 var timeout;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2049,6 +2050,14 @@ var timeout;
     },
     transferUrl: {
       type: String,
+      required: true
+    },
+    profileUrl: {
+      type: String,
+      required: true
+    },
+    pinStatus: {
+      type: Number,
       required: true
     }
   },
@@ -2108,25 +2117,28 @@ var timeout;
                 res = _context.sent;
                 _this2.recepient = res.data.payload;
                 _this2.hasRecepient = true;
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
               case 10:
                 _context.prev = 10;
                 _context.t0 = _context["catch"](0);
+
+                _this2.cancelTransfer();
+
                 _this2.errors = _context.t0.response.data.payload;
 
-              case 13:
-                _context.prev = 13;
+              case 14:
+                _context.prev = 14;
                 _this2.processing = false;
-                return _context.finish(13);
+                return _context.finish(14);
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 10, 13, 16]]);
+        }, _callee, null, [[0, 10, 14, 17]]);
       }))();
     },
     transferFunds: function transferFunds() {
@@ -2139,15 +2151,16 @@ var timeout;
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.prev = 0;
+                _this3.errors = {};
                 _this3.processing = true;
-                _context2.next = 4;
+                _context2.next = 5;
                 return axios.post(_this3.transferUrl, {
                   email: _this3.recepient.email,
                   user: _this3.recepient.account.id,
                   amount: _this3.recepient.amount
                 });
 
-              case 4:
+              case 5:
                 res = _context2.sent;
 
                 _this3.resetForm();
@@ -2157,26 +2170,26 @@ var timeout;
                 _this3.showAlert(true, 'success', res.data.message);
 
                 _this3.hasRecepient = false;
-                _context2.next = 14;
+                _context2.next = 15;
                 break;
 
-              case 11:
-                _context2.prev = 11;
+              case 12:
+                _context2.prev = 12;
                 _context2.t0 = _context2["catch"](0);
 
-                _this3.showAlert(true, 'success', _context2.t0.response.data.message);
+                _this3.showAlert(true, 'danger', _context2.t0.response.data.message);
 
-              case 14:
-                _context2.prev = 14;
+              case 15:
+                _context2.prev = 15;
                 _this3.processing = false;
-                return _context2.finish(14);
+                return _context2.finish(15);
 
-              case 17:
+              case 18:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 11, 14, 17]]);
+        }, _callee2, null, [[0, 12, 15, 18]]);
       }))();
     },
     cancelTransfer: function cancelTransfer() {
@@ -2283,6 +2296,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 var timeout;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2291,8 +2309,16 @@ var timeout;
       type: String,
       required: true
     },
-    canWithdraw: {
-      // type: String,
+    profileUrl: {
+      type: String,
+      required: true
+    },
+    withdrawStatus: {
+      type: Number,
+      required: true
+    },
+    pinStatus: {
+      type: Number,
       required: true
     }
   },
@@ -2342,10 +2368,11 @@ var timeout;
               case 0:
                 _context.prev = 0;
                 _this2.processing = true;
-                _context.next = 4;
+                _this2.errors = {};
+                _context.next = 5;
                 return axios.post(_this2.withdrawUrl, _objectSpread({}, _this2.form));
 
-              case 4:
+              case 5:
                 res = _context.sent;
 
                 _this2.resetForm();
@@ -2353,29 +2380,29 @@ var timeout;
                 _this2.showAlert(true, 'success', res.data.message);
 
                 _this2.confirm = false;
-                _context.next = 15;
+                _context.next = 16;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](0);
                 _this2.errors = _context.t0.response.data.payload;
 
                 _this2.cancelWithdraw();
 
-                _this2.showAlert(true, 'success', _context.t0.response.data.message);
+                _this2.showAlert(true, 'danger', _context.t0.response.data.message);
 
-              case 15:
-                _context.prev = 15;
+              case 16:
+                _context.prev = 16;
                 _this2.processing = false;
-                return _context.finish(15);
+                return _context.finish(16);
 
-              case 18:
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 10, 15, 18]]);
+        }, _callee, null, [[0, 11, 16, 19]]);
       }))();
     },
     cancelWithdraw: function cancelWithdraw() {
@@ -3652,18 +3679,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.alert.show
-    ? _c("div", { staticClass: "alert alert-success alert-block" }, [
-        _c(
-          "button",
-          {
-            staticClass: "close",
-            attrs: { type: "button", "data-dismiss": "alert" }
-          },
-          [_vm._v("×")]
-        ),
-        _vm._v(" "),
-        _c("strong", [_vm._v(_vm._s(_vm.alert.msg))])
-      ])
+    ? _c(
+        "div",
+        { staticClass: "alert alert-block", class: "alert-" + _vm.alert.type },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "close",
+              attrs: { type: "button", "data-dismiss": "alert" }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _c("strong", [_vm._v(_vm._s(_vm.alert.msg))])
+        ]
+      )
     : _vm._e()
 }
 var staticRenderFns = []
@@ -3779,7 +3810,7 @@ var render = function() {
                             staticClass: "col-form-label",
                             attrs: { for: "email" }
                           },
-                          [_vm._v("Email")]
+                          [_vm._v("Email/Phone")]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -3846,7 +3877,7 @@ var render = function() {
                           attrs: {
                             id: "pin",
                             required: "",
-                            type: "text",
+                            type: "password",
                             name: "pin"
                           },
                           domProps: { value: _vm.form.pin },
@@ -3873,23 +3904,40 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-12 mt-2 card-action" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "submit", disabled: _vm.processing }
-                        },
-                        [
-                          _vm.processing
-                            ? _c("span", {
-                                staticClass:
-                                  "dashboard-spinner spinner-white spinner-xs"
-                              })
-                            : _c("span", [_vm._v("Submit")])
-                        ]
-                      )
-                    ])
+                    _vm.pinStatus
+                      ? _c("div", { staticClass: "col-12 mt-2 card-action" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: {
+                                type: "submit",
+                                disabled: _vm.processing
+                              }
+                            },
+                            [
+                              _vm.processing
+                                ? _c("span", {
+                                    staticClass:
+                                      "dashboard-spinner spinner-white spinner-xs"
+                                  })
+                                : _c("span", [_vm._v("Submit")])
+                            ]
+                          )
+                        ])
+                      : !_vm.pinStatus
+                      ? _c("p", { staticClass: "col-12" }, [
+                          _c("em", [
+                            _vm._v(
+                              "You have not created a pin for you account.Click "
+                            ),
+                            _c("a", { attrs: { href: _vm.profileUrl } }, [
+                              _c("u", [_vm._v("Here")])
+                            ]),
+                            _vm._v(" to create your pin")
+                          ])
+                        ])
+                      : _vm._e()
                   ])
                 ])
               ])
@@ -4030,7 +4078,7 @@ var render = function() {
       _c(
         "form",
         {
-          attrs: { method: "post", action: _vm.confirmWithdraw },
+          attrs: { method: "post" },
           on: {
             submit: function($event) {
               $event.preventDefault()
@@ -4124,7 +4172,7 @@ var render = function() {
                       attrs: {
                         id: "pin",
                         required: "",
-                        type: "text",
+                        type: "password",
                         name: "pin"
                       },
                       domProps: { value: _vm.form.pin },
@@ -4151,49 +4199,94 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm.confirm
-                  ? _c("div", { staticClass: "col-12 mt-2 card-action" }, [
-                      _c("p", [_vm._v("Are you sure?")]),
-                      _vm._v(" "),
-                      !_vm.processing
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { disabled: _vm.processing },
-                              on: { click: _vm.cancelWithdraw }
-                            },
-                            [_vm._v("Cancel")]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { disabled: _vm.processing },
-                          on: { click: _vm.withdrawFunds }
-                        },
-                        [
-                          _vm.processing
-                            ? _c("span", {
-                                staticClass:
-                                  "dashboard-spinner spinner-white spinner-xs"
-                              })
-                            : _c("span", [_vm._v("Withdraw")])
-                        ]
-                      )
+                _vm.withdrawStatus && _vm.pinStatus
+                  ? _c("section", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _vm.confirm
+                          ? _c(
+                              "div",
+                              { staticClass: "col-12 mt-2 card-action" },
+                              [
+                                !_vm.processing
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-primary",
+                                        attrs: {
+                                          type: "button",
+                                          disabled: _vm.processing
+                                        },
+                                        on: { click: _vm.cancelWithdraw }
+                                      },
+                                      [_vm._v("Cancel")]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    attrs: {
+                                      type: "button",
+                                      disabled: _vm.processing
+                                    },
+                                    on: { click: _vm.withdrawFunds }
+                                  },
+                                  [
+                                    _vm.processing
+                                      ? _c("span", {
+                                          staticClass:
+                                            "dashboard-spinner spinner-white spinner-xs"
+                                        })
+                                      : _c("span", [_vm._v("Withdraw")])
+                                  ]
+                                )
+                              ]
+                            )
+                          : _c(
+                              "div",
+                              { staticClass: "col-12 mt-2 card-action" },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    attrs: {
+                                      type: "submit",
+                                      disabled: _vm.processing
+                                    }
+                                  },
+                                  [_vm._v("Submit")]
+                                )
+                              ]
+                            )
+                      ])
                     ])
-                  : _c("div", { staticClass: "col-12 mt-2 card-action" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "submit", disabled: _vm.processing }
-                        },
-                        [_vm._v("Submit")]
-                      )
+                  : !_vm.withdrawStatus
+                  ? _c("p", { staticClass: "col-12" }, [
+                      _c("em", [
+                        _vm._v(
+                          "You do not have your bank details on the system. Click "
+                        ),
+                        _c("a", { attrs: { href: _vm.profileUrl } }, [
+                          _c("u", [_vm._v("Here")])
+                        ]),
+                        _vm._v(" to add your bank details")
+                      ])
                     ])
+                  : !_vm.pinStatus
+                  ? _c("p", { staticClass: "col-12" }, [
+                      _c("em", [
+                        _vm._v(
+                          "You have not created a pin for you account.Click "
+                        ),
+                        _c("a", { attrs: { href: _vm.profileUrl } }, [
+                          _c("u", [_vm._v("Here")])
+                        ]),
+                        _vm._v(" to create your pin")
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ])

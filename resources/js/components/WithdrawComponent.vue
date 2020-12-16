@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-8 col-sm-12 col-12 mx-auto">
         <Alert :alert="alert" />
-        <form method="post" :action="confirmWithdraw" @submit.prevent="confirmWithdraw">
+        <form method="post" @submit.prevent="confirmWithdraw">
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Withdrawal</h5>
@@ -20,23 +20,28 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="pin" class="col-form-label">Pin</label>
-                                <input id="pin" required type="text" v-model="form.pin" class="form-control form-control-lg" name="pin">
+                                <input id="pin" required type="password" v-model="form.pin" class="form-control form-control-lg" name="pin">
                                 <span class="invalid-feedback d-block" role="alert" v-if="pinError">
                                     <strong>{{ pinError }}</strong>
                                 </span>
                             </div>
                         </div>
-                        <div class="col-12 mt-2 card-action" v-if="confirm">
-                            <p>Are you sure?</p>
-                            <button v-if="!processing" class="btn btn-primary" :disabled="processing" @click="cancelWithdraw">Cancel</button>
-                            <button class="btn btn-primary" :disabled="processing" @click="withdrawFunds">
-                                <span v-if="processing" class="dashboard-spinner spinner-white spinner-xs"></span>
-                                <span v-else>Withdraw</span>
-                            </button>
-                        </div>
-                        <div class="col-12 mt-2 card-action" v-else>
-                            <button type="submit" class="btn btn-primary" :disabled="processing">Submit</button>
-                        </div>
+                        <section class="col-12" v-if="withdrawStatus && pinStatus">
+                            <div class="row">
+                                <div class="col-12 mt-2 card-action" v-if="confirm">
+                                    <button v-if="!processing" type="button" class="btn btn-primary" :disabled="processing" @click="cancelWithdraw">Cancel</button>
+                                    <button class="btn btn-primary" type="button" :disabled="processing" @click="withdrawFunds">
+                                        <span v-if="processing" class="dashboard-spinner spinner-white spinner-xs"></span>
+                                        <span v-else>Withdraw</span>
+                                    </button>
+                                </div>
+                                <div class="col-12 mt-2 card-action" v-else>
+                                    <button type="submit" class="btn btn-primary" :disabled="processing">Submit</button>
+                                </div>
+                            </div>
+                        </section>
+                        <p class="col-12" v-else-if="!withdrawStatus"><em>You do not have your bank details on the system. Click <a :href="profileUrl"><u>Here</u></a> to add your bank details</em></p>
+                        <p class="col-12" v-else-if="!pinStatus"><em>You have not created a pin for you account.Click <a :href="profileUrl"><u>Here</u></a> to create your pin</em></p>
                     </div>
                 </div>
             </div>
@@ -54,8 +59,16 @@
                 type: String,
                 required: true,
             },
-            canWithdraw: {
-                // type: String,
+            profileUrl: {
+                type: String,
+                required: true,
+            },
+            withdrawStatus: {
+                type: Number,
+                required: true,
+            },
+            pinStatus: {
+                type: Number,
                 required: true,
             },
         },
@@ -93,6 +106,7 @@
             async withdrawFunds() {
                 try {
                     this.processing = true;
+                    this.errors = {};
                     const res = await axios.post(this.withdrawUrl, { ...this.form });
                     this.resetForm();
                     this.showAlert(true, 'success', res.data.message);
@@ -100,7 +114,7 @@
                 } catch (e) {
                     this.errors = e.response.data.payload;
                     this.cancelWithdraw();
-                    this.showAlert(true, 'success', e.response.data.message);
+                    this.showAlert(true, 'danger', e.response.data.message);
                 } finally {
                     this.processing = false;
                 }

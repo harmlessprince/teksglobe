@@ -19,7 +19,6 @@
                                     <th>Interest</th>
                                     <th>Total Payable</th>
                                     <th>Status</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,7 +33,6 @@
                                         <td>{{ number_format(($loan->amount + $loan->charge), 2) }}</td>
                                         <td> <p class="text-success"> {{ $loan->status }}</p></td>
                                         <td>{{ optional($loan->verified_at)->format('d M, Y H:i A') }}</td>
-                                       
                                     </tr>
                                 @endforeach
                             </tbody>

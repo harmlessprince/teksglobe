@@ -28,6 +28,7 @@ class BuyPackage extends FormRequest
             return [
                 'name' => 'required|string',
                 'amount' => 'required|numeric|min:1',
+                'evidence' => 'required|image|max:150',
             ];
         }
         return [

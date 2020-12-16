@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="email" class="col-form-label">Email</label>
+                                <label for="email" class="col-form-label">Email/Phone</label>
                                 <input id="email" required type="email" v-model="form.email" class="form-control form-control-lg" name="email">
                                 <span class="invalid-feedback d-block" role="alert" v-if="emailError">
                                     <strong>{{ emailError }}</strong>
@@ -29,18 +29,19 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="pin" class="col-form-label">Pin</label>
-                                <input id="pin" required type="text" v-model="form.pin" class="form-control form-control-lg" name="pin">
+                                <input id="pin" required type="password" v-model="form.pin" class="form-control form-control-lg" name="pin">
                                 <span class="invalid-feedback d-block" role="alert" v-if="pinError">
                                     <strong>{{ pinError }}</strong>
                                 </span>
                             </div>
                         </div>
-                        <div class="col-12 mt-2 card-action">
+                        <div class="col-12 mt-2 card-action" v-if="pinStatus">
                             <button type="submit" class="btn btn-primary" :disabled="processing">
                                 <span v-if="processing" class="dashboard-spinner spinner-white spinner-xs"></span>
                                 <span v-else>Submit</span>
                             </button>
                         </div>
+                        <p class="col-12" v-else-if="!pinStatus"><em>You have not created a pin for you account.Click <a :href="profileUrl"><u>Here</u></a> to create your pin</em></p>
                     </div>
                 </div>
             </div>
@@ -89,6 +90,14 @@
                 type: String,
                 required: true,
             },
+            profileUrl: {
+                type: String,
+                required: true,
+            },
+            pinStatus: {
+                type: Number,
+                required: true,
+            },
         },
         components: {
             Alert,
@@ -129,6 +138,7 @@
                     this.recepient = res.data.payload;
                     this.hasRecepient = true;
                 } catch (e) {
+                    this.cancelTransfer();
                     this.errors = e.response.data.payload;
                 } finally {
                     this.processing = false;
@@ -136,6 +146,7 @@
             },
             async transferFunds() {
                 try {
+                    this.errors = {};
                     this.processing = true;
                     const res = await axios.post(this.transferUrl, { email: this.recepient.email, user: this.recepient.account.id, amount: this.recepient.amount });
                     this.resetForm();
@@ -143,7 +154,7 @@
                     this.showAlert(true, 'success', res.data.message);
                     this.hasRecepient = false;
                 } catch (e) {
-                    this.showAlert(true, 'success', e.response.data.message);
+                    this.showAlert(true, 'danger', e.response.data.message);
                 } finally {
                     this.processing = false;
                 }
