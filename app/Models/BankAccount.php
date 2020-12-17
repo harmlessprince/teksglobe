@@ -19,8 +19,8 @@ class BankAccount extends Model
     /**
      * Get the user record associated with the bank account.
      */
-    public function investments()
+    public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }
