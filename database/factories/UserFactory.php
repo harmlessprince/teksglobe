@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'active' => $this->faker->boolean(50),
             'mobile' => $this->faker->phoneNumber,
             'avatar' => 'uploads/avatars/default.jpg',
-            'pin' => substr(str_shuffle($permitted_chars), 0, 5),
+            // 'pin' => substr(str_shuffle($permitted_chars), 0, 5),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),

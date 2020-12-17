@@ -18,6 +18,7 @@
                                     <th>Amount</th>
                                     <th>Charge</th>
                                     <th>Requested</th>
+                                    <th>Account</th>
                                     <th>Status</th>
                                     <th>Approve</th>
                                     <th>Decline</th>
@@ -31,6 +32,7 @@
                                         <td>{{ number_format($pending_withdrawal->amount, 2) }}</td>
                                         <td>{{ number_format($pending_withdrawal->charge, 2) }}</td>
                                         <td> {{ $pending_withdrawal->created_at->format('d M, Y H:i A') }}</td>
+                                        <td>{{$pending_withdrawal->user->bank->bank_name}}/{{$pending_withdrawal->user->bank->account_name}}/{{$pending_withdrawal->user->bank->account_number}}</td>
                                         <td>
                                             <p class="text-warning"> {{ $pending_withdrawal->status }} </p>
                                         </td>
