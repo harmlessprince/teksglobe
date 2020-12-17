@@ -145,7 +145,7 @@ class WithdrawController extends Controller
         $withdraw->verified_at = now();
         $withdraw->narration = $request->narration;
         $withdraw->save();
-        $withdraw->user()->notify(new WithdrawalDeclinedNotification());
+        $withdraw->user->notify(new WithdrawalDeclinedNotification());
         return back()->with('success', 'Withdrawal has been successfully Declined');
     }
 
