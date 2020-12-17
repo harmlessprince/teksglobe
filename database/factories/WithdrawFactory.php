@@ -23,6 +23,11 @@ class WithdrawFactory extends Factory
     {
         return [
             //
+            'charge' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'admin' => $this->faker->boolean(50),
+            'active' => $this->faker->boolean(50),
+            'mobile' => $this->faker->phoneNumber,
         ];
     }
 }

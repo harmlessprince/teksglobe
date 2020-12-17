@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateWithdrawal;
 use App\Http\Requests\WithdrawRequest;
 use App\Models\Withdraw;
+use App\Notifications\WithdrawalDeclinedNotification;
 use Illuminate\Http\Request;
 
 class WithdrawController extends Controller
@@ -144,6 +145,7 @@ class WithdrawController extends Controller
         $withdraw->verified_at = now();
         $withdraw->narration = $request->narration;
         $withdraw->save();
+        $withdraw->user->notify(new WithdrawalDeclinedNotification());
         return back()->with('success', 'Withdrawal has been successfully Declined');
     }
 

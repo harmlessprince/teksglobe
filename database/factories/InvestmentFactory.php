@@ -26,7 +26,8 @@ class InvestmentFactory extends Factory
         $package =  Package::all()->random();
         return [
             'package_id' => $package->id,
-            'amount' => $package->amount,
+            'amount' => $package->amount, 
+            'evidence' => 'uploads/avatars/default.jpg',
             'balance' => $package->amount * 2,
             'gateway' => $this->faker->randomElement($array = array('paystack', 'wallet', 'bank')),
             'status' => $this->faker->randomElement($array = array('approved', 'pending', 'declined')),
