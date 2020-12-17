@@ -137,7 +137,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('pin/update', [PinController::class, 'index'])->name('pin.index');
         Route::post('pin/update', [PinController::class, 'update'])->name('pin.update');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');
-        Route::get('membership', [MembershipController::class, 'show'])->name('membership.show');
+        // Route::get('membership', [MembershipController::class, 'show'])->name('membership.show');
         Route::post('transfers/confirm', [TransferController::class, 'confirm'])->name('transfers.confirm');
         Route::get('transfers', [TransferController::class, 'index'])->name('transfers.index')->middleware('password.confirm');
         Route::post('transfers', [TransferController::class, 'store'])->name('transfers.store');

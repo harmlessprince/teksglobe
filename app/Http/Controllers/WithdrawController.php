@@ -123,7 +123,7 @@ class WithdrawController extends Controller
         $withdraw->verified_by = auth()->user()->id;
         $withdraw->verified_at = now();
         $withdraw->save();
-        debitInterestTable($withdraw->user_id, $withdraw->amount, "Withdrawal approved");
+        debitInterestTable($withdraw->user_id, $withdraw->amount, 'Withdrawal approved');
         return back()->with('success', 'Withdrawal has been successfully Approved');
     }
 
