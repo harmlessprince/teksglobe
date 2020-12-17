@@ -15,7 +15,12 @@ class BankAccount extends Model
      * @var array
      */
     protected $guarded = [];
-    public  function user () {
-        return $this->belongsTo(User::class);
+
+    /**
+     * Get the user record associated with the bank account.
+     */
+    public function investments()
+    {
+        return $this->hasMany(User::class);
     }
 }

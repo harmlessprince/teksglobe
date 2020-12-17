@@ -151,11 +151,11 @@ class LoanController extends Controller
         $loan->verified_at = now();
         $loan->save();
         //
-        creditInterestTable($loan->user_id, $loan->amount, "fix this");
+        creditInterestTable($loan->user_id, $loan->amount, 'Loan Approved');
         debitLoanAccountTable($loan->user_id, $loan->amount, 'Loan Booking', $loan->investment_id);
         debitLoanAccountTable($loan->user_id, $loan->charge, ' Interest on Loan', $loan->investment_id);
         //
-        $loan->user->notify(new LoanApprovedNotification($loan));
+        // $loan->user->notify(new LoanApprovedNotification($loan));
         //
         return back()->with('success', 'Loan has been successfully Approved');
     }
