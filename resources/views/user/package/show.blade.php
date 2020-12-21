@@ -97,7 +97,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="evidence" class="col-form-label">Evidence</label>
+                                    <label for="evidence" class="col-form-label">Evidence (Not more than 150KB and should be in JPEG, JPG or PNG format)</label>
                                     <input id="evidence" type="file" required class="form-control form-control-lg" name="evidence">
                                     @error('evidence')
                                         <span class="invalid-feedback d-block" role="alert">

@@ -3,6 +3,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/datatables/css/dataTables.bootstrap4.css') }}">
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
+    <style>
+        .evidence {
+            width: 100%;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -18,6 +23,7 @@
                                 <tr>
                                     <th>Investor name</th>
                                     <th>Package name</th>
+                                    <th>Evidence</th>
                                     <th>Amount</th>
                                     <th>Balance</th>
                                     <th>Created at</th>
@@ -30,6 +36,25 @@
                                     <tr>
                                         <td>{{ $investment->user->name }}</td>
                                         <td>{{ $investment->package->name }}</td>
+                                        <td>
+                                            <a href="#" class="text-center pop">
+                                                <img src="{{ asset('storage/'.$investment->evidence) }}" alt="evidence" class="user-avatar-md rounded-circle pop">
+                                                <input type="hidden" name="invest_id" value="{{ $investment->id }}">
+                                            </a>
+                                            <div class="modal fade" id="imagemodal-{{ $investment->id }}" tabindex="-1"
+                                                role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <button type="button" class="close" data-dismiss="modal"><span
+                                                                    aria-hidden="true">&times;</span><span
+                                                                    class="sr-only">Close</span></button>
+                                                            <img src="" class="imagepreview" style="width: 100%;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>{{ number_format($investment->amount, 2) }}</td>
                                         <td>{{ number_format($investment->balance, 2) }}</td>
                                         <td> {{ $investment->created_at->format('d M, Y H:i A') }}</td>
@@ -60,6 +85,7 @@
                                 <tr>
                                     <th>Investor name</th>
                                     <th>Package name</th>
+                                    <th>Evidence</th>
                                     <th>Amount</th>
                                     <th>Balance</th>
                                     <th>Created at</th>
@@ -76,7 +102,7 @@
 
 
 
-    
+
 @endsection
 
 @push('scripts')
@@ -85,6 +111,16 @@
     <script src="{{ asset('assets/vendor/datatables/js/data-table.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $(function() {
+                $('.pop').on('click', function() {
+                    var id = $(this).next('input').val();
+                    $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+                    $(`#imagemodal-${id}`).modal('show');
+                });
+            });
+
+        });
         $(document).ready(function() {
             $(".activate").submit(function(e) {
                 e.preventDefault();
@@ -113,7 +149,7 @@
                             });
 
                         } else {
-                            swal("Approval cancled");
+                            swal("Approval cancelled");
                         }
                     });
             });
@@ -146,7 +182,7 @@
                             });
 
                         } else {
-                            swal("Approval cancled");
+                            swal("Approval cancelled");
                         }
                     });
             });
