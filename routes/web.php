@@ -134,6 +134,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('loans', [LoanController::class, 'index'])->name('loans.index');
         Route::get('packages', [PackageController::class, 'index'])->name('packages.index');
         Route::get('profile', [UserController::class, 'show'])->name('profile.show');
+        Route::post('profile', [UserController::class, 'update'])->name('profile.update');
         Route::get('pin/update', [PinController::class, 'index'])->name('pin.index');
         Route::post('pin/update', [PinController::class, 'update'])->name('pin.update');
         Route::get('packages/{package}', [PackageController::class, 'show'])->name('packages.show');

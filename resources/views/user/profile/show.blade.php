@@ -4,8 +4,7 @@
 @section('content')
     <div class="row">
         <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-            <form method="post" action="" enctype="multipart/form-data">
-                @method('PUT')
+            <form method="post" action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="icon-box-sm card-header" style="display: flex; align-items: center;">
@@ -26,7 +25,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="col-form-label">Full Name</label>
-                                    <input id="name" type="text" placeholder="name" class="form-control form-control-lg" name="name" value="{{ $user->name }}">
+                                    <input id="name" type="text" placeholder="name" class="form-control form-control-lg" value="{{ $user->name }}" readonly>
                                     @error('name')
                                         <span class="invalid-feedback  d-block" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -43,7 +42,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="mobile" class="col-form-label">Mobile Number</label>
-                                    <input id="mobile" type="number" value="{{ $user->mobile }}" class="form-control form-control-lg" name="mobile" readonly>
+                                    <input id="mobile" type="text" value="{{ $user->mobile }}" class="form-control form-control-lg" name="mobile">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -91,6 +90,11 @@
                                     <input id="current_password" type="password" value=""
                                         class="form-control form-control-lg" name="current_password">
                                     <span class="text-danger  text-center d-block">Type your current password to save changes</span>
+                                    @error('current_password')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-12 card-action">
@@ -160,4 +164,3 @@
         </div>
     </div>
 @endsection
-
