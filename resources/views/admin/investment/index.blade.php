@@ -2,9 +2,7 @@
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/datatables/css/dataTables.bootstrap4.css') }}">
     <style>
-        .evidence {
-            width: 100%;
-        }
+       
 
     </style>
 @endpush
