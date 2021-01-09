@@ -28,17 +28,15 @@ class Kernel extends ConsoleKernel
     {
         // SELECT *,  verified_at + INTERVAL 30 DAY  FROM `investments` WHERE ;
         $schedule->call(function () {
-           
-            // where('balance', '>', 0)
-                // ->where('status', 'approved')
-                // ->whereNotNull('verified_at')
-                // ->whereRaw('DATE(verified_at + INTERVAL 30 DAY) < DATE(NOW())')
-                Investment::chunkById(500, function ($investments) {
+            Investment::where('balance', '>', 0)
+                ->where('status', 'approved')
+                ->whereNotNull('verified_at')
+                ->whereRaw('DATE(verified_at + INTERVAL 30 DAY) < DATE(NOW())')
+                ->chunkById(500, function ($investments) {
                     foreach ($investments as $investment) {
                         // dump($investment->id);
                         $balance = $investment->balance;
-                        // $returns = 0.04;
-                        $returns = 100000; //$investment->returns;
+                        $returns = $investment->returns;
                         $weekly = $returns / 50;
                         $interest = ($weekly > $balance) ? $balance : $weekly;
                         creditInterestTable(
@@ -57,9 +55,9 @@ class Kernel extends ConsoleKernel
                     }
                 });
         })
-        ->everyMinute();
-        // ->weekly()
-        // ->fridays()
+        // ->everyMinute();
+        ->weekly()
+        ->fridays();
         // ->appendOutputTo('/storage/app');
     }
 

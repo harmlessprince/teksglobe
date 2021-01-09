@@ -14,8 +14,8 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Name</th>
                                     <th>Status</th>
+                                    <th>Name</th>
                                     <th>Amount Invested</th>
                                     <th>Expected Returns</th>
                                     <th>Current Returns</th>
@@ -32,7 +32,7 @@
                                             @endphp
                                             <span class="badge-dot badge-{{ $badge['color'] }}"></span>
                                         </td>
-                                        <td>{{ ucfirst($investment->status) }}</td>
+                                        <td>{{ $badge['text'] }}</td>
                                         <td>{{ $investment->package->name }}</td>
                                         <td>{{ number_format($investment->amount, 2) }}</td>
                                         <td>{{ number_format($investment->returns, 2) }}</td>

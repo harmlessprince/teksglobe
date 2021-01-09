@@ -108,8 +108,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                                © By Teks Global Nigeria 2020. Developed By <a
-                                    href="#">Alabian Solutions</a>.
+                                ©Teks Global 2020..
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                                 <div class="text-md-right footer-links d-none d-sm-block">

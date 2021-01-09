@@ -62,7 +62,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->pin ? 1 : 0;
     }
-     /**
+
+    /**
      * Get the profile record associated with the user.
      */
     public function withdrawals()

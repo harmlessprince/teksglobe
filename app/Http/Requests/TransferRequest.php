@@ -35,9 +35,9 @@ class TransferRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                Rule::exists('users', 'email')->where(function ($query) {
-                    $query->orWhere('phone', $this->email);
-                }),
+                // Rule::exists('users', 'email')->where(function ($query) {
+                //     $query->orWhere('mobile', $this->email);
+                // }),
             ],
             'pin' => ['required', 'numeric', new CheckPin],
         ];

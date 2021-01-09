@@ -107,7 +107,7 @@ class InvestmentController extends Controller
      */
     public function show(Investment $investment)
     {
-        if ($investment->user_id !== auth()->user()->id) {
+        if ((int)$investment->user_id !== (int)auth()->user()->id) {
             return abort(403);
         }
         $investment->load('interests');
