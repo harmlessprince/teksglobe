@@ -87,3 +87,21 @@
         </ul>
     </div>
 </li>
+
+<li class="nav-item">
+    <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5"
+        aria-controls="submenu-5"><i class="fa fa-fw fa-user-circle"></i>Roles & Permission</a>
+    <div id="submenu-5" class="collapse submenu" style="">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.membership.index') }}">View</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.membership.active') }}">Active</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.membership.inactive') }}">In-active</a>
+            </li>
+        </ul>
+    </div>
+</li>

@@ -9,9 +9,11 @@ use App\Http\Controllers\LoanController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PinController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WithdrawController;
+use App\Models\Role;
 use App\Models\Withdraw;
 use Database\Factories\WithdrawFactory;
 use Illuminate\Support\Facades\Route;
@@ -116,6 +118,7 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('loans/approved', [LoanController::class, 'approved'])->name('loans.approved');
         Route::post('loans/approve/{loan}', [LoanController::class, 'update'])->name('loans.update');
         Route::post('loans/decline/{loan}', [LoanController::class, 'destroy'])->name('loans.destroy');
+        Route::view('role', [RoleController::class, 'index'])->name('role.index');
     });
 
     Route::name('user.')->group(function () {
