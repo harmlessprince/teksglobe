@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Investment;
+use App\Models\Loan;
+use App\Models\Package;
+use App\Models\Withdraw;
+use App\Policies\InvestmentPolicy;
+use App\Policies\LoanPolicy;
+use App\Policies\PackagePolicy;
+use App\Policies\WithdrawalPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,6 +22,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Investment::class => InvestmentPolicy::class,
+        Package::class => PackagePolicy::class,
+        Loan::class => LoanPolicy::class,
+        Withdraw::class => WithdrawalPolicy::class,
+
     ];
 
     /**
@@ -26,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Checks if users is and admin
-        Gate::define('isAdmin', function($user) {
+        Gate::define('isAdmin', function ($user) {
             return $user->admin == true;
         });
     }

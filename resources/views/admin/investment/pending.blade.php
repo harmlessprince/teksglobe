@@ -65,13 +65,13 @@
                                         <td>
                                             <input type="hidden" class="investement_id" value="{{ $investment->id }}">
                                             <form method="post" class="my-4 activate"
-                                                action="">
+                                                action="{{route('admin.investments.update',$investment->id)}}">
                                                 @csrf
                                                 <input type="hidden" name="status" value="approved">
                                                 <button type="submit" class="btn btn-success btn-sm ">Approve</button>
                                             </form>
                                             <form method="post" class="my-4 declined"
-                                                action="" >
+                                                action="{{route('admin.investments.update', $investment->id)}}" >
                                                 @csrf
                                                 <input type="hidden" name="status" value="declined">
                                                 <button type="submit" class="btn btn-danger btn-sm " data-toggle="modal" data-target="#declined">Decline</button>
@@ -121,72 +121,72 @@
             });
 
         });
-        $(document).ready(function() {
-            $(".activate").submit(function(e) {
-                e.preventDefault();
-                var formData = new FormData(e.target);
-                var investment_id = $(this).closest("tr").find('.investement_id').val();
-                // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                swal({
-                        title: "Are you sure?",
-                        text: "Are you sure you want to approve this investments",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            fetch(`/admin/investments/${investment_id}`, {
-                                method: 'POST',
-                                body: formData
-                            }).then(() => {
-                                console.log('success');
-                                swal(
-                                    "Investment approved", {
-                                        icon: "success",
-                                    }).then(() =>  location.reload());
+        // $(document).ready(function() {
+        //     $(".activate").submit(function(e) {
+        //         e.preventDefault();
+        //         var formData = new FormData(e.target);
+        //         var investment_id = $(this).closest("tr").find('.investement_id').val();
+        //         // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        //         swal({
+        //                 title: "Are you sure?",
+        //                 text: "Are you sure you want to approve this investments",
+        //                 icon: "warning",
+        //                 buttons: true,
+        //                 dangerMode: true,
+        //             })
+        //             .then((willDelete) => {
+        //                 if (willDelete) {
+        //                     fetch(`/admin/investments/${investment_id}`, {
+        //                         method: 'POST',
+        //                         body: formData
+        //                     }).then((response) => {
+        //                         console.log(response);
+        //                         swal(
+        //                             "Investment approved", {
+        //                                 icon: "success",
+        //                             }).then(() =>  location.reload());
 
-                            });
+        //                     });
 
-                        } else {
-                            swal("Approval cancelled");
-                        }
-                    });
-            });
+        //                 } else {
+        //                     swal("Approval cancelled");
+        //                 }
+        //             });
+        //     });
 
 
-            $(".declined").submit(function(e) {
-                e.preventDefault();
-                var formData = new FormData(e.target);
-                var investment_id = $(this).closest("tr").find('.investement_id').val();
-                // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                swal({
-                        title: "Are you sure?",
-                        text: "Are you sure you want to decline this investment",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            fetch(`/admin/investments/${investment_id}`, {
-                                method: 'POST',
-                                body: formData
-                            }).then(() => {
-                                console.log('success');
-                                swal(
-                                    "Investment Declined", {
-                                        icon: "success",
-                                    }).then(() =>  location.reload());
+        //     $(".declined").submit(function(e) {
+        //         e.preventDefault();
+        //         var formData = new FormData(e.target);
+        //         var investment_id = $(this).closest("tr").find('.investement_id').val();
+        //         // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        //         swal({
+        //                 title: "Are you sure?",
+        //                 text: "Are you sure you want to decline this investment",
+        //                 icon: "warning",
+        //                 buttons: true,
+        //                 dangerMode: true,
+        //             })
+        //             .then((willDelete) => {
+        //                 if (willDelete) {
+        //                     fetch(`/admin/investments/${investment_id}`, {
+        //                         method: 'POST',
+        //                         body: formData
+        //                     }).then(() => {
+        //                         console.log('success');
+        //                         swal(
+        //                             "Investment Declined", {
+        //                                 icon: "success",
+        //                             }).then(() =>  location.reload());
 
-                            });
+        //                     });
 
-                        } else {
-                            swal("Approval cancelled");
-                        }
-                    });
-            });
-        });
+        //                 } else {
+        //                     swal("Approval cancelled");
+        //                 }
+        //             });
+        //     });
+        // });
 
     </script>
 @endpush

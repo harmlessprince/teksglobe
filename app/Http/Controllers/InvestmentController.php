@@ -134,16 +134,27 @@ class InvestmentController extends Controller
      */
     public function update(UpdateInvestment $request, Investment $investment)
     {
-        //
+        
+        // check of user can update investment status
+        $this->authorize('update', $investment);
         [
             'status' => $status,
         ] = $request->validated();
-
+        
+       
         $investment->status = $status;
         $investment->verified_by = auth()->user()->id;
         $investment->verified_at = now();
         $investment->save();
-        return back()->with('success', 'Investment updated');
+        if ($investment->status == 'approved') {
+            return back()->with('success', 'Investment approved');
+        }
+        return back()->with('success', 'Investment declined');
+       
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Yessss!!! I am authorized',
+        // ]);
     }
 
     /**

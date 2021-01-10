@@ -38,6 +38,7 @@ class PackageController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Package::class);
         return view('admin.package.create');
     }
 
@@ -96,6 +97,8 @@ class PackageController extends Controller
      */
     public function update(UpdatePackage $request, Package $package)
     {
+        // check of user can update package status
+        $this->authorize('update', $package);
         [
             'name' => $name,
             'amount' => $amount,
@@ -120,6 +123,8 @@ class PackageController extends Controller
      */
     public function destroy(Package $package)
     {
+        // check of user can delete package status
+        $this->authorize('delete', $package);
         if ($package->investments()->exists()) {
             return back()->with('error', 'Ooops!! This Package can not be deleted, their are users subscribed to it');
         }

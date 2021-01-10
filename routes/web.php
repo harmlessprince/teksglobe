@@ -118,7 +118,9 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('loans/approved', [LoanController::class, 'approved'])->name('loans.approved');
         Route::post('loans/approve/{loan}', [LoanController::class, 'update'])->name('loans.update');
         Route::post('loans/decline/{loan}', [LoanController::class, 'destroy'])->name('loans.destroy');
-        Route::view('role', [RoleController::class, 'index'])->name('role.index');
+        Route::get('role', [RoleController::class, 'index'])->name('role.index');
+        Route::get('role/create', [RoleController::class, 'create'])->name('role.create');
+        Route::post('role/store', [RoleController::class, 'store'])->name('role.store');
     });
 
     Route::name('user.')->group(function () {

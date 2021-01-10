@@ -168,6 +168,9 @@ class LoanController extends Controller
      */
     public function destroy(UpdateLoan $request, Loan $loan)
     {
+
+        // check of user can update loan status
+        $this->authorize('update', $loan);
         //
         [
             'status' => $status,
