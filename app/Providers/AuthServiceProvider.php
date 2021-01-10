@@ -9,9 +9,11 @@ use App\Models\Withdraw;
 use App\Policies\InvestmentPolicy;
 use App\Policies\LoanPolicy;
 use App\Policies\PackagePolicy;
+use App\Policies\RolePolicy;
 use App\Policies\WithdrawalPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Permission\Models\Role;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Package::class => PackagePolicy::class,
         Loan::class => LoanPolicy::class,
         Withdraw::class => WithdrawalPolicy::class,
-
+        Role::class => RolePolicy::class,
     ];
 
     /**

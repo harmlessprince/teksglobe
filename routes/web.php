@@ -118,9 +118,12 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('loans/approved', [LoanController::class, 'approved'])->name('loans.approved');
         Route::post('loans/approve/{loan}', [LoanController::class, 'update'])->name('loans.update');
         Route::post('loans/decline/{loan}', [LoanController::class, 'destroy'])->name('loans.destroy');
-        Route::get('role', [RoleController::class, 'index'])->name('role.index');
-        Route::get('role/create', [RoleController::class, 'create'])->name('role.create');
-        Route::post('role/store', [RoleController::class, 'store'])->name('role.store');
+        Route::resource('role', RoleController::class);
+        Route::get('role/{role}/assign', [RoleController::class, 'assignForm'])->name('role.assign');
+        Route::post('role/{role}/add', [RoleController::class, 'addToRole'])->name('role.add');
+        Route::post('role/{role}/remove', [RoleController::class, 'removeFromRole'])->name('role.remove');
+
+        Route::get('role/assign/{role}', [RoleController::class, 'show'])->name('role.assign');
     });
 
     Route::name('user.')->group(function () {

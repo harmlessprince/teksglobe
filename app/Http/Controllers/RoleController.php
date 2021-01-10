@@ -16,8 +16,11 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
-    //    dd(SpatieRole::get('name')->random());
+        $this->authorize('view', new SpatieRole);
+      $roles = SpatieRole::withCount('users')->get();
+
+    //   dd($roles);
+      return view ('admin.role.index', compact('roles'));
     }
 
     /**
@@ -28,6 +31,7 @@ class RoleController extends Controller
     public function create()
     {
         //
+        $this->authorize('create', SpatieRole::class);
         $permissions = Permission::all();
         return view('admin.role.create', compact('permissions'));
     }
@@ -55,12 +59,15 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  Spatie\Permission\Models\Role as SpatieRole
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(SpatieRole $role)
     {
         //
+        $this->authorize('view', $role);
+        $role->load('users', 'permissions');
+        return view('admin.role.show', compact('role'));
     }
 
     /**
@@ -69,9 +76,12 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(SpatieRole $role)
     {
         //
+        $this->authorize('update', $role);
+       
+        
     }
 
     /**
