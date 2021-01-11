@@ -108,10 +108,17 @@ class RoleController extends Controller
             'permissions' => $permissions
         ] = $request->validated();
 
-
+        //checking for the role id
+        if ($role->id == 1) {
+            return redirect()->route('admin.role.show', $role->id)->with('error', 'Sorry this role can not be updated');
+        }
+ 
         $role->name = $name;
+
+       
         $role->save();
 
+        
         //assign permission to roles
         $role->syncPermissions($permissions);
 
@@ -161,6 +168,10 @@ class RoleController extends Controller
         $this->validate($request, [
             'users' => 'required|array',
         ]);
+         //checking for the role id
+        if ($role->id == 1) {
+            return redirect()->route('admin.role.show', $role->id)->with('error', 'Sorry, you are not allowed to assign this role to another user');
+        }
         $users = $request->users;
         foreach ($users as  $userId) {
             $user = User::findOrFail($userId);
@@ -180,6 +191,10 @@ class RoleController extends Controller
         $this->validate($request, [
             'members' => 'required|array',
         ]);
+         //checking for the role id
+        if ($role->id == 1) {
+            return redirect()->route('admin.role.show', $role->id)->with('error', 'Sorry, this role can not be revoked');
+        }
         $users = $request->members;
         foreach ($users as  $userId) {
             $user = User::findOrFail($userId);
