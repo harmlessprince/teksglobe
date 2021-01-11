@@ -2,12 +2,14 @@
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/datatables/css/dataTables.bootstrap4.css') }}">
 @endpush
-
+@section('pageheader')
+Application Roles
+@endsection
 @section('content')
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <h3 class="card-header">Application Roles</h3>
+                <h3 class="card-header">Role Management</h3>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered first">

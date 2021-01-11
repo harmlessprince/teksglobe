@@ -18,13 +18,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create()->each(function ($user) {
-        //     $user->profile()->save(Profile::factory()->make());
-        // });
+        
 
-        User::factory(10)->create()->each(function ($user)
-        {
-            $user->investments()->saveMany( Investment::factory(3)->make(['user_id' => null]));
+        User::factory(10)->create()->each(function ($user) {
+            $user->investments()->saveMany(Investment::factory(3)->make(['user_id' => null]));
         });
     }
 }

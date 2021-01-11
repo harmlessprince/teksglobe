@@ -5,6 +5,10 @@
 
 @endpush
 
+@section('pageheader')
+Add/Remove Users From {{$role->name}}
+@endsection
+
 @section('content')
 
 

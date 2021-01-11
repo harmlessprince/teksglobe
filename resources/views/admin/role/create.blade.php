@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('pageheader')
+Create Role
+@endsection
 
 @section('content')
     <div class="row">
@@ -7,7 +10,7 @@
                 @csrf
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="mb-0">Create Role</h3>
+                        <h3 class="mb-0"></h3>
                     </div>
                     <div class="card-body">
                         <div class="row">

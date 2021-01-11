@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role as SpatieRole;
+
 class RoleSeeder extends Seeder
 {
     /**
@@ -15,18 +17,23 @@ class RoleSeeder extends Seeder
     public function run()
     {
         //
-      
-        $users = User::all();
+        $roles = [
+            'Super Admin',
+            'Activate Package',
+            'Activate Loan',
+            'Activate Withdrawal',
+        ];
 
-        $roles = SpatieRole::get();
-
-      
-        foreach ($users as  $user) {
-            $role = $roles->pluck('name')->random();
-            print_r($role);
-            $user->assignRole( $role);
-            // $user->removeRole('super admin');
+        foreach ($roles as  $role) {
+            SpatieRole::create(['name' => $role]);
         }
 
+        // $users = User::where('name', '!=', 'Super Admin')->where('admin', true)->get();
+        // foreach ($users as  $user) {
+        //     $role = SpatieRole::where('name', '!=', 'Super Admin')->pluck('name');
+           
+        //     $user->assignRole($role->random());
+        //     // $user->removeRole('super admin');
+        // }
     }
 }

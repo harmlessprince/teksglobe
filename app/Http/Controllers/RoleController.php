@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRole;
+use App\Http\Requests\UpdateRole;
 use App\Models\Role;
 use App\Models\User;
 // use Illuminate\Contracts\Validation\Rule;
@@ -9,6 +11,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleController extends Controller
 {
@@ -34,7 +37,7 @@ class RoleController extends Controller
     public function create()
     {
         //
-        $this->authorize('create', SpatieRole::class);
+        $this->authorize('create role', SpatieRole::class);
         $permissions = Permission::all();
         return view('admin.role.create', compact('permissions'));
     }
@@ -45,16 +48,18 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRole $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string|unique:roles',
-        ]);
+
+        [
+            'name' => $name,
+            'permissions' => $permissions
+        ] = $request->validated();
         // get role name
-        $role = SpatieRole::create(['name' => $request->name]);
+        $role = SpatieRole::create(['name' => $name]);
 
         //assign permission to roles
-        $role->syncPermissions($request->permissions);
+        $role->syncPermissions($permissions);
 
         return back()->with('success', 'Role has been created and succesfully assigned permission');
     }
@@ -81,8 +86,11 @@ class RoleController extends Controller
      */
     public function edit(SpatieRole $role)
     {
-        //
+        //Check if user is authroized to update this model
         $this->authorize('update', $role);
+        $role->load('permissions');
+        $permissions = Permission::all();
+        return view('admin.role.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -92,9 +100,24 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRole $request, SpatieRole $role)
     {
         //
+        [
+            'name' => $name,
+            'permissions' => $permissions
+        ] = $request->validated();
+
+
+        $role->name = $name;
+        $role->save();
+
+        //assign permission to roles
+        $role->syncPermissions($permissions);
+
+        // Reset cached roles and permissions
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        return redirect()->route('admin.role.show', $role->id)->with('success', 'Role has been succesfully updated and assigned permissions');
     }
 
     /**
