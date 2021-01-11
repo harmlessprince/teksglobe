@@ -32,29 +32,33 @@
                                         <td>{{ number_format($pending_withdrawal->amount, 2) }}</td>
                                         <td>{{ number_format($pending_withdrawal->charge, 2) }}</td>
                                         <td> {{ $pending_withdrawal->created_at->format('d M, Y H:i A') }}</td>
-                                        <td>{{$pending_withdrawal->user->bank->bank_name}}/{{$pending_withdrawal->user->bank->account_name}}/{{$pending_withdrawal->user->bank->account_number}}</td>
+                                        <td>{{ $pending_withdrawal->user->bank->bank_name }}/{{ $pending_withdrawal->user->bank->account_name }}/{{ $pending_withdrawal->user->bank->account_number }}
+                                        </td>
                                         <td>
                                             <p class="text-warning"> {{ $pending_withdrawal->status }} </p>
                                         </td>
                                         <td>
-                                            <form method="post" class="my-4"
-                                                action="{{ route('admin.withdraw.update', $pending_withdrawal->id) }}">
-                                                @csrf
-                                                <input type="hidden" name="status" value="approved">
-                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                            </form>
+                                            @can('confirm withdrawal')
+                                                <form method="post" class="my-4"
+                                                    action="{{ route('admin.withdraw.update', $pending_withdrawal->id) }}">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="approved">
+                                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                                </form>
+                                            @endcan
+
                                         </td>
                                         <td>
-
-                                                <button type="submit" class="btn btn-danger btn-sm"  data-toggle="modal"
-                                                data-target="#declineModal-{{ $pending_withdrawal->id }}">Decline</button>
-
+                                            @can('decline withdrawal')
+                                                <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#declineModal-{{ $pending_withdrawal->id }}">Decline</button>
+                                            @endcan
                                             <!-- Modal -->
                                             <form method="post" class="my-4"
                                                 action="{{ route('admin.withdrawals.destroy', $pending_withdrawal->id) }}">
                                                 @csrf
-                                                <div class="modal fade" id="declineModal-{{ $pending_withdrawal->id}}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="declineModal-{{ $pending_withdrawal->id }}"
+                                                    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -72,7 +76,8 @@
                                                                     <label for="narration">Kindly state reason for
                                                                         declination of this withdrawal</label>
                                                                     <textarea name="narration" id="" cols="30" rows="4"
-                                                                        class="form-control" id="narration" required ></textarea>
+                                                                        class="form-control" id="narration"
+                                                                        required></textarea>
 
                                                                 </div>
                                                             </div>

@@ -45,6 +45,7 @@ class LoanController extends Controller
      */
     public function pending()
     {
+        
         $loans = Loan::where('status', '=', 'pending')
             ->latest()
             ->get();
@@ -142,6 +143,7 @@ class LoanController extends Controller
     public function update(UpdateLoan $request, Loan $loan)
     {
         //
+        $this->authorize('update', $loan);
         [
             'status' => $status,
         ] = $request->validated();

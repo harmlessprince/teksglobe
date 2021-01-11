@@ -41,18 +41,20 @@
                                         </td>
                                         --}}
                                         <td>
-                                            <form method="post" class="my-4"
-                                                action="{{ route('admin.loans.update', $loan->id) }}">
-                                                @csrf
-                                                <input type="hidden" name="status" value="approved">
-                                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                            </form>
-
-
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#declineModal-{{ $loan->id }}">
-                                                Decline
-                                            </button>
+                                            @can('confirm loan')
+                                                <form method="post" class="my-4"
+                                                    action="{{ route('admin.loans.update', $loan->id) }}">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="approved">
+                                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                                </form>
+                                            @endcan
+                                            @can('decline loan')
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                    data-target="#declineModal-{{ $loan->id }}">
+                                                    Decline
+                                                </button>
+                                            @endcan
                                             {{--
                                             </form> --}}
                                             <!-- Modal -->
@@ -78,7 +80,8 @@
                                                                     <label for="narration">Kindly state reason for
                                                                         declination of this loan</label>
                                                                     <textarea name="narration" id="" cols="30" rows="4"
-                                                                        class="form-control" id="narration" required ></textarea>
+                                                                        class="form-control" id="narration"
+                                                                        required></textarea>
 
                                                                 </div>
                                                             </div>

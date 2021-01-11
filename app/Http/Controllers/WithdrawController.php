@@ -114,7 +114,7 @@ class WithdrawController extends Controller
     public function update(UpdateWithdrawal $request, Withdraw $withdraw)
     {
         //
-
+        $this->authorize('update', $withdraw);
         [
             'status' => $status,
         ] = $request->validated();
@@ -136,6 +136,7 @@ class WithdrawController extends Controller
     public function destroy(UpdateWithdrawal $request, Withdraw $withdraw)
     {
         //
+        $this->authorize('update', $withdraw);
         [
             'status' => $status,
         ] = $request->validated();
@@ -170,7 +171,7 @@ class WithdrawController extends Controller
     public function approvedWithdrawal()
     {
          // check of user can update withdrawal status
-         $this->authorize('update');
+        
         $approved_withdrawals = Withdraw::where('status', '=', "approved")->get();
         return view('admin.withdraw.approved', compact('approved_withdrawals'));
     }
@@ -184,7 +185,7 @@ class WithdrawController extends Controller
     public function declinedWithdrawal()
     {
          // check of user can update withdrawal status
-         $this->authorize('update');
+         
         $declined_withdrawals = Withdraw::where('status', '=', "declined")->get();
         return view('admin.withdraw.declined', compact('declined_withdrawals'));
     }

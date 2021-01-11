@@ -27,8 +27,8 @@
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
                                         <td>
-                                            <a href="{{route('admin.membership.show', $user->id)}}">    {{ $user->name }}</a>
-                                        
+                                            <a href="{{ route('admin.membership.show', $user->id) }}"> {{ $user->name }}</a>
+
                                         </td>
                                         <td>{{ $user->email }}</td>
                                         <td>
@@ -47,20 +47,25 @@
                                             @endif
                                         </td>
                                         <td>
+
                                             @if ($user->active == true)
-                                                <form action="{{ route('admin.membership.update', $user->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    <input type="hidden" value="0" name="active">
-                                                    <button type="submit" class="btn btn-sm btn-danger">Deactivate</button>
-                                                </form>
+                                                @can('confirm membership')
+                                                    <form action="{{ route('admin.membership.update', $user->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <input type="hidden" value="0" name="active">
+                                                        <button type="submit" class="btn btn-sm btn-danger">Deactivate</button>
+                                                    </form>
+                                                @endcan
                                             @else
-                                                <form action="{{ route('admin.membership.update', $user->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    <input type="hidden" value="1" name="active">
-                                                    <button type="submit" class="btn btn-sm btn-success"> Activate</button>
-                                                </form>
+                                                @can('decline membership')
+                                                    <form action="{{ route('admin.membership.update', $user->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <input type="hidden" value="1" name="active">
+                                                        <button type="submit" class="btn btn-sm btn-success"> Activate</button>
+                                                    </form>
+                                                @endcan
                                             @endif
                                         </td>
                                     </tr>

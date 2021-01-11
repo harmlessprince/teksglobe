@@ -30,6 +30,6 @@ class WithdrawalPolicy
     public function update(User $user)
 
     {
-        return $user->hasAnyPermission(['confirm Withdrawal', 'decline Withdrawal']);
+        return $user->hasAnyPermission(['confirm withdrawal', 'decline withdrawal']);
     }
 }
