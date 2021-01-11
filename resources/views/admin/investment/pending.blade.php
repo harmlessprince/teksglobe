@@ -7,6 +7,7 @@
         .evidence {
             width: 100%;
         }
+
     </style>
 @endpush
 
@@ -38,7 +39,8 @@
                                         <td>{{ $investment->package->name }}</td>
                                         <td>
                                             <a href="#" class="text-center pop">
-                                                <img src="{{ asset('storage/'.$investment->evidence) }}" alt="evidence" class="user-avatar-md rounded-circle pop">
+                                                <img src="{{ asset('storage/' . $investment->evidence) }}" alt="evidence"
+                                                    class="user-avatar-md rounded-circle pop">
                                                 <input type="hidden" name="invest_id" value="{{ $investment->id }}">
                                             </a>
                                             <div class="modal fade" id="imagemodal-{{ $investment->id }}" tabindex="-1"
@@ -64,18 +66,23 @@
 
                                         <td>
                                             <input type="hidden" class="investement_id" value="{{ $investment->id }}">
-                                            <form method="post" class="my-4 activate"
-                                                action="{{route('admin.investments.update',$investment->id)}}">
-                                                @csrf
-                                                <input type="hidden" name="status" value="approved">
-                                                <button type="submit" class="btn btn-success btn-sm ">Approve</button>
-                                            </form>
-                                            <form method="post" class="my-4 declined"
-                                                action="{{route('admin.investments.update', $investment->id)}}" >
-                                                @csrf
-                                                <input type="hidden" name="status" value="declined">
-                                                <button type="submit" class="btn btn-danger btn-sm " data-toggle="modal" data-target="#declined">Decline</button>
-                                            </form>
+                                            @can('confirm payment')
+                                                <form method="post" class="my-4 activate"
+                                                    action="{{ route('admin.investments.update', $investment->id) }}">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="approved">
+                                                    <button type="submit" class="btn btn-success btn-sm ">Approve</button>
+                                                </form>
+                                            @endcan
+                                            @can('decline payment')
+                                                <form method="post" class="my-4 declined"
+                                                    action="{{ route('admin.investments.update', $investment->id) }}">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="declined">
+                                                    <button type="submit" class="btn btn-danger btn-sm " data-toggle="modal"
+                                                        data-target="#declined">Decline</button>
+                                                </form>
+                                            @endcan
                                         </td>
 
                                     </tr>

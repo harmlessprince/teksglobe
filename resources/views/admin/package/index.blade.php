@@ -42,7 +42,9 @@
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                             </form> --}}
+                                            @can('update package')
                                             <a href="{{ route('admin.packages.edit', $package->id) }}" class="btn btn-sm btn-warning ">Edit</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

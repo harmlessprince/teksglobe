@@ -67,6 +67,18 @@ class RolePolicy
     }
 
     /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  \App\Model\User  $user
+     * @param  Spatie\Permission\Models\Role $role
+     * @return mixed
+     */
+    public function delete(User $user, Role $role)
+    {
+        return $user->hasPermissionTo('delete role');
+    }
+
+    /**
      * Determine whether the user can assign models.
      *
      * @param  \App\Model\User  $user

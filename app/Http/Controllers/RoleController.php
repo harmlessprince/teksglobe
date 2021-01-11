@@ -136,6 +136,15 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+        // check of user can delete package status
+        $this->authorize('delete', $role);
+        if ($role->users()->exists()) {
+            return back()->with('error', 'Ooops!! This Role can not be deleted, their are users assigned to it');
+        }
+        $role->delete();
+
+        return redirect()->route('admin.role.index')
+            ->with('success', 'Role has been succesfully deleted');
     }
     /**
      * shows the form for adding users to role
@@ -175,7 +184,7 @@ class RoleController extends Controller
         $users = $request->users;
         foreach ($users as  $userId) {
             $user = User::findOrFail($userId);
-            $user->assignRole($role->pluck('name'));
+            $user->assignRole($role);
         }
         return back()->with('success', 'User\'s Assigned Successfully');
     }
