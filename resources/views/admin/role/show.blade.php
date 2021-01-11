@@ -6,8 +6,13 @@
 @section('content')
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card">
-                <h3 class="card-header ">{{ $role->name }}</h3>
+            <div class="card"> 
+                <div class="card-header d-flex">
+                    <h4 class="card-header-title">Users in {{ $role->name }}</h4>
+                    <div class="toolbar ml-auto">
+                        <a href="{{route('admin.role.assign', $role->id)}}" class="btn btn-primary btn-sm ">Edit</a>
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered first">
@@ -41,8 +46,12 @@
     <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="mb-0">Permission List</h3>
+                
+                <div class="card-header d-flex">
+                    <h4 class="card-header-title">Permission List</h4>
+                    <div class="toolbar ml-auto">
+                        <a href="{{route('admin.role.edit', $role->id)}}" class="btn btn-primary btn-sm ">Edit Permissions</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
