@@ -73,7 +73,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loanModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="loanModalLabel">Applly for loan</h5>
                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </a>
@@ -81,7 +81,7 @@
                 <form method="post" class="my-4" action="{{ route('user.loans.store', $investment->id) }}">
                     @csrf
                     <div class="modal-body">
-                        <p>{{ $investment->availableLoanAmount() }}</p>
+                        <p>Hello  you have {{ $investment->availableLoanAmount() }}</p>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">

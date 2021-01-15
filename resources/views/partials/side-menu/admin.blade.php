@@ -78,12 +78,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.membership.index') }}">View</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.membership.active') }}">Active</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.membership.inactive') }}">In-active</a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </li>

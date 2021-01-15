@@ -19,9 +19,9 @@
                                     <th>Charge</th>
                                     <th>Account</th>
                                     <th>Requested</th>
-                                    {{-- <th>Approved</th> --}}
+                                   
                                     <th>Status</th>
-                                    {{-- <th>Action</th> --}}
+                                  
                                 </tr>
                             </thead>
                             <tbody>

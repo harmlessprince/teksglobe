@@ -18,17 +18,17 @@ class MembershipController extends Controller
      */
     public function index()
     {
-        $path = Route::currentRouteName();
-        if ($path == "admin.membership.active") {
-            $users = User::where('active', '=', true)->get();
-            return view('admin.membership.active', compact('users'));
-        } elseif ($path == "admin.membership.inactive") {
-            $users = User::where('active', '=', false)->get();
-            return view('admin.membership.inactive', compact('users'));
-        } else {
+        // $path = Route::currentRouteName();
+        // if ($path == "admin.membership.active") {
+        //     $users = User::where('active', '=', true)->get();
+        //     return view('admin.membership.active', compact('users'));
+        // } elseif ($path == "admin.membership.inactive") {
+        //     $users = User::where('active', '=', false)->get();
+        //     return view('admin.membership.inactive', compact('users'));
+        // } else {
             $users = User::all();
             return view('admin.membership.index', compact('users'));
-        }
+        // }
     }
 
     /**

@@ -23,7 +23,8 @@ class PackageFactory extends Factory
     {
         return [
             'name' => $this->faker->jobTitle,
-            'amount' => round($this->faker->numberBetween(100000, 500000), -5),
+            'returns' => round($this->faker->numberBetween(50000, 100000), 5),
+            'amount' => round($this->faker->numberBetween(10000, 50000), 5),
         ];
     }
 }

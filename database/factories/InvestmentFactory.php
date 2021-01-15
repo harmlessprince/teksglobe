@@ -27,6 +27,7 @@ class InvestmentFactory extends Factory
         return [
             'package_id' => $package->id,
             'amount' => $package->amount, 
+            'returns' => $package->returns,
             'evidence' => 'uploads/avatars/default.jpg',
             'balance' => $package->amount * 2,
             'gateway' => $this->faker->randomElement($array = array('paystack', 'wallet', 'bank')),

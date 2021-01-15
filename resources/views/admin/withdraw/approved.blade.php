@@ -31,7 +31,7 @@
                                         <td>{{ $approved_withdrawal->user->name }}</td>
                                         <td>{{ number_format($approved_withdrawal->amount, 2) }}</td>
                                         <td>{{ number_format($approved_withdrawal->charge, 2) }}</td>
-                                        <td>---</td>
+                                        <td>{{ $approved_withdrawal->user->bank->bank_name }}/{{ $approved_withdrawal->user->bank->account_name }}/{{ $approved_withdrawal->user->bank->account_number }}</td>
                                         <td> {{ $approved_withdrawal->verified_at->format('d M, Y H:i A') }}</td>
                                         <td> <p class="text-success">{{ $approved_withdrawal->status }}</p> </td>
                                         {{-- <td></td> --}}

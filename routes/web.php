@@ -110,8 +110,8 @@ Route::middleware('auth', 'verified')->group(function () {
         Route::get('membership', [MembershipController::class, 'index'])->name('membership.index');
         Route::post('membership/{user}', [MembershipController::class, 'update'])->name('membership.update');
         Route::get('membership/{user}', [MembershipController::class, 'show'])->name('membership.show');
-        Route::get('membership/active', [MembershipController::class, 'index'])->name('membership.active');
-        Route::get('membership/inactive', [MembershipController::class, 'index'])->name('membership.inactive');
+        // Route::get('membership/active', [MembershipController::class, 'index'])->name('membership.active');
+        // Route::get('membership/inactive', [MembershipController::class, 'index'])->name('membership.inactive');
         Route::get('loans/completed', [LoanController::class, 'completed'])->name('loans.completed');
         Route::get('loans/pending', [LoanController::class, 'pending'])->name('loans.pending');
         Route::get('loans/declined', [LoanController::class, 'declined'])->name('loans.declined');
